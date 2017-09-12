@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 
 @MappedSuperclass
 public abstract class BasicUser {
+
     @Id
     private String loginEmail;
 
@@ -43,6 +44,4 @@ public abstract class BasicUser {
     public void setRegistrationDate(Timestamp registrationDate) {
         this.registrationDate = registrationDate;
     }
-
-
 }

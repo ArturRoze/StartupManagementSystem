@@ -7,4 +7,6 @@ import javax.persistence.Table;
 @Table(name = "admin")
 public class Admin extends BasicUser {
 
+
+
 }
