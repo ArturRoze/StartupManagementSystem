@@ -52,43 +52,43 @@ public class MainConfiguration {
         return dataSource;
     }
 
-//    @Bean
-//    public LocalSessionFactoryBean sessionFactoryBean(DataSource dataSource){
-//
-//        LocalSessionFactoryBean bean = new LocalSessionFactoryBean();
-//
-//        bean.setDataSource(dataSource);
-//
-//        bean.setPackagesToScan("productManagementSystem.model");
-//
-//        Properties properties = new Properties();
-//
-//        properties.put("hibernate.dialect", dialect);
-//
-//        bean.setHibernateProperties(properties);
-//
-//        return  bean;
-//    }
-//
-//    @Bean
-//    public HibernateTransactionManager transactionManager(SessionFactory sessionFactory){
-//        return new HibernateTransactionManager(sessionFactory);
-//    }
-
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory (DataSource dataSource){
-        HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
-        jpaVendorAdapter.setDatabasePlatform(dialect);
+    public LocalSessionFactoryBean sessionFactoryBean(DataSource dataSource){
 
-        LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
-        factoryBean.setDataSource(dataSource);
-        factoryBean.setJpaVendorAdapter(jpaVendorAdapter);
-        factoryBean.setPackagesToScan("ua.goit.group6.model");
-        return factoryBean;
+        LocalSessionFactoryBean bean = new LocalSessionFactoryBean();
+
+        bean.setDataSource(dataSource);
+
+        bean.setPackagesToScan("ua.goit.group6.model");
+
+        Properties properties = new Properties();
+
+        properties.put("hibernate.dialect", dialect);
+
+        bean.setHibernateProperties(properties);
+
+        return  bean;
     }
 
     @Bean
-    public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory){
-        return new JpaTransactionManager(entityManagerFactory);
+    public HibernateTransactionManager transactionManager(SessionFactory sessionFactory){
+        return new HibernateTransactionManager(sessionFactory);
     }
+
+//    @Bean
+//    public LocalContainerEntityManagerFactoryBean entityManagerFactory (DataSource dataSource){
+//        HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
+//        jpaVendorAdapter.setDatabasePlatform(dialect);
+//
+//        LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
+//        factoryBean.setDataSource(dataSource);
+//        factoryBean.setJpaVendorAdapter(jpaVendorAdapter);
+//        factoryBean.setPackagesToScan("ua.goit.group6.model");
+//        return factoryBean;
+//    }
+//
+//    @Bean
+//    public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory){
+//        return new JpaTransactionManager(entityManagerFactory);
+//    }
 }

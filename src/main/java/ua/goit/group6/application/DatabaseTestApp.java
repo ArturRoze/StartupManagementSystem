@@ -15,6 +15,9 @@ public class DatabaseTestApp {
 
             System.out.println(userService.readById(1L));
 
+            long id = userService.readById(1L).getId();
+            System.out.println(id);
+
             System.out.println("-------------------------------------------------------------------------------------");
         }
     }
