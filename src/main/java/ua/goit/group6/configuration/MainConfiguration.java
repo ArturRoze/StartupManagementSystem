@@ -7,10 +7,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
 import java.util.Properties;
@@ -19,6 +24,7 @@ import java.util.Properties;
 @ComponentScan("ua.goit.group6")
 @PropertySource(value = {"classpath:db.properties"})
 @EnableTransactionManagement
+@EnableJpaRepositories("ua.goit.group6.dao")
 public class MainConfiguration {
 
     @Value("${datasource.driver}")
@@ -46,26 +52,43 @@ public class MainConfiguration {
         return dataSource;
     }
 
+//    @Bean
+//    public LocalSessionFactoryBean sessionFactoryBean(DataSource dataSource){
+//
+//        LocalSessionFactoryBean bean = new LocalSessionFactoryBean();
+//
+//        bean.setDataSource(dataSource);
+//
+//        bean.setPackagesToScan("productManagementSystem.model");
+//
+//        Properties properties = new Properties();
+//
+//        properties.put("hibernate.dialect", dialect);
+//
+//        bean.setHibernateProperties(properties);
+//
+//        return  bean;
+//    }
+//
+//    @Bean
+//    public HibernateTransactionManager transactionManager(SessionFactory sessionFactory){
+//        return new HibernateTransactionManager(sessionFactory);
+//    }
+
     @Bean
-    public LocalSessionFactoryBean sessionFactoryBean(DataSource dataSource){
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory (DataSource dataSource){
+        HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
+        jpaVendorAdapter.setDatabasePlatform(dialect);
 
-        LocalSessionFactoryBean bean = new LocalSessionFactoryBean();
-
-        bean.setDataSource(dataSource);
-
-        bean.setPackagesToScan("productManagementSystem.model");
-
-        Properties properties = new Properties();
-
-        properties.put("hibernate.dialect", dialect);
-
-        bean.setHibernateProperties(properties);
-
-        return  bean;
+        LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
+        factoryBean.setDataSource(dataSource);
+        factoryBean.setJpaVendorAdapter(jpaVendorAdapter);
+        factoryBean.setPackagesToScan("ua.goit.group6.model");
+        return factoryBean;
     }
 
     @Bean
-    public HibernateTransactionManager transactionManager(SessionFactory sessionFactory){
-        return new HibernateTransactionManager(sessionFactory);
+    public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory){
+        return new JpaTransactionManager(entityManagerFactory);
     }
 }
