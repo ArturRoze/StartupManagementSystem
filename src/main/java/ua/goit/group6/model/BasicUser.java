@@ -1,11 +1,12 @@
 package ua.goit.group6.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 
 @MappedSuperclass
-public abstract class BasicUser {
+public abstract class BasicUser implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
