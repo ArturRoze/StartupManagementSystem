@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 @ComponentScan("ua.goit.group6.controller")
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
 // Roles ADMIN and USER are in memory.
 //  @Autowired
 //  protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -33,30 +34,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                // 1. USER can check all users in the system.
-                // 2. ADMIN can create, update or delete users.
-                //TODO rewrite for our servlets
-                .antMatchers("/", "/login", "/registration", "/register").permitAll()
-                .antMatchers("/???????", "/???????????").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/?????????**", "?????????/**").hasRole("ADMIN")
-                .antMatchers("/**").authenticated()
-                .anyRequest().denyAll()
+                    .antMatchers("/").permitAll()
+                    .anyRequest().denyAll()
                 .and()
-                .formLogin()
-                .defaultSuccessUrl("/??????????")
-                .loginPage("/login")
-                .failureUrl("/login?error")
-                .permitAll()
+                    .formLogin()
+                    .permitAll()
+//                .and()
+//                    // logout for all
+//                    .logout().permitAll()
+//                    // logout URL
+//                    .logoutUrl("/logout")
+//                    // URL at a successful logout
+//                    .logoutSuccessUrl("/login?logout")
+//                    // make invisible current session
+//                    .invalidateHttpSession(true)
                 .and()
-                // logout for all
-                .logout().permitAll()
-                // logout URL
-                .logoutUrl("/logout")
-                // URL at a successful logout
-                .logoutSuccessUrl("/login?logout")
-                // make invisible current session
-                .invalidateHttpSession(true)
-                .and()
-                .csrf().disable();
+                    .csrf().disable();
     }
 }
