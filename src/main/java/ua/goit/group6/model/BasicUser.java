@@ -1,8 +1,6 @@
 package ua.goit.group6.model;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 
@@ -10,10 +8,17 @@ import java.sql.Timestamp;
 public abstract class BasicUser {
 
     @Id
-    private String loginEmail;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column
+    private String login;
 
     @Column
     private String password;
+
+    @Column
+    private String email;
 
     @Column (name = "registration_date")
     private Timestamp registrationDate;
@@ -21,12 +26,28 @@ public abstract class BasicUser {
     public BasicUser() {
     }
 
-    public String getLoginEmail() {
-        return loginEmail;
+    public long getId() {
+        return id;
     }
 
-    public void setLoginEmail(String loginEmail) {
-        this.loginEmail = loginEmail;
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
