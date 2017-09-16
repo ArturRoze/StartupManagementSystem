@@ -4,7 +4,9 @@ import ua.goit.group6.model.User;
 
 import java.util.List;
 
-
+/**
+ * @author Boiko Ivan
+ */
 public interface UserService {
 
     User getById(long id);

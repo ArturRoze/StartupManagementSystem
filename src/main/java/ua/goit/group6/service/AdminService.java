@@ -4,6 +4,9 @@ import ua.goit.group6.model.Admin;
 
 import java.util.List;
 
+/**
+ * @author Boiko Ivan
+ */
 public interface AdminService {
 
     Admin getById(long id);
