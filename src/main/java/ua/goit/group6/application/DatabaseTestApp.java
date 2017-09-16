@@ -20,9 +20,6 @@ public class DatabaseTestApp {
             user.setEmail("a");
             userService.save(user);
 
-            long id = userService.readById(1L).getId();
-            System.out.println(id);
-
             System.out.println("-------------------------------------------------------------------------------------");
         }
     }
