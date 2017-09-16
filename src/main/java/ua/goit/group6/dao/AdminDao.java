@@ -5,6 +5,6 @@ import ua.goit.group6.model.Admin;
 
 public interface AdminDao extends JpaRepository<Admin, Long> {
 
-
+    Admin getAdminByLogin(String lpgin);
 
 }
