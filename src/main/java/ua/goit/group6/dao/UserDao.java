@@ -5,6 +5,6 @@ import ua.goit.group6.model.User;
 
 public interface UserDao extends JpaRepository<User, Long> {
 
-
+    User getUserByLogin(String login);
 
 }

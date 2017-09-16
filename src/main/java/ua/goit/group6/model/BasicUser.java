@@ -66,4 +66,40 @@ public abstract class BasicUser implements Serializable{
     public void setRegistrationDate(Timestamp registrationDate) {
         this.registrationDate = registrationDate;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BasicUser)) return false;
+
+        BasicUser basicUser = (BasicUser) o;
+
+        if (getId() != basicUser.getId()) return false;
+        if (getLogin() != null ? !getLogin().equals(basicUser.getLogin()) : basicUser.getLogin() != null) return false;
+        if (getPassword() != null ? !getPassword().equals(basicUser.getPassword()) : basicUser.getPassword() != null)
+            return false;
+        if (getEmail() != null ? !getEmail().equals(basicUser.getEmail()) : basicUser.getEmail() != null) return false;
+        return getRegistrationDate() != null ? getRegistrationDate().equals(basicUser.getRegistrationDate()) : basicUser.getRegistrationDate() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (getId() ^ (getId() >>> 32));
+        result = 31 * result + (getLogin() != null ? getLogin().hashCode() : 0);
+        result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
+        result = 31 * result + (getEmail() != null ? getEmail().hashCode() : 0);
+        result = 31 * result + (getRegistrationDate() != null ? getRegistrationDate().hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "BasicUser{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", registrationDate=" + registrationDate +
+                '}';
+    }
 }
