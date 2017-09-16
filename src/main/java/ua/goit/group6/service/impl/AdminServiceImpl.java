@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.goit.group6.dao.AdminDao;
+import ua.goit.group6.dao.UserDao;
 import ua.goit.group6.model.Admin;
 import ua.goit.group6.service.AdminService;
-import ua.goit.group6.service.UserService;
 
 import java.util.List;
 
@@ -22,13 +22,13 @@ public class AdminServiceImpl implements AdminService {
     private final Logger LOGGER = LoggerFactory.getLogger(AdminServiceImpl.class);
 
     private final AdminDao adminDao;
-    private final UserService userService;
+    private final UserDao userDao;
 
     @Autowired
-    public AdminServiceImpl(AdminDao adminDao, UserService userService) {
+    public AdminServiceImpl(AdminDao adminDao, UserDao userDao) {
         LOGGER.info("AdminServiceImpl created");
         this.adminDao = adminDao;
-        this.userService = userService;
+        this.userDao = userDao;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     @Transactional
     public Admin save(Admin admin) {
-        if (userService.getByLogin(admin.getLogin()) == null) {
+        if (userDao.getUserByLogin(admin.getLogin()) == null) {
             LOGGER.info("Save admin:{} to repository", admin);
             return adminDao.saveAndFlush(admin);
         } else {

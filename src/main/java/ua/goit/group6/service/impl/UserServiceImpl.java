@@ -5,9 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ua.goit.group6.dao.AdminDao;
 import ua.goit.group6.dao.UserDao;
 import ua.goit.group6.model.User;
-import ua.goit.group6.service.AdminService;
 import ua.goit.group6.service.UserService;
 
 import java.util.List;
@@ -22,13 +22,13 @@ public class UserServiceImpl implements UserService {
     private final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private final UserDao userDao;
-    private final AdminService adminService;
+    private final AdminDao adminDao;
 
     @Autowired
-    public UserServiceImpl(UserDao userDao, AdminService adminService) {
+    public UserServiceImpl(UserDao userDao, AdminDao adminDao) {
         LOGGER.info("UserServiceImpl created");
         this.userDao = userDao;
-        this.adminService = adminService;
+        this.adminDao = adminDao;
     }
 
     @Override
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User save(User user) {
 
-        if (adminService.getByLogin(user.getLogin()) == null) {
+        if (adminDao.getAdminByLogin(user.getLogin()) == null) {
             LOGGER.info("Save user:{} to repository", user);
             return userDao.saveAndFlush(user);
         } else {
