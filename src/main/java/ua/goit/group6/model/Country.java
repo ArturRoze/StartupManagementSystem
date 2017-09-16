@@ -1,10 +1,11 @@
 package ua.goit.group6.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "country")
-public class Country {
+public class Country implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

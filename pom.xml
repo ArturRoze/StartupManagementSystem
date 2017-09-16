@@ -118,6 +118,8 @@
             <artifactId>jstl</artifactId>
             <version>${servlet.jstl.version}</version>
         </dependency>
+
+        <!--Logger-->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -128,6 +130,8 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
+
+        <!--Test-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
