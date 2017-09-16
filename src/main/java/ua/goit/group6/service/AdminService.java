@@ -1,6 +1,18 @@
 package ua.goit.group6.service;
 
-public class AdminService {
+import ua.goit.group6.model.Admin;
 
-    //TODO CRUD operations
+import java.util.List;
+
+public interface AdminService {
+
+    Admin getById(long id);
+
+    List<Admin> getAll();
+
+    Admin save(Admin admin);
+
+    Admin update(Admin admin);
+
+    void delete(Admin admin);
 }

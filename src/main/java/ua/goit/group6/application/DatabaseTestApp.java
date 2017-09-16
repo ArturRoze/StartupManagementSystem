@@ -13,7 +13,7 @@ public class DatabaseTestApp {
 
             UserService userService = context.getBean(UserService.class);
 
-            System.out.println(userService.readById(1L));
+            System.out.println(userService.getById(1L));
 
             System.out.println("-------------------------------------------------------------------------------------");
         }

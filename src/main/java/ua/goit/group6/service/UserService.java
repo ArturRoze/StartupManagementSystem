@@ -1,25 +1,19 @@
 package ua.goit.group6.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import ua.goit.group6.dao.UserDao;
 import ua.goit.group6.model.User;
 
-@Service
-public class UserService {
+import java.util.List;
 
-    //TODO User CRUD
 
-    private final UserDao userDao;
+public interface UserService {
 
-    @Autowired
-    public UserService(UserDao userDao) {
-        this.userDao = userDao;
-    }
+    User getById(long id);
 
-    @Transactional(readOnly = true)
-    public User readById(long id){
-        return userDao.findOne(id);
-    }
+    List<User> getAll();
+
+    User save(User user);
+
+    User update(User user);
+
+    void delete(User user);
 }
