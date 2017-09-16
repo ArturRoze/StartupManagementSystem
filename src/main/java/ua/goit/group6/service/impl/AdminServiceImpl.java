@@ -32,6 +32,12 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Admin getByLogin(String login) {
+        return null;
+    }
+
+    @Override
     @Transactional
     public Admin save(Admin admin) {
         return null;

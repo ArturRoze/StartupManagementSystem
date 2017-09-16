@@ -8,6 +8,8 @@ public interface AdminService {
 
     Admin getById(long id);
 
+    Admin getByLogin(String login);
+
     List<Admin> getAll();
 
     Admin save(Admin admin);
