@@ -15,9 +15,9 @@ public interface AdminService {
 
     List<Admin> getAll();
 
-    Admin save(Admin admin);
+    void save(Admin admin);
 
-    Admin update(Admin admin);
+    void update(Admin admin);
 
     void delete(Admin admin);
 }

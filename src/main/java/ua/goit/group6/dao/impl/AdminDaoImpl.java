@@ -31,6 +31,7 @@ public class AdminDaoImpl implements GeneralDao<Admin> {
         logger.info("create admin");
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Admin getByLogin(String login) {
         Session session = sessionFactory.getCurrentSession();
