@@ -42,8 +42,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public User getByLogin(String login) {
         LOGGER.info("Get user by login='{}' from repository", login);
-        userDao.getByLogin(login);
-        return null;
+        return userDao.getByLogin(login);
     }
 
     @Override
