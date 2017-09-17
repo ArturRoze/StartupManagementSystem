@@ -9,7 +9,7 @@
 
 <html>
 <head>
-    <title>Product management system</title>
+    <title>Startup management system</title>
 </head>
 <body>
 <div align="center">
@@ -18,13 +18,13 @@
             <tr>
                 <th>Enter login</th>
                 <td>
-                    <input autofocus type="text" name="username" placeholder="Login">
+                    <input autofocus type="text" required name="username" placeholder="Login">
                 </td>
             </tr>
             <tr>
                 <th>Enter login</th>
                 <td>
-                    <input type="password" name="password" placeholder="Password">
+                    <input type="password" required name="password" placeholder="Password">
                 </td>
             </tr>
             <tr>

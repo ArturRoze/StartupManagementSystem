@@ -6,7 +6,7 @@ import org.hibernate.query.Query;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ua.goit.group6.dao.GeneralDao;
+import ua.goit.group6.dao.UserDao;
 import ua.goit.group6.model.User;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
  */
 
 @Repository
-public class UserDaoImpl implements GeneralDao<User> {
+public class UserDaoImpl implements UserDao {
 
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
 

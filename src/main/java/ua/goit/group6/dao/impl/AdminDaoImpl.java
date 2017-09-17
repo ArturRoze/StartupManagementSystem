@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import ua.goit.group6.dao.AdminDao;
 import ua.goit.group6.dao.GeneralDao;
 import ua.goit.group6.model.Admin;
 
@@ -20,7 +21,7 @@ import java.util.List;
  */
 
 @Repository
-public class AdminDaoImpl implements GeneralDao<Admin> {
+public class AdminDaoImpl implements AdminDao {
 
     private static final Logger logger = LoggerFactory.getLogger(AdminDaoImpl.class);
 

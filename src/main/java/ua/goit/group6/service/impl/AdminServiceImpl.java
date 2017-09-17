@@ -5,9 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ua.goit.group6.dao.GeneralDao;
+import ua.goit.group6.dao.AdminDao;
+import ua.goit.group6.dao.UserDao;
 import ua.goit.group6.model.Admin;
-import ua.goit.group6.model.User;
 import ua.goit.group6.service.AdminService;
 
 import java.util.List;
@@ -21,14 +21,14 @@ public class AdminServiceImpl implements AdminService {
 
     private final Logger LOGGER = LoggerFactory.getLogger(AdminServiceImpl.class);
 
-    private final GeneralDao<Admin> adminDao;
-    private final GeneralDao<User> userDao;
+    private final AdminDao adminDao;
+    private final UserDao userDao;
 
     @Autowired
-    public AdminServiceImpl(GeneralDao<Admin> adminDao, GeneralDao<User> userDao) {
-        LOGGER.info("AdminServiceImpl created");
+    public AdminServiceImpl(AdminDao adminDao, UserDao userDao) {
         this.adminDao = adminDao;
         this.userDao = userDao;
+        LOGGER.info("AdminServiceImpl created");
     }
 
     @Override
