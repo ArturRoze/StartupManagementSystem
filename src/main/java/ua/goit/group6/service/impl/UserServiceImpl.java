@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public List<User> getAll() {
         LOGGER.info("Get all users from repository");
-        return null;
+        return userDao.readAll();
     }
 
     @Override
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
 
         if (adminDao.getByLogin(user.getLogin()) == null) {
             LOGGER.info("Save user:{} to repository", user);
-           userDao.create(user);
+            userDao.create(user);
         } else {
             LOGGER.info("User with login:'{}' already exists", user.getLogin());
             //TODO Which exception should be thrown
@@ -71,11 +71,13 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void update(User user) {
         LOGGER.info("Update user:{} in repository", user);
+        userDao.update(user);
     }
 
     @Override
     @Transactional
     public void delete(User user) {
         LOGGER.info("Delete user:{} from repository", user);
+        userDao.delete(user);
     }
 }
