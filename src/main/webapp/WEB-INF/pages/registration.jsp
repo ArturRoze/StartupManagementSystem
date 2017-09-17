@@ -11,13 +11,13 @@
             <tr align="center">
                 <th>Login</th>
                 <td>
-                    <input type="text" name="login">
+                    <input type="text" required name="login">
                 </td>
             </tr>
             <tr align="center">
                 <th>Password</th>
                 <td>
-                    <input type="password" name="password">
+                    <input type="password" required name="password">
                 </td>
             </tr>
             <tr align="center">

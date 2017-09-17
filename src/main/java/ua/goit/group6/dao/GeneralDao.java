@@ -9,8 +9,6 @@ import java.util.List;
 
 public interface GeneralDao<T> {
 
-    T getByLogin(String login);
-
     T getById(long id);
 
     void create(T value);

@@ -19,7 +19,6 @@ import java.util.Properties;
 @ComponentScan({"ua.goit.group6.dao", "ua.goit.group6.service"})
 @PropertySource(value = {"classpath:db.properties"})
 @EnableTransactionManagement
-//@EnableJpaRepositories("ua.goit.group6.dao")
 public class DatabaseConfiguration {
 
     @Value("${datasource.driver}")
@@ -38,7 +37,7 @@ public class DatabaseConfiguration {
     private String dialect;
 
     @Bean
-    public DataSource dataSource(){
+    public DataSource dataSource() {
         HikariDataSource dataSource = new HikariDataSource();
         dataSource.setDriverClassName(driver);
         dataSource.setJdbcUrl(url);
@@ -48,7 +47,7 @@ public class DatabaseConfiguration {
     }
 
     @Bean
-    public LocalSessionFactoryBean sessionFactoryBean(DataSource dataSource){
+    public LocalSessionFactoryBean sessionFactoryBean(DataSource dataSource) {
 
         LocalSessionFactoryBean bean = new LocalSessionFactoryBean();
 
@@ -59,32 +58,14 @@ public class DatabaseConfiguration {
         Properties properties = new Properties();
 
         properties.put("hibernate.dialect", dialect);
-        properties.put("hibernate.show_sql", true);
 
         bean.setHibernateProperties(properties);
 
-        return  bean;
+        return bean;
     }
 
     @Bean
-    public HibernateTransactionManager transactionManager(SessionFactory sessionFactory){
+    public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
         return new HibernateTransactionManager(sessionFactory);
     }
-
-//    @Bean
-//    public LocalContainerEntityManagerFactoryBean entityManagerFactory (DataSource dataSource){
-//        HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
-//        jpaVendorAdapter.setDatabasePlatform(dialect);
-//
-//        LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
-//        factoryBean.setDataSource(dataSource);
-//        factoryBean.setJpaVendorAdapter(jpaVendorAdapter);
-//        factoryBean.setPackagesToScan("ua.goit.group6.model");
-//        return factoryBean;
-//    }
-//
-//    @Bean
-//    public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory){
-//        return new JpaTransactionManager(entityManagerFactory);
-//    }
 }
