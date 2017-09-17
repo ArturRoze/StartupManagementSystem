@@ -12,8 +12,8 @@ import ua.goit.group6.model.User;
 import java.util.List;
 
 /**
- * @author Artyr
  * @param <>
+ * @author Artyr
  */
 
 @Repository
@@ -35,7 +35,9 @@ public class UserDaoImpl implements UserDao {
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("from User U where U.login like :login");
         query.setParameter("login", login);
-        return (User) query.list().get(0);
+        if (!query.list().isEmpty())
+            return (User) query.list().get(0);
+        else return null;
     }
 
     @Override
@@ -56,7 +58,7 @@ public class UserDaoImpl implements UserDao {
     public List<User> readAll() {
         Session session = sessionFactory.getCurrentSession();
         List<User> userList = session.createQuery("from User").list();
-        for(User user : userList){
+        for (User user : userList) {
             logger.info("User List:" + user);
         }
         return userList;

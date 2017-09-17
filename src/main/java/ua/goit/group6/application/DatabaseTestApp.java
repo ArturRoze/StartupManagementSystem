@@ -17,7 +17,7 @@ public class DatabaseTestApp {
             User user = userService.getById(1L);
             System.out.println(user);
 
-            user = userService.getByLogin(user.getLogin());
+            user = userService.getByLogin("b");
             System.out.println(user);
 
 //            userService.save(user);

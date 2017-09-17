@@ -18,15 +18,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     // We will use BC password encoder and http basic configuration.
     // Configure this all by configure method.
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+//    @Bean
+//    public BCryptPasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
+                .antMatchers("/test").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/**").permitAll()
                     .anyRequest().denyAll()
                 .and()
