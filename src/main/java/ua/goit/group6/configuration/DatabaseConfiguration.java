@@ -19,7 +19,7 @@ import java.util.Properties;
 @ComponentScan({"ua.goit.group6.dao", "ua.goit.group6.service"})
 @PropertySource(value = {"classpath:db.properties"})
 @EnableTransactionManagement
-@EnableJpaRepositories("ua.goit.group6.dao")
+//@EnableJpaRepositories("ua.goit.group6.dao")
 public class DatabaseConfiguration {
 
     @Value("${datasource.driver}")
@@ -59,6 +59,7 @@ public class DatabaseConfiguration {
         Properties properties = new Properties();
 
         properties.put("hibernate.dialect", dialect);
+        properties.put("hibernate.show_sql", true);
 
         bean.setHibernateProperties(properties);
 

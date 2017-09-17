@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.goit.group6.dao.GeneralDao;
+import ua.goit.group6.dao.impl.AdminDaoImpl;
+import ua.goit.group6.dao.impl.UserDaoImpl;
 import ua.goit.group6.model.Admin;
 import ua.goit.group6.service.AdminService;
 
@@ -20,11 +22,11 @@ public class AdminServiceImpl implements AdminService {
 
     private final Logger LOGGER = LoggerFactory.getLogger(AdminServiceImpl.class);
 
-    private final AdminDao adminDao;
-    private final GeneralDao userDao;
+    private final AdminDaoImpl adminDao;
+    private final UserDaoImpl userDao;
 
     @Autowired
-    public AdminServiceImpl(AdminDao adminDao, GeneralDao userDao) {
+    public AdminServiceImpl(AdminDaoImpl adminDao, UserDaoImpl userDao) {
         LOGGER.info("AdminServiceImpl created");
         this.adminDao = adminDao;
         this.userDao = userDao;
@@ -34,7 +36,7 @@ public class AdminServiceImpl implements AdminService {
     @Transactional(readOnly = true)
     public Admin getById(long id) {
         LOGGER.info("Get admin by id='{}' from repository", id);
-        return adminDao.findOne(id);
+        return adminDao.getById(id);
     }
 
     @Override
@@ -53,22 +55,21 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     @Transactional
-    public Admin save(Admin admin) {
-        if (userDao.getUserByLogin(admin.getLogin()) == null) {
+    public void save(Admin admin) {
+        if (userDao.getByLogin(admin.getLogin()) == null) {
             LOGGER.info("Save admin:{} to repository", admin);
-            return adminDao.saveAndFlush(admin);
+             adminDao.create(admin);
         } else {
             LOGGER.info("User with login:'{}' already exists", admin.getLogin());
-            //TODO Which exception should be thrown
+            //TODO Which exception should be thrown?
             throw new RuntimeException("User with login:'" + admin.getLogin() + "' already exists");
         }
     }
 
     @Override
     @Transactional
-    public Admin update(Admin admin) {
+    public void update(Admin admin) {
         LOGGER.info("Update admin:{} in repository", admin);
-        return null;
     }
 
     @Override

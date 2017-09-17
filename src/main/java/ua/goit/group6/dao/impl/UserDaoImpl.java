@@ -2,6 +2,7 @@ package ua.goit.group6.dao.impl;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -28,10 +29,14 @@ public class UserDaoImpl implements GeneralDao<User> {
         logger.info("create user");
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public User getByLogin(String login) {
         Session session = sessionFactory.getCurrentSession();
-        return session.get(User.class, login);
+        Query query = session.createQuery("from User U where U.login like :login");
+        query.setParameter("login", login);
+        return (User) query.list().get(0);
+//        return session.get(User.class, login);
     }
 
     @Override

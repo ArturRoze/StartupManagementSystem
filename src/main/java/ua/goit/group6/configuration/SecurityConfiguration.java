@@ -16,13 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @ComponentScan("ua.goit.group6.controller")
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-// Roles ADMIN and USER are in memory.
-//  @Autowired
-//  protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//    auth.inMemoryAuthentication().withUser("user").password("user").roles("USER");
-//    auth.inMemoryAuthentication().withUser("artur").password("artur").roles("ADMIN");
-//  }
-
     // We will use BC password encoder and http basic configuration.
     // Configure this all by configure method.
     @Bean
@@ -34,20 +27,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                    .antMatchers("/").permitAll()
+                .antMatchers("/**").permitAll()
                     .anyRequest().denyAll()
                 .and()
-                    .formLogin()
-                    .permitAll()
-//                .and()
-//                    // logout for all
-//                    .logout().permitAll()
-//                    // logout URL
+                    .formLogin().permitAll()
+                    .loginPage("/login")
+                .and()
+                    .logout().permitAll()
 //                    .logoutUrl("/logout")
-//                    // URL at a successful logout
-//                    .logoutSuccessUrl("/login?logout")
-//                    // make invisible current session
-//                    .invalidateHttpSession(true)
+                    .logoutSuccessUrl("/login?logout")
+                    .invalidateHttpSession(true)
                 .and()
                     .csrf().disable();
     }

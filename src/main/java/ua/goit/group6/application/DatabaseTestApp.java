@@ -17,8 +17,10 @@ public class DatabaseTestApp {
             User user = userService.getById(1L);
             System.out.println(user);
 
-            user.setEmail("a");
-            userService.save(user);
+            user = userService.getByLogin(user.getLogin());
+            System.out.println(user);
+
+//            userService.save(user);
 
             System.out.println("-------------------------------------------------------------------------------------");
         }

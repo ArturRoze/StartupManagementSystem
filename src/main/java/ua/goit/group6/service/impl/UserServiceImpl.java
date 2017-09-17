@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.goit.group6.dao.GeneralDao;
+import ua.goit.group6.model.Admin;
 import ua.goit.group6.model.User;
 import ua.goit.group6.service.UserService;
 
@@ -20,27 +21,28 @@ public class UserServiceImpl implements UserService {
 
     private final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
-    private final GeneralDao userDao;
-    private final AdminDao adminDao;
+    private final GeneralDao<User> userDao;
+    private final GeneralDao<Admin> adminDao;
 
     @Autowired
-    public UserServiceImpl(GeneralDao userDao, AdminDao adminDao) {
-        LOGGER.info("UserServiceImpl created");
+    public UserServiceImpl(GeneralDao<User> userDao, GeneralDao<Admin> adminDao) {
         this.userDao = userDao;
         this.adminDao = adminDao;
+        LOGGER.info("UserServiceImpl created");
     }
 
     @Override
     @Transactional(readOnly = true)
     public User getById(long id) {
         LOGGER.info("Get user by id='{}' from repository", id);
-        return userDao.findOne(id);
+        return userDao.getById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
     public User getByLogin(String login) {
         LOGGER.info("Get user by login='{}' from repository", login);
+        userDao.getByLogin(login);
         return null;
     }
 
@@ -53,11 +55,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User save(User user) {
+    public void save(User user) {
 
-        if (adminDao.getAdminByLogin(user.getLogin()) == null) {
+        if (adminDao.getByLogin(user.getLogin()) == null) {
             LOGGER.info("Save user:{} to repository", user);
-            return userDao.saveAndFlush(user);
+           userDao.create(user);
         } else {
             LOGGER.info("User with login:'{}' already exists", user.getLogin());
             //TODO Which exception should be thrown
@@ -67,9 +69,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User update(User user) {
+    public void update(User user) {
         LOGGER.info("Update user:{} in repository", user);
-        return null;
     }
 
     @Override
