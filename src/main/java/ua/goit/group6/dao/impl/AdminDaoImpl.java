@@ -2,6 +2,7 @@ package ua.goit.group6.dao.impl;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,9 @@ public class AdminDaoImpl implements GeneralDao<Admin> {
     @Override
     public Admin getByLogin(String login) {
         Session session = sessionFactory.getCurrentSession();
-        return session.get(Admin.class, login);
+        Query query = session.createQuery("from Admin A where A.login like :login");
+        query.setParameter("login", login);
+        return (Admin) query.list().get(0);
     }
 
     @Override

@@ -36,7 +36,6 @@ public class UserDaoImpl implements GeneralDao<User> {
         Query query = session.createQuery("from User U where U.login like :login");
         query.setParameter("login", login);
         return (User) query.list().get(0);
-//        return session.get(User.class, login);
     }
 
     @Override
