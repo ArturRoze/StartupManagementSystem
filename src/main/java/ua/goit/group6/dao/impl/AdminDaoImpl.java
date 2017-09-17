@@ -39,7 +39,9 @@ public class AdminDaoImpl implements AdminDao {
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("from Admin A where A.login like :login");
         query.setParameter("login", login);
+        if (!query.list().isEmpty())
         return (Admin) query.list().get(0);
+        else return null;
     }
 
     @Override
