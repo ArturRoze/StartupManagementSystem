@@ -1,5 +1,7 @@
 package ua.goit.group6.configuration;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -17,8 +19,11 @@ import org.springframework.web.servlet.view.JstlView;
 @ComponentScan("ua.goit.group6.controller")
 public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
+    private final Logger LOGGER = LoggerFactory.getLogger(MvcConfiguration.class);
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        LOGGER.info("Handle resources");
         registry.addResourceHandler("/jpeg/**").addResourceLocations("/WEB-INF/jpeg/");
         registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/css/");
         registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/js/");
@@ -26,6 +31,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
+        LOGGER.info("Handle controllers");
         registry.addViewController("/login").setViewName("login_form");
         registry.addViewController("/error").setViewName("error");
         registry.addViewController("/registration").setViewName("registration_form");
@@ -47,6 +53,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     //
     @Bean
     public ViewResolver viewResolver() {
+        LOGGER.info("Handling view");
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
         // mean we will work with JPS
         resolver.setViewClass(JstlView.class);
