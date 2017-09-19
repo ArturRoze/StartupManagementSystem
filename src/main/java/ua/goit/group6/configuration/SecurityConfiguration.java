@@ -28,8 +28,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/startups", "/startups/*").permitAll()
                 .antMatchers("/registration**").not().authenticated()
                 .antMatchers("/news").authenticated()
-                .antMatchers("/users**").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/admins**").hasRole("ADMIN")
+                .antMatchers("/users/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/users", "/admins**").hasRole("ADMIN")
 
                 // for second sprint
                 .antMatchers("/startups/**").hasAnyRole("USER", "ADMIN")
@@ -42,7 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                     .formLogin()
                     .loginPage("/login")
-                    .failureUrl("/login?error")
+                    .failureUrl("/error")
                     .defaultSuccessUrl("/test1")
                     .loginPage("/login")
                     .permitAll()
