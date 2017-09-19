@@ -12,10 +12,10 @@ public interface BasicService<T> {
 
     List<T> getAll();
 
-    void save(T user);
+    void save(T value);
 
-    void update(T user);
+    void update(T value);
 
-    void delete(T user);
+    void delete(T value);
 
 }
