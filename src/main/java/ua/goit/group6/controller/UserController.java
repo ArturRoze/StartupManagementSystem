@@ -1,7 +1,27 @@
 package ua.goit.group6.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import ua.goit.group6.service.UserService;
+
+@Controller
+@RequestMapping("/users")
 public class UserController {
 
+    private final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
+    private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
+        LOGGER.info("Creating user controller");
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
 }

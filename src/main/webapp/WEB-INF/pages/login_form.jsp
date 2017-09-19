@@ -36,7 +36,7 @@
     </form>
 </div>
 <div align="center">
-    <form action="/registration" method="get">
+    <form action="${pageContext.request.contextPath}/registration" method="get">
         <input type="submit" value="Registration">
     </form>
 </div>
