@@ -73,6 +73,10 @@ public class AdminDetailed implements UserDetails {
         return !getAuthorities().isEmpty();
     }
 
+    public long getId(){
+        return admin.getId();
+    }
+
     @Override
     public String toString() {
         return "AdminDetailed{" +

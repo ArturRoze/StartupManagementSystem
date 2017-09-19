@@ -7,17 +7,6 @@ import java.util.List;
 /**
  * @author Boiko Ivan
  */
-public interface AdminService {
+public interface AdminService extends BasicUserService<Admin> {
 
-    Admin getById(long id);
-
-    Admin getByLogin(String login);
-
-    List<Admin> getAll();
-
-    void save(Admin admin);
-
-    void update(Admin admin);
-
-    void delete(Admin admin);
 }

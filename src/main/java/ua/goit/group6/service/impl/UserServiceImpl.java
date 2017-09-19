@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
             userDao.create(user);
         } else {
             LOGGER.info("User with login:'{}' already exists", user.getLogin());
-            //TODO Which exception should be thrown
+            //TODO Which exception should be thrown?
             throw new RuntimeException("User with login:'" + user.getLogin() + "' already exists");
         }
     }

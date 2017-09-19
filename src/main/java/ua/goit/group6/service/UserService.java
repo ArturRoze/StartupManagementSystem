@@ -7,17 +7,5 @@ import java.util.List;
 /**
  * @author Boiko Ivan
  */
-public interface UserService {
-
-    User getById(long id);
-
-    User getByLogin(String login);
-
-    List<User> getAll();
-
-    void save(User user);
-
-    void update(User user);
-
-    void delete(User user);
+public interface UserService extends BasicUserService<User> {
 }
