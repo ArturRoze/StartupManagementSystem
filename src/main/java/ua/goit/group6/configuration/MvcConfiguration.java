@@ -32,6 +32,11 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         registry.addViewController("/offers/new_offer").setViewName("new_offer_form");
         registry.addViewController("/admins/new_admin").setViewName("new_admin_form");
 
+        //для работы (не заморачивайтесь), потом нужно будет удалить
+        registry.addViewController("/startups/1/update").setViewName("test_startups_update_page");
+        registry.addViewController("/startups/1").setViewName("test_startups_read_page");
+        registry.addViewController("/startups").setViewName("test_startups_page");
+
         registry.addViewController("/test").setViewName("testPageAfterLogin");
         registry.addViewController("/test1").setViewName("testPageAfterLogin1");
     }

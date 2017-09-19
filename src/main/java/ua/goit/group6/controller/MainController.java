@@ -30,6 +30,13 @@ public class MainController {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @GetMapping
+    public ModelAndView main(){
+        ModelAndView main = new ModelAndView("index");
+        // TODO add startup list
+        return main;
+    }
+
     @PostMapping("/logout")
     public String logout() {
         return "redirect:/login?logout";

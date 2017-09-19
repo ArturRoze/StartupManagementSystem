@@ -16,8 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @ComponentScan("ua.goit.group6.controller")
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    // We will use BC password encoder and http basic configuration.
-    // Configure this all by configure method.
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -27,18 +25,33 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
+                .antMatchers("/", "/startups", "/startups/*").permitAll()
+                .antMatchers("/registration**").not().authenticated()
+                .antMatchers("/news").authenticated()
+                .antMatchers("/users**").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/admins**").hasRole("ADMIN")
+
+                // for second sprint
+                .antMatchers("/startups/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/offers**").hasAnyRole("USER", "ADMIN")
+
+                //for development
                 .antMatchers("/test**").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/**").permitAll()
-                    .anyRequest().denyAll()
+
+                .anyRequest().denyAll()
                 .and()
-                    .formLogin().permitAll()
-                .defaultSuccessUrl("/test1")
+                    .formLogin()
                     .loginPage("/login")
+                    .failureUrl("/login?error")
+                    .defaultSuccessUrl("/test1")
+                    .loginPage("/login")
+                    .permitAll()
                 .and()
-                    .logout().permitAll()
-//                    .logoutUrl("/logout")
+                    .logout()
+                    .logoutUrl("/logout")
                     .logoutSuccessUrl("/login?logout")
                     .invalidateHttpSession(true)
+                    .permitAll()
                 .and()
                     .csrf().disable();
     }
