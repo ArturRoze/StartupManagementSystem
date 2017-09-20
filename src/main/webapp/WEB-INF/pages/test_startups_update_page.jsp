@@ -13,6 +13,11 @@
 <body>
 <h1>Test startups update page</h1>
 <a href="/">To main page</a>
+<div align="center">
+    <form action="/logout" method="post">
+        <input type="submit" value="Logout">
+    </form>
+</div>
 
 </body>
 </html>

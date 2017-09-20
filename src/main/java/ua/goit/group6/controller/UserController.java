@@ -65,11 +65,11 @@ public class UserController {
     }
 
     /**
-     * Mapping for url ""/users/profile/{id}/delete"
+     * Mapping for url ":/users/profile/{id}/delete"
      * Method deletes {@link User} with chosen id from database
      *
      * @param idString the id of user to delete from url
-     * @return redirect link to main page
+     * @return redirect link to index page
      */
     @GetMapping("/profile/{id}/delete")
     public String delete(@PathVariable("id") String idString) {
@@ -77,7 +77,7 @@ public class UserController {
         User user = userService.getById(id);
         userService.delete(user);
         //TODO make deleteById(id)
-        LOGGER.info("Redirecting to main page after deleting user with id='" + idString + "'");
+        LOGGER.info("Redirecting to index page after deleting user with id='" + idString + "'");
         //TODO make logout for user but not for admin
         return "redirect:/";
     }
@@ -150,6 +150,7 @@ public class UserController {
     public ModelAndView list() {
         ModelAndView users = new ModelAndView("users_list");
         users.addObject("users", userService.getAll());
+        LOGGER.info("Building page with all users");
         return users;
     }
 }

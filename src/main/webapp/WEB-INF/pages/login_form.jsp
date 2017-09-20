@@ -39,6 +39,9 @@
     <form action="${pageContext.request.contextPath}/registration" method="get">
         <input type="submit" value="Registration">
     </form>
+    <form action="${pageContext.request.contextPath}/" method="get">
+        <input type="submit" value="To main page">
+    </form>
 </div>
 </body>
 </html>

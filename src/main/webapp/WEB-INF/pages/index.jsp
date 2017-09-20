@@ -10,5 +10,6 @@
 <a href="/startups/1/update">To startups update page</a><br>
 <a href="/startups/1">To startups read page</a><br>
 <a href="/startups">To startups page</a><br>
+<a href="/news">To news page</a><br>
 </body>
 </html>
