@@ -8,13 +8,19 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.goit.group6.dao.AdminDao;
 import ua.goit.group6.dao.UserDao;
 import ua.goit.group6.model.Admin;
+import ua.goit.group6.model.User;
 import ua.goit.group6.service.AdminService;
 
 import java.util.List;
 
 
 /**
+ * Service for managing {@link Admin} in repository
+ *
  * @author Boiko Ivan
+ * @see AdminService
+ * @see AdminDao
+ * @see UserDao
  */
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -52,6 +58,12 @@ public class AdminServiceImpl implements AdminService {
         return adminDao.readAll();
     }
 
+    /**
+     * Method saves {@link Admin} to repository if no {@link User}
+     * with such login exists
+     *
+     * @param admin Admin to save
+     */
     @Override
     @Transactional
     public void save(Admin admin) {

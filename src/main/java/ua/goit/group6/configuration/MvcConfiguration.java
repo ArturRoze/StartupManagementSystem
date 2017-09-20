@@ -13,7 +13,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-
+/**
+ * Configuration for Spring mvc
+ *
+ * @author Boiko Ivan
+ * @author Artyr
+ */
 @Configuration
 @EnableWebMvc
 @ComponentScan("ua.goit.group6.controller")

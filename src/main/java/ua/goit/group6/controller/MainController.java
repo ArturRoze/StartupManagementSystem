@@ -17,6 +17,11 @@ import ua.goit.group6.service.UserService;
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 
+/**
+ * Main controller for system
+ *
+ * @author Boiko Ivan
+ */
 @Controller
 @RequestMapping("/")
 public class MainController {
@@ -27,6 +32,13 @@ public class MainController {
     private final AdminService adminService;
     private final PasswordEncoder passwordEncoder;
 
+    /**
+     * Constructor for controller
+     *
+     * @param userService     {@link UserService} bean
+     * @param adminService    {@link AdminService} bean
+     * @param passwordEncoder {@link PasswordEncoder} bean
+     */
     @Autowired
     public MainController(UserService userService, AdminService adminService, PasswordEncoder passwordEncoder) {
         LOGGER.info("Creating main controller");
@@ -35,29 +47,47 @@ public class MainController {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * Mapping for url ":/"
+     *
+     * @return a {@link ModelAndView} object holding the name of jsp represented by {@code String},
+     * and {@link java.util.List} of last 10 //TODO startups from database
+     */
     @GetMapping
-    public ModelAndView main(){
+    public ModelAndView main() {
         ModelAndView main = new ModelAndView("index");
         // TODO add startup list
         LOGGER.info("Building main page");
         return main;
     }
 
+    /**
+     * Mapping for url ":/logout"
+     *
+     * @return redirect link to logout
+     */
     @PostMapping("/logout")
     public String logout() {
         LOGGER.info("Redirecting to login?logout");
         return "redirect:/login?logout";
     }
 
+    /**
+     * Mapping for url ":/registration/"
+     * Method saves {@link User} to database
+     *
+     * @param user {@link User} from page form
+     * @return redirect link //TODO where?
+     * @throws IOException if registration failed
+     */
     @PostMapping("registration/")
     public String registerUser(@ModelAttribute("user") User user) throws IOException {
         LOGGER.info("Encoding password");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        try{
+        try {
             LOGGER.info("Trying to save user " + user + " to database");
             userService.save(user);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             LOGGER.info("Exception during saving user to database");
             throw new IOException("Exception during saving user to database");
         }
@@ -65,18 +95,35 @@ public class MainController {
         return "redirect:/";
     }
 
+    /**
+     * Mapping for url ":/news"
+     *
+     * @return @return a {@link ModelAndView} object holding the name of jsp represented by {@code String},
+     * and {@link java.util.List} of //TODO startups and offers from database
+     * sorted by descending registration date
+     */
     @GetMapping("/news")
-    public ModelAndView news(){
+    public ModelAndView news() {
         ModelAndView news = new ModelAndView("news");
         // TODO add startup list
         return news;
     }
 
+    /**
+     * //TODO what does this method do?
+     * @param ex some exception
+     * @return something
+     */
     @ExceptionHandler(value = IOException.class)
     public ResponseEntity<String> handleIOException(IOException ex) {
         return ResponseEntity.status(HttpStatus.INSUFFICIENT_STORAGE).build();
     }
 
+    /**
+     * Method initialises default {@link User} with login = 'user' and password = 'user',
+     * and default {@link Admin} with login = 'admin' and password = 'admin',
+     * and writes they to database
+     */
     @PostConstruct
     public void InitDefaultUsers() {
 

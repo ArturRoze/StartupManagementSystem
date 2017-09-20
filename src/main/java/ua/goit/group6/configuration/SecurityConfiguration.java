@@ -12,6 +12,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * Configuration for Spring security.
+ *
+ * @author Boiko Ivan
+ * @author Artyr
  */
 @Configuration
 @EnableWebSecurity
@@ -59,6 +62,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .invalidateHttpSession(true)
                     .permitAll()
                 .and()
-                    .csrf().disable();
+                .csrf().disable();
     }
 }
