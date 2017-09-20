@@ -24,7 +24,9 @@ public class MainController {
     private final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
 
     private final UserService userService;
+
     private final AdminService adminService;
+
     private final PasswordEncoder passwordEncoder;
 
     @Autowired

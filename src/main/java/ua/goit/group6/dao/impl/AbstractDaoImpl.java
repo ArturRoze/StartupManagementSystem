@@ -12,7 +12,7 @@ import java.util.List;
 
 public abstract class AbstractDaoImpl<T> implements GeneralDao<T> {
 
-    private static final Logger logger = LoggerFactory.getLogger(AbstractDaoImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractDaoImpl.class);
 
     private SessionFactory sessionFactory;
 
@@ -29,27 +29,32 @@ public abstract class AbstractDaoImpl<T> implements GeneralDao<T> {
 
     @Override
     public T getById(long id) {
+        LOGGER.info("Get user by id='{}' from repository", id);
         return getSession().get(entityType, id);
     }
 
     @Override
     public void create(T value) {
+        LOGGER.info("Save user:{} to repository", value);
         getSession().save(value);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public List<T> readAll() {
+        LOGGER.info("Get all users from repository");
         return (List<T>) getSession().getNamedQuery("getAll" + getCleanEntityClass(entityType) + "s").list();
     }
 
     @Override
     public void update(T value) {
+        LOGGER.info("Update user:{} in repository", value);
         getSession().update(value);
     }
 
     @Override
     public void delete(T value) {
+        LOGGER.info("delete user:{} in repository", value);
         getSession().remove(value);
     }
 
