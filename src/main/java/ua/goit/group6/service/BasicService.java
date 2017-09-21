@@ -18,4 +18,5 @@ public interface BasicService<T> {
 
     void delete(T value);
 
+//    void deleteById(long id);
 }
