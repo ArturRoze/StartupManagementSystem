@@ -42,7 +42,8 @@ public class AdminController {
     @GetMapping("/profile/{id}/delete")
     public String delete(@PathVariable("id") String idString) {
         long id = Long.parseLong(idString);
-        adminService.deleteById(id);
+        //TODO uncomment
+        //adminService.deleteById(id);
         return "redirect:/logout";
     }
 
