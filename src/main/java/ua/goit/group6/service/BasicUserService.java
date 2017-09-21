@@ -10,7 +10,6 @@ import ua.goit.group6.model.BasicUser;
 public interface BasicUserService<T extends BasicUser> extends BasicService<T> {
 
     /**
-     *
      * @param login string login to search in repository
      * @return child of {@link BasicUser} from repository
      */

@@ -23,7 +23,7 @@ import java.util.List;
  * @see UserDao
  */
 @Service
-public class AdminServiceImpl implements AdminService {
+public class AdminServiceImpl extends AbstractBasicServiceImpl<Admin> implements AdminService {
 
     private final Logger LOGGER = LoggerFactory.getLogger(AdminServiceImpl.class);
 
@@ -32,30 +32,21 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     public AdminServiceImpl(AdminDao adminDao, UserDao userDao) {
+        super(adminDao);
         this.adminDao = adminDao;
         this.userDao = userDao;
         LOGGER.info("AdminServiceImpl created");
     }
 
+    /**
+     * Method reads user from repository
+     * @param login string login to search in repository
+     * @return {@link User} from repository with given login
+     */
     @Override
-    @Transactional(readOnly = true)
-    public Admin getById(long id) {
-        LOGGER.info("Get admin by id='{}' from repository", id);
-        return adminDao.getById(id);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public Admin getByLogin(String login) {
-        LOGGER.info("Get admin by login='{}' from repository", login);
         return adminDao.getByLogin(login);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Admin> getAll() {
-        LOGGER.info("Get all users from repository");
-        return adminDao.readAll();
     }
 
     /**
@@ -77,24 +68,47 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
-    @Override
-    @Transactional
-    public void update(Admin admin) {
-        adminDao.update(admin);
-        LOGGER.info("Update admin:{} in repository", admin);
-    }
-
-    @Override
-    @Transactional
-    public void delete(Admin admin) {
-        adminDao.delete(admin);
-        LOGGER.info("Delete admin:{} from repository", admin);
-    }
-    //TODO uncomment
-    //@Override
-    @Transactional
-    public void deleteById(long id) {
-        adminDao.deleteById(id);
-        LOGGER.info("Delete admin with id:{} from repository", id);
-    }
+//    @Override
+//    @Transactional(readOnly = true)
+//    public Admin getById(long id) {
+//        LOGGER.info("Get admin by id='{}' from repository", id);
+//        return adminDao.getById(id);
+//    }
+//
+//    @Override
+//    @Transactional(readOnly = true)
+//    public Admin getByLogin(String login) {
+//        LOGGER.info("Get admin by login='{}' from repository", login);
+//        return adminDao.getByLogin(login);
+//    }
+//
+//    @Override
+//    @Transactional(readOnly = true)
+//    public List<Admin> getAll() {
+//        LOGGER.info("Get all users from repository");
+//        return adminDao.readAll();
+//    }
+//
+//
+//
+//    @Override
+//    @Transactional
+//    public void update(Admin admin) {
+//        adminDao.update(admin);
+//        LOGGER.info("Update admin:{} in repository", admin);
+//    }
+//
+//    @Override
+//    @Transactional
+//    public void delete(Admin admin) {
+//        adminDao.delete(admin);
+//        LOGGER.info("Delete admin:{} from repository", admin);
+//    }
+//    //TODO uncomment
+//    //@Override
+//    @Transactional
+//    public void deleteById(long id) {
+//        adminDao.deleteById(id);
+//        LOGGER.info("Delete admin with id:{} from repository", id);
+//    }
 }

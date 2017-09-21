@@ -10,8 +10,6 @@ import ua.goit.group6.dao.UserDao;
 import ua.goit.group6.model.User;
 import ua.goit.group6.service.UserService;
 
-import java.util.List;
-
 
 /**
  * Service for managing {@link User} in repository
@@ -22,40 +20,30 @@ import java.util.List;
  * @see AdminDao
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends AbstractBasicServiceImpl<User> implements UserService {
 
     private final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private final UserDao userDao;
-
     private final AdminDao adminDao;
 
     @Autowired
-    public UserServiceImpl(UserDao userDao, AdminDao adminDao) {
+    public UserServiceImpl(AdminDao adminDao, UserDao userDao) {
+        super(userDao);
         this.userDao = userDao;
         this.adminDao = adminDao;
         LOGGER.info("UserServiceImpl created");
     }
 
+    /**
+     * Method reads user from repository
+     * @param login string login to search in repository
+     * @return {@link User} from repository with given login
+     */
     @Override
-    @Transactional(readOnly = true)
-    public User getById(long id) {
-        LOGGER.info("Get user by id='{}' from repository", id);
-        return userDao.getById(id);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public User getByLogin(String login) {
-        LOGGER.info("Get user by login='{}' from repository", login);
         return userDao.getByLogin(login);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<User> getAll() {
-        LOGGER.info("Get all users from repository");
-        return userDao.readAll();
     }
 
     /**
@@ -77,17 +65,53 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Override
-    @Transactional
-    public void update(User user) {
-        LOGGER.info("Update user:{} in repository", user);
-        userDao.update(user);
-    }
+//    private final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+//
+//    private final UserDao userDao;
+//
+//    private final AdminDao adminDao;
+//
+//    @Autowired
+//    public UserServiceImpl(UserDao userDao, AdminDao adminDao) {
+//        this.userDao = userDao;
+//        this.adminDao = adminDao;
+//        LOGGER.info("UserServiceImpl created");
+//    }
+//
+//    @Override
+//    @Transactional(readOnly = true)
+//    public User getById(long id) {
+//        LOGGER.info("Get user by id='{}' from repository", id);
+//        return userDao.getById(id);
+//    }
+//
+//    @Override
+//    @Transactional(readOnly = true)
+//    public User getByLogin(String login) {
+//        LOGGER.info("Get user by login='{}' from repository", login);
+//        return userDao.getByLogin(login);
+//    }
+//
+//    @Override
+//    @Transactional(readOnly = true)
+//    public List<User> getAll() {
+//        LOGGER.info("Get all users from repository");
+//        return userDao.readAll();
+//    }
 
-    @Override
-    @Transactional
-    public void delete(User user) {
-        LOGGER.info("Delete user:{} from repository", user);
-        userDao.delete(user);
-    }
+
+//
+//    @Override
+//    @Transactional
+//    public void update(User user) {
+//        LOGGER.info("Update user:{} in repository", user);
+//        userDao.update(user);
+//    }
+//
+//    @Override
+//    @Transactional
+//    public void delete(User user) {
+//        LOGGER.info("Delete user:{} from repository", user);
+//        userDao.delete(user);
+//    }
 }
