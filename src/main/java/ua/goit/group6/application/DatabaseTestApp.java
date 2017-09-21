@@ -12,8 +12,8 @@ import java.util.List;
 public class DatabaseTestApp {
 
     public static void main(String[] args) {
-        try(AnnotationConfigApplicationContext context =
-                    new AnnotationConfigApplicationContext(DatabaseConfiguration.class)){
+        try (AnnotationConfigApplicationContext context =
+                     new AnnotationConfigApplicationContext(DatabaseConfiguration.class)) {
             System.out.println("-------------------------------------------------------------------------------------");
 
             UserService userService = context.getBean(UserService.class);
@@ -47,14 +47,14 @@ public class DatabaseTestApp {
 //            System.out.println("try delete admin");
 //            adminService.delete(newAdmin);
 
-
-            User user = userService.getById(1L);
-            System.out.println(user);
-
-            user = userService.getByLogin("b");
-            System.out.println(user);
-
-            userService.save(user);
+//            User user;
+//            user = userService.getById(1L);
+//            System.out.println(user);
+//
+//            user = userService.getByLogin("user");
+//            System.out.println(user);
+//
+//            userService.save(user);
 
             System.out.println("-------------------------------------------------------------------------------------");
         }

@@ -40,4 +40,9 @@ public interface BasicService<T> {
      */
     void delete(T value);
 
+    /**
+     * Method deletes entity with given id
+     * @param id id of entity to remove
+     */
+    void deleteById(long id);
 }

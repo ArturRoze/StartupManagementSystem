@@ -13,7 +13,7 @@
     <a href="/startups">To startups page</a><br>
     <a href="/news">To news page</a><br>
     <a href="/users">To users page</a><br>
-    <a href="/users/profile/1">To users page</a><br>
+    <a href="/users/profile/1">To profile page</a><br>
 </div>
 </body>
 </html>
