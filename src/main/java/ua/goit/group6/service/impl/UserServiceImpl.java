@@ -14,7 +14,12 @@ import java.util.List;
 
 
 /**
+ * Service for managing {@link User} in repository
+ *
  * @author Boiko Ivan
+ * @see UserService
+ * @see UserDao
+ * @see AdminDao
  */
 @Service
 public class UserServiceImpl implements UserService {
@@ -53,10 +58,15 @@ public class UserServiceImpl implements UserService {
         return userDao.readAll();
     }
 
+    /**
+     * Method saves {@link User} to repository if no {@link ua.goit.group6.model.Admin}
+     * with such login exists
+     *
+     * @param user User to save
+     */
     @Override
     @Transactional
     public void save(User user) {
-
         if (adminDao.getByLogin(user.getLogin()) == null) {
             LOGGER.info("Save user:{} to repository", user);
             userDao.create(user);

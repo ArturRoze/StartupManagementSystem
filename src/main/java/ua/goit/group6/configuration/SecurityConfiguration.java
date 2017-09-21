@@ -12,6 +12,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * Configuration for Spring security.
+ *
+ * @author Boiko Ivan
+ * @author Artyr
  */
 @Configuration
 @EnableWebSecurity
@@ -31,11 +34,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         LOGGER.info("Configuring security");
 
         http.authorizeRequests()
-                .antMatchers("/", "/startups", "/startups/*").permitAll()
-                .antMatchers("/registration**").not().authenticated()
-                .antMatchers("/news").authenticated()
-                .antMatchers("/users/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/users", "/admins**").hasRole("ADMIN")
+                    .antMatchers("/", "/startups", "/startups/*").permitAll()
+                    .antMatchers("/registration**").not().authenticated()
+                    .antMatchers("/news").authenticated()
+                    .antMatchers("/users**", "/admins**").hasRole("ADMIN")
+                    .antMatchers("/users/**").hasAnyRole("USER", "ADMIN")
 
                 // for second sprint
                 .antMatchers("/startups/**").hasAnyRole("USER", "ADMIN")
@@ -55,10 +58,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                     .logout()
                     .logoutUrl("/logout")
-                    .logoutSuccessUrl("/login?logout")
+                    .logoutSuccessUrl("/")
                     .invalidateHttpSession(true)
                     .permitAll()
                 .and()
-                    .csrf().disable();
+                .csrf().disable();
     }
 }

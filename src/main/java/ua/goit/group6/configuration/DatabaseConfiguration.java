@@ -15,6 +15,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 import java.util.Properties;
 
+/**
+ * Configuration for Spring orm.
+ *
+ * @author Boiko Ivan
+ * @author Artyr
+ */
 @Configuration
 @ComponentScan({"ua.goit.group6.dao", "ua.goit.group6.service"})
 @PropertySource(value = {"classpath:db.properties"})

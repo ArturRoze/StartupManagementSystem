@@ -19,6 +19,8 @@ import ua.goit.group6.service.UserService;
  *
  * @author Boiko Ivan
  * @see UserDetailsService
+ * @see UserDetailed
+ * @see AdminDetailed
  */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -35,6 +37,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         this.userService = userService;
     }
 
+    /**
+     * Implementation of {@link UserDetailsService} method
+     * 
+     * @param username login of logging in user
+     * @return a {@link AdminDetailed} if such {@link Admin} exists or
+     *          {@link UserDetailed} if such {@link User} exists
+     * @throws UsernameNotFoundException if neither admin nor user is not found
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 

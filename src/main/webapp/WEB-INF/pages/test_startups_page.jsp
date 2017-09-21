@@ -11,8 +11,15 @@
     <title>test_startups_page</title>
 </head>
 <body>
-<h1>test_startups_page</h1>
-<a href="/">To main page</a>
+<div align="center">
+    <h1>test_startups_page</h1>
+    <a href="/">To main page</a>
+    <div align="center">
+        <form action="/logout" method="post">
+            <input type="submit" value="Logout">
+        </form>
+    </div>
+</div>
 
 
 </body>
