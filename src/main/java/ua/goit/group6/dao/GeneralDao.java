@@ -3,8 +3,8 @@ package ua.goit.group6.dao;
 import java.util.List;
 
 /**
- * @author Artyr
  * @param <T>
+ * @author Artyr
  */
 
 public interface GeneralDao<T> {
@@ -18,4 +18,6 @@ public interface GeneralDao<T> {
     void update(T value);
 
     void delete(T value);
+
+    void deleteById(long id);
 }
