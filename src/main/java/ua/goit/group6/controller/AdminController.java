@@ -43,7 +43,7 @@ public class AdminController {
     public String delete(@PathVariable("id") String idString) {
         long id = Long.parseLong(idString);
         adminService.deleteById(id);
-        return "redirect:/";
+        return "redirect:/logout";
     }
 
 
@@ -58,14 +58,12 @@ public class AdminController {
 
     @PostMapping(value = "/profile/{id}/update/", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String update(@PathVariable("id") String idString,
-                         @RequestParam("login") String login,
                          @RequestParam("password") String password,
                          @RequestParam("email") String email)
 
             throws IOException {
         Admin admin = new Admin();
         admin.setId(Long.parseLong(idString));
-        admin.setLogin(login);
         admin.setPassword(passwordEncoder.encode(password));
         admin.setEmail(email);
         return "redirect:admins/profile/{id}";
