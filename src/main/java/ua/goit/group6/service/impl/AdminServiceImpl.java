@@ -90,4 +90,11 @@ public class AdminServiceImpl implements AdminService {
         adminDao.delete(admin);
         LOGGER.info("Delete admin:{} from repository", admin);
     }
+    //TODO uncomment
+    //@Override
+    @Transactional
+    public void deleteById(long id) {
+        adminDao.deleteById(id);
+        LOGGER.info("Delete admin with id:{} from repository", id);
+    }
 }

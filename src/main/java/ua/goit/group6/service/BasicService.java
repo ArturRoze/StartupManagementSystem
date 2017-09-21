@@ -39,4 +39,5 @@ public interface BasicService<T> {
      * @param value entity to delete
      */
     void delete(T value);
+
 }

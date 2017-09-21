@@ -26,8 +26,11 @@ public class UserController {
     private final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     private final UserService userService;
+
     private final CountryService countryService;
+
     private final CityService cityService;
+
     private final PasswordEncoder passwordEncoder;
 
     /**
