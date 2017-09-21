@@ -69,7 +69,7 @@ public class UserController {
      * Method deletes {@link User} with chosen id from database
      *
      * @param idString the id of user to delete from url
-     * @return redirect link to index page
+     * @return redirect link to logout
      */
     @GetMapping("/profile/{id}/delete")
     public String delete(@PathVariable("id") String idString) {
@@ -79,7 +79,7 @@ public class UserController {
         //TODO make deleteById(id)
         LOGGER.info("Redirecting to index page after deleting user with id='" + idString + "'");
         //TODO make logout for user but not for admin
-        return "redirect:/";
+        return "redirect:/logout";
     }
 
     /**

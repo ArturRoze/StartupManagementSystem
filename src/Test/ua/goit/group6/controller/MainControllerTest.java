@@ -18,9 +18,7 @@ import ua.goit.group6.model.User;
 import ua.goit.group6.service.AdminService;
 import ua.goit.group6.service.UserService;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.anonymous;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -30,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 /**
  * Tests for main controller
+ *
  * @author Boiko Ivan
  */
 @RunWith(SpringRunner.class)
@@ -50,8 +49,15 @@ public class MainControllerTest {
     @Autowired
     private WebApplicationContext context;
 
+    private User user;
+
+    private Admin admin;
+
     @Before
     public void setUp() throws Exception {
+        user = mock(User.class);
+        admin = mock(Admin.class);
+
         mvc = MockMvcBuilders
                 .webAppContextSetup(context)
                 .apply(springSecurity())
@@ -61,45 +67,28 @@ public class MainControllerTest {
     @Test
     public void guestIndexTest() throws Exception {
         mvc.perform(get("/").with(anonymous()))
-                .andExpect(status().isOk())
                 //TODO when will be startups test them
-                .andExpect(view().name("index"));
+                .andExpect(view().name("index"))
+                .andExpect(status().isOk());
     }
 
     @Test
-    public void userIndexTest() throws Exception {
-        mvc.perform(get("/").with(user("user").roles("USER")))
-                .andExpect(status().isOk())
+    public void authenticatedIndexTest() throws Exception {
+        mvc.perform(get("/").with(user("user").roles("ADMIN", "USER")))
                 //TODO when will be startups test them
-                .andExpect(view().name("index"));
+                .andExpect(view().name("index"))
+                .andExpect(status().isOk());
     }
 
     @Test
-    public void adminIndexTest() throws Exception {
-        mvc.perform(get("/").with(user("admin").roles("ADMIN")))
-                .andExpect(status().isOk())
-                //TODO when will be startups test them
-                .andExpect(view().name("index"));
-    }
-
-    @Test
-    public void userLogoutTest() throws Exception {
-        mvc.perform(post("/logout").with(user("user").roles("USER")))
-                .andExpect(redirectedUrl("/"))
-                .andExpect(status().isFound());
-    }
-
-    @Test
-    public void adminLogoutTest() throws Exception {
-        mvc.perform(post("/logout").with(user("admin").roles("ADMIN")))
+    public void logoutTest() throws Exception {
+        mvc.perform(post("/logout").with(user("user").roles("ADMIN", "USER")))
                 .andExpect(redirectedUrl("/"))
                 .andExpect(status().isFound());
     }
 
     @Test
     public void registrationTest() throws Exception {
-
-        User user = mock(User.class);
         userService.save(user);
         verify(userService, times(1)).save(user);
 
@@ -117,31 +106,19 @@ public class MainControllerTest {
 
     @Test
     //TODO finish after creating startups
-    public void userNewsTest() throws Exception {
-        mvc.perform(get("/news").with(user("user").roles("USER")))
-                .andExpect(status().isOk())
+    public void authenticatedNewsTest() throws Exception {
+        mvc.perform(get("/news").with(user("user").roles("ADMIN", "USER")))
                 //TODO startups
-                .andExpect(view().name("news"));
-    }
-
-    @Test
-    //TODO finish after creating startups
-    public void adminNewsTest() throws Exception {
-        mvc.perform(get("/news").with(user("admin").roles("ADMIN")))
-                .andExpect(status().isOk())
-                //TODO startups
-                .andExpect(view().name("news"));
+                .andExpect(view().name("news"))
+                .andExpect(status().isOk());
     }
 
     @Test
     public void initDefaultUsersTest() throws Exception {
-        User user = mock(User.class);
         userService.save(user);
         verify(userService, times(1)).save(user);
 
-        Admin admin = mock(Admin.class);
         adminService.save(admin);
         verify(adminService, times(1)).save(admin);
     }
-
 }
