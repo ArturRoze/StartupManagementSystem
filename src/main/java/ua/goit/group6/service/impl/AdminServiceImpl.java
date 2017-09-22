@@ -18,6 +18,7 @@ import java.util.List;
  * Service for managing {@link Admin} in repository
  *
  * @author Boiko Ivan
+ * @see AbstractBasicServiceImpl
  * @see AdminService
  * @see AdminDao
  * @see UserDao
@@ -59,8 +60,7 @@ public class AdminServiceImpl extends AbstractBasicServiceImpl<Admin> implements
     @Transactional
     public void save(Admin admin) {
         if (userDao.getByLogin(admin.getLogin()) == null) {
-            LOGGER.info("Save admin:{} to repository", admin);
-            adminDao.create(admin);
+            super.save(admin);
         } else {
             LOGGER.info("User with login:'{}' already exists", admin.getLogin());
             //TODO Which exception should be thrown?
@@ -104,7 +104,7 @@ public class AdminServiceImpl extends AbstractBasicServiceImpl<Admin> implements
 //        adminDao.delete(admin);
 //        LOGGER.info("Delete admin:{} from repository", admin);
 //    }
-//    //TODO uncomment
+//
 //    //@Override
 //    @Transactional
 //    public void deleteById(long id) {
