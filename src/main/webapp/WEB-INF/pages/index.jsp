@@ -14,6 +14,10 @@
     <a href="/news">To news page</a><br>
     <a href="/users">To users page</a><br>
     <a href="/users/profile/1">To profile page</a><br>
+    <a href="/startups/1">To startup page</a><br>
+    <a href="/startups">Show all startups</a><br>
+
+
 </div>
 </body>
 </html>

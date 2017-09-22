@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.NoRepositoryBean;
+import org.springframework.transaction.annotation.Transactional;
 import ua.goit.group6.dao.GeneralDao;
 
 import java.lang.reflect.ParameterizedType;
@@ -32,6 +33,7 @@ public abstract class AbstractDaoImpl<T> implements GeneralDao<T> {
     }
 
     @Override
+    @Transactional
     public T getById(long id) {
         LOGGER.info("Get user by id='{}' from repository", id);
         return getSession().get(entityType, id);
@@ -45,6 +47,7 @@ public abstract class AbstractDaoImpl<T> implements GeneralDao<T> {
 
     @SuppressWarnings("unchecked")
     @Override
+    @Transactional
     public List<T> readAll() {
         LOGGER.info("Get all users from repository");
         return (List<T>) getSession().createQuery("from " + getCleanEntityClass(entityType)).list();
