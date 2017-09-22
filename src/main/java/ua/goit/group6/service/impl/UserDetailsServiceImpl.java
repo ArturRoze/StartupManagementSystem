@@ -19,6 +19,8 @@ import ua.goit.group6.service.UserService;
  *
  * @author Boiko Ivan
  * @see UserDetailsService
+ * @see UserService
+ * @see AdminService
  * @see UserDetailed
  * @see AdminDetailed
  */
@@ -32,9 +34,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     public UserDetailsServiceImpl(AdminService adminService, UserService userService) {
-        LOGGER.info("UserDetailsServiceImpl created");
         this.adminService = adminService;
         this.userService = userService;
+        LOGGER.info("UserDetailsServiceImpl created");
     }
 
     /**

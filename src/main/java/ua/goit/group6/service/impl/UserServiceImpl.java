@@ -15,6 +15,7 @@ import ua.goit.group6.service.UserService;
  * Service for managing {@link User} in repository
  *
  * @author Boiko Ivan
+ * @see AbstractBasicServiceImpl
  * @see UserService
  * @see UserDao
  * @see AdminDao
@@ -37,6 +38,7 @@ public class UserServiceImpl extends AbstractBasicServiceImpl<User> implements U
 
     /**
      * Method reads user from repository
+     *
      * @param login string login to search in repository
      * @return {@link User} from repository with given login
      */
@@ -56,8 +58,7 @@ public class UserServiceImpl extends AbstractBasicServiceImpl<User> implements U
     @Transactional
     public void save(User user) {
         if (adminDao.getByLogin(user.getLogin()) == null) {
-            LOGGER.info("Save user:{} to repository", user);
-            userDao.create(user);
+            super.save(user);
         } else {
             LOGGER.info("User with login:'{}' already exists", user.getLogin());
             //TODO Which exception should be thrown?
