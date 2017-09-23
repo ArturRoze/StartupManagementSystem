@@ -12,6 +12,8 @@
 <html>
 <head>
     <title>Show all startups</title>
+    <%--<link type="text/css" href="styles.css" rel="stylesheet">--%>
+
     <style>
         #products {
             font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -43,45 +45,32 @@
 </head>
 <body>
 <div align="center">
-    <%--<h2>Вы вошли как: <sec:authentication property="principal.username"/></h2>--%>
-    <%--<h2>Registration date: <sec:authentication property="principal.registrationDate"/></h2>--%>
-    <%--<h2>Email of user: <sec:authentication property="principal.email"/></h2>--%>
 
-    <%--<c:set var="login" value="q" scope="session"/>--%>
-    <%--<c:set var="login">--%>
-        <%--<sec:authentication property="principal.username"/>--%>
-    <%--</c:set>--%>
-    <%--<c:if test = "${'admin' eq login}">--%>
-         <%--You are ADMIN--%>
-    <%--</c:if>--%>
-    
     <table border="bold" id="products">
         <caption><h1>List of all products</h1></caption>
         <tr>
             <th>Id</th>
             <th>Name</th>
-            <th>Manufacturer</th>
-            <th>Cost</th>
             <th>Description</th>
-            <sec:authorize access="hasRole('ADMIN')">
-                <th>Update</th>
-                <th>Delete</th>
-            </sec:authorize>
+            <th>User</th>
+            <th>Registration</th>
+            <th>Country</th>
+            <th>To startup</th>
         </tr>
-        <c:forEach var="startup" items="${startups}">
+        <c:forEach var="user" items="${startups}">
             <tr>
-                <td>${startup.id}</td>
-                <td>${startup.name}</td>
-                <td>${startup.description}</td>
-                <td>${startup.user.login}</td>
-                <td>${startup.registrationDate}</td>
-                <td>${startup.country.name}</td>
-                    <td><form action="/startups/${startup.id}" method="get">
+                <td>${user.id}</td>
+                <td>${user.name}</td>
+                <td>${user.description}</td>
+                <td>${user.user.login}</td>
+                <td>${user.registrationDate}</td>
+                <td>${user.country.name}</td>
+                <td>
+                    <form action="/startups/${user.id}" method="get">
                         <input type="submit" value="show startup">
-                    </form></td>
-                    <%--<td><form action="/product/product_delete/id=${startup.id}" method="get">--%>
-                        <%--<input type="submit" value="Delete product">--%>
-                    <%--</form></td>--%>
+                    </form>
+                </td>
+
             </tr>
         </c:forEach>
     </table>

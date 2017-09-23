@@ -64,15 +64,19 @@ public class AdminServiceImpl extends AbstractBasicServiceImpl<Admin> implements
 
         if (userDao.getByLogin(admin.getLogin()) != null) {
             LOGGER.info("User with login:'{}' already exists", admin.getLogin());
-            throw new RuntimeException("User with login:'" + admin.getLogin() + "' already exists");
 
         } else if (adminDao.getByLogin(admin.getLogin()) != null){
             LOGGER.info("Admin with login:'{}' already exists", admin.getLogin());
-            throw new RuntimeException("Admin with login:'" + admin.getLogin() + "' already exists");
 
         }else {
             admin.setPassword(passwordEncoder.encode(admin.getPassword()));
             super.save(admin);
         }
+    }
+
+    @Override
+    public void update(Admin admin) {
+        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+        super.update(admin);
     }
 }

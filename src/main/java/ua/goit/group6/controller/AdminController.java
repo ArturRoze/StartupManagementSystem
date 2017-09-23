@@ -50,7 +50,7 @@ public class AdminController {
 
     @GetMapping("profile/{id}/update")
     public ModelAndView update(@PathVariable("id") String idString) {
-        ModelAndView updateForm = new ModelAndView("update_form");
+        ModelAndView updateForm = new ModelAndView("user_update_form");
         long id = Long.parseLong("id");
         Admin admin = adminService.getById(id);
         updateForm.addObject("admin", admin);

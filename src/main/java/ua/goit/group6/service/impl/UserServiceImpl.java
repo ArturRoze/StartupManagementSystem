@@ -64,15 +64,19 @@ public class UserServiceImpl extends AbstractBasicServiceImpl<User> implements U
 
         if (adminDao.getByLogin(user.getLogin()) != null) {
             LOGGER.info("Admin with login:'{}' already exists", user.getLogin());
-            throw new RuntimeException("Admin with login:'" + user.getLogin() + "' already exists");
-            
+
         } else if (userDao.getByLogin(user.getLogin()) != null) {
             LOGGER.info("User with login:'{}' already exists", user.getLogin());
-            throw new RuntimeException("User with login:'" + user.getLogin() + "' already exists");
 
         } else {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             super.save(user);
         }
+    }
+
+    @Override
+    public void update(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        super.update(user);
     }
 }

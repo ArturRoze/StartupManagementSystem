@@ -76,10 +76,7 @@ public class UserController {
      */
     @GetMapping("/profile/{id}/delete")
     public String delete(@PathVariable("id") String idString) {
-        long id = Long.parseLong(idString);
-        User user = userService.getById(id);
-        userService.delete(user);
-        //TODO make deleteById(id)
+        userService.deleteById(Long.parseLong(idString));
         LOGGER.info("Redirecting to index page after deleting user with id='" + idString + "'");
         //TODO make logout for user but not for admin
         return "redirect:/logout";
@@ -96,7 +93,7 @@ public class UserController {
      */
     @GetMapping("/profile/{id}/update")
     public ModelAndView update(@PathVariable("id") String idString) {
-        ModelAndView updateForm = new ModelAndView("update_form");
+        ModelAndView updateForm = new ModelAndView("user_update_form");
         long id = Long.parseLong(idString);
         User user = userService.getById(id);
         updateForm.addObject("user", user);

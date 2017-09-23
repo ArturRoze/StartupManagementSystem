@@ -21,9 +21,22 @@ public class StartupServiceImpl extends AbstractBasicServiceImpl<Startup> implem
 
     @Override
     @Transactional(readOnly = true)
-    public List<Startup> getLastN(int n) {
-        //TODO complete
-        return getAll();
-//                .stream().sorted(Comparator.comparing(Startup::getRegistrationDate)).limit(n).collect(Collectors.toList());
+    public List<Startup> getLastNDesc(int n) {
+        return getAll()
+                .stream()
+                .sorted(Comparator.comparing(Startup::getRegistrationDate)
+                        .reversed())
+                .limit(n)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Startup> getAllDescRegistration() {
+        return getAll()
+                .stream()
+                .sorted(Comparator.comparing(Startup::getRegistrationDate)
+                        .reversed())
+                .collect(Collectors.toList());
     }
 }

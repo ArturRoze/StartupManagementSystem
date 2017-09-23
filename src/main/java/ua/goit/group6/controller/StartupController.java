@@ -35,7 +35,7 @@ public class StartupController {
     @GetMapping
     public ModelAndView list() {
         ModelAndView startups = new ModelAndView("startups_list");
-        startups.addObject("startups", startupService.getLastN(2));
+        startups.addObject("startups", startupService.getAllDescRegistration());
         LOGGER.info("Building page with all startups");
         return startups;
     }

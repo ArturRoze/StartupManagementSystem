@@ -29,9 +29,9 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         LOGGER.info("Handle resources");
-        registry.addResourceHandler("/jpeg/**").addResourceLocations("/WEB-INF/jpeg/");
-        registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/css/");
-        registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/js/");
+        registry.addResourceHandler("/*.jpeg").addResourceLocations("/WEB-INF/jpeg/");
+        registry.addResourceHandler("/*.css").addResourceLocations("/WEB-INF/css/");
+        registry.addResourceHandler("/*.js").addResourceLocations("/WEB-INF/js/");
     }
 
     @Override
@@ -40,14 +40,9 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         registry.addViewController("/login").setViewName("login_form");
         registry.addViewController("/error").setViewName("error");
         registry.addViewController("/registration").setViewName("registration_form");
-        registry.addViewController("/startups/new_startup").setViewName("new_startup_form");
-        registry.addViewController("/offers/new_offer").setViewName("new_offer_form");
-        registry.addViewController("/admins/new_admin").setViewName("new_admin_form");
-
-        //для работы (не заморачивайтесь), потом нужно будет удалить
-        registry.addViewController("/startups/1/update").setViewName("test_startups_update_page");
-        registry.addViewController("/startups/1").setViewName("test_startups_read_page");
-        registry.addViewController("/startups").setViewName("test_startups_page");
+        registry.addViewController("/startups/new/startup/").setViewName("new_startup_form");
+        registry.addViewController("/offers/new/offer/").setViewName("new_offer_form");
+        registry.addViewController("/admins/new/admin/").setViewName("new_admin_form");
 
     }
 

@@ -54,8 +54,8 @@ public class MainController {
     @GetMapping
     public ModelAndView index() {
         ModelAndView main = new ModelAndView("index");
-        main.addObject("startups", startupService.getAll());
-//        main.addObject("startups", startupService.getLastN(10));
+//        main.addObject("startups", startupService.getAll());
+        main.addObject("startups", startupService.getLastNDesc(2));
         LOGGER.info("Building index page");
         return main;
     }
@@ -97,10 +97,12 @@ public class MainController {
      * and {@link java.util.List} of //TODO startups and offers from database
      * sorted by registration date in descending order
      */
-    @GetMapping("/news")
+    @GetMapping("news")
     public ModelAndView news() {
         ModelAndView news = new ModelAndView("news");
-        // TODO add startup list
+        news.addObject("startups", startupService.getAllDescRegistration());
+        //TODO add offers
+        LOGGER.info("Building news page");
         return news;
     }
 
