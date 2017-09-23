@@ -42,6 +42,12 @@
     </sec:authorize>
 
     <div align="center">
+        <form action="${pageContext.request.contextPath}/" method="get">
+            <input type="submit" value="To main page">
+        </form>
+    </div>
+
+    <div align="center">
         <form action="/users/profile/${current_user_id}" method="get">
             <input type="submit" value="To profile page">
         </form>
@@ -49,10 +55,10 @@
 
     <c:choose>
     <c:when test="${id_test || isAdmin}">
-    <form action="${pageContext.request.contextPath}/users/profile/${user.id}/update/" method="post">
+    <form action="/users/profile/${user.id}/update/" method="post">
 
         <table>
-            <caption><h1>User profile</h1></caption>
+            <caption><h1>User update</h1></caption>
             <tr>
                 <th></th>
                 <th>Old profile</th>
@@ -74,19 +80,20 @@
             <tr>
                 <td>Last name</td>
                 <td>${user.lastName}</td>
-                <td><input type="text" name="" value="${user.lastName}"></td>
+                <td><input type="text" name="last_name" value="${user.lastName}"></td>
             </tr>
 
             <tr>
                 <td>Description</td>
                 <td>${user.description}</td>
-                <td><input type="text" name="" value="${user.description}"></td>
+                <td><input type="text" name="description" value="${user.description}"></td>
             </tr>
 
             <tr>
                 <td>Country</td>
                 <td>${user.country.name}</td>
-                <td><select name="country_id">
+                <td><select name="country_id" >
+                    <option value="${user.country.id}" selected>${user.country.name}</option>
                     <c:forEach var="country" items="${countries}">
                         <option value="${country.id}">${country.name}</option>
                     </c:forEach>
@@ -97,7 +104,7 @@
             <tr>
                 <td>City</td>
                 <td>${user.city.name}</td>
-                <td><input type="text" name="" value="${user.city.name}"></td>
+                <td><input type="text" name="city_name" value="${user.city.name}"></td>
             </tr>
 
             <tr>

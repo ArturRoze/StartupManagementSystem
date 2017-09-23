@@ -94,8 +94,6 @@ public class UserController {
         User user = userService.getById(id);
         updateForm.addObject("user", user);
         updateForm.addObject("countries", countryService.getAll());
-        //TODO cities
-        updateForm.addObject("cities", cityService.getAll());
         LOGGER.info("Building update page for " + user);
         return updateForm;
     }
@@ -110,7 +108,7 @@ public class UserController {
      * @param lastName new last name for user from request
      * @param description new description for user from request
      * @param countryIdString new id of {@link ua.goit.group6.model.Country} for user from request
-     * @param cityIidString new id of {@link ua.goit.group6.model.City} for user from request
+     * @param cityName name of {@link ua.goit.group6.model.City} for user from request
      * @return redirect link to this user profile
      */
     @PostMapping(value = "/profile/{id}/update/", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -120,17 +118,20 @@ public class UserController {
                          @RequestParam("last_name") String lastName,
                          @RequestParam("description") String description,
                          @RequestParam("country_id") String countryIdString,
-                         @RequestParam("city_id") String cityIidString){
+                         @RequestParam("city_name") String cityName){
+        LOGGER.info("Returning from user update form");
         User user = new User();
         user.setId(Long.parseLong(idString));
         user.setPassword(password);
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setDescription(description);
-        user.setCountry(countryService.getById(Long.parseLong(countryIdString)));
+//        user.setCountry(countryService.getById(Long.parseLong(countryIdString)));
+
         //TODO cities
-        user.setCity(cityService.getById(Long.parseLong(cityIidString)));
-        userService.update(user);
+//        user.setCity(cityService.getById(Long.parseLong(cityIidString)));
+
+//        userService.update(user);
         LOGGER.info("User " + user + " successfully updated");
         LOGGER.info("Redirecting to profile of user with id='" + idString + "'");
         return "redirect:users/profile/" + idString;

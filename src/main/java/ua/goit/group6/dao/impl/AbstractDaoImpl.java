@@ -40,6 +40,7 @@ public abstract class AbstractDaoImpl<T> implements GeneralDao<T> {
     }
 
     @Override
+    @Transactional
     public void create(T value) {
         getSession().save(value);
         LOGGER.info("Save user:{} to repository", value);
@@ -54,18 +55,21 @@ public abstract class AbstractDaoImpl<T> implements GeneralDao<T> {
     }
 
     @Override
+    @Transactional
     public void update(T value) {
         getSession().update(value);
         LOGGER.info("Update user:{} in repository", value);
     }
 
     @Override
+    @Transactional
     public void delete(T value) {
         getSession().remove(value);
         LOGGER.info("delete user:{} from repository", value);
     }
 
     @Override
+    @Transactional
     public void deleteById(long id) {
         Query deleteByIdQuery = getSession().createQuery("delete from " + getCleanEntityClass(entityType) + " where id = :id");
         deleteByIdQuery.setParameter("id", id);
