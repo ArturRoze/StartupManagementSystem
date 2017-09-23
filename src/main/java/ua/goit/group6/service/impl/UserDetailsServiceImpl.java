@@ -27,7 +27,7 @@ import ua.goit.group6.service.UserService;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     private final AdminService adminService;
     private final UserService userService;

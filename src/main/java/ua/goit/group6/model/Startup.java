@@ -17,19 +17,18 @@ public class Startup implements Serializable{
     private String name;
 
     @Column
-    private String idea;
+    private String description;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id",insertable = false, updatable = false)
+    @JoinColumn(name = "country_id",insertable = false, updatable = false)
     private Country country;
 
-//    @Column (name = "registration_date")
-//    private Timestamp registrationDate;
-
+    @Column (name = "registration_date")
+    private Timestamp registrationDate;
 
     public long getId() {
         return id;
@@ -47,12 +46,12 @@ public class Startup implements Serializable{
         this.name = name;
     }
 
-    public String getIdea() {
-        return idea;
+    public String getDescription() {
+        return description;
     }
 
-    public void setIdea(String idea) {
-        this.idea = idea;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public User getUser() {
@@ -69,5 +68,13 @@ public class Startup implements Serializable{
 
     public void setCountry(Country country) {
         this.country = country;
+    }
+
+    public Timestamp getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(Timestamp registrationDate) {
+        this.registrationDate = registrationDate;
     }
 }

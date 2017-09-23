@@ -44,8 +44,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/startups/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/offers**").hasAnyRole("USER", "ADMIN")
 
-                //for development
-                .antMatchers("/test**").hasAnyRole("USER", "ADMIN")
 
                 .anyRequest().denyAll()
                 .and()
