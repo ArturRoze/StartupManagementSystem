@@ -3,7 +3,6 @@ package ua.goit.group6.dao;
 import java.util.List;
 
 /**
- * @param <T>
  * @author Artyr
  */
 

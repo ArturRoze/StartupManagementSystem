@@ -12,42 +12,27 @@
 <html>
 <head>
     <title>Show all startups</title>
-    <%--<link type="text/css" href="styles.css" rel="stylesheet">--%>
-
     <style>
-        #products {
-            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-            border-collapse: collapse;
-            width: 80%;
-        }
-
-        #products td, #products th {
+        table, td, th {
             border: 1px solid #ddd;
-            padding: 8px;
-        }
-
-        #products tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        #products tr:hover {
-            background-color: #ddd;
-        }
-
-        #products th {
-            padding-top: 12px;
-            padding-bottom: 12px;
             text-align: left;
-            background-color: #4CAF50;
-            color: white;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 50%;
+        }
+
+        th, td {
+            padding: 15px;
         }
     </style>
 </head>
 <body>
 <div align="center">
 
-    <table border="bold" id="products">
-        <caption><h1>List of all products</h1></caption>
+    <table>
+        <caption><h1>List of all startups</h1></caption>
         <tr>
             <th>Id</th>
             <th>Name</th>
@@ -57,17 +42,17 @@
             <th>Country</th>
             <th>To startup</th>
         </tr>
-        <c:forEach var="user" items="${startups}">
+        <c:forEach var="startup" items="${startups}">
             <tr>
-                <td>${user.id}</td>
-                <td>${user.name}</td>
-                <td>${user.description}</td>
-                <td>${user.user.login}</td>
-                <td>${user.registrationDate}</td>
-                <td>${user.country.name}</td>
+                <td>${startup.id}</td>
+                <td>${startup.name}</td>
+                <td>${startup.description}</td>
+                <td>${startup.user.login}</td>
+                <td>${startup.registrationDate}</td>
+                <td>${startup.country.name}</td>
                 <td>
-                    <form action="/startups/${user.id}" method="get">
-                        <input type="submit" value="show startup">
+                    <form action="/startups/${startup.id}" method="get">
+                        <input type="submit" value="Show startup">
                     </form>
                 </td>
 
@@ -76,8 +61,8 @@
     </table>
 
     <div align="center">
-        <form action="/logout" method="post">
-            <input type="submit" value="Logout">
+        <form action="${pageContext.request.contextPath}/" method="get">
+            <input type="submit" value="To main page">
         </form>
     </div>
 </div>

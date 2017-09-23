@@ -11,10 +11,29 @@
 <html>
 <head>
     <title>News</title>
+    <style>
+        table, td, th {
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 50%;
+        }
+
+        th, td {
+            padding: 15px;
+        }
+    </style>
 </head>
 <body>
 <div align="center">
     <h1 align="center">News Page</h1>
+
+    <c:set var="current_user_id">
+        <sec:authentication property="principal.id"/>
+    </c:set>
 
     <div align="center">
         <form action="${pageContext.request.contextPath}/" method="get">
@@ -22,25 +41,21 @@
         </form>
     </div>
 
-    <c:set var="id">
-    <sec:authentication property="principal.id"/>
-    </c:set>
-
     <div align="center">
-        <form action="/users/profile/${id}" method="get">
+        <form action="/users/profile/${current_user_id}" method="get">
             <input type="submit" value="To profile page">
         </form>
     </div>
 
     <div align="center">
-        <form action="/logout" method="post">
+        <form action="${pageContext.request.contextPath}/logout" method="post">
             <input type="submit" value="Logout">
         </form>
     </div>
 
     <div align="center">
 
-        <table border="bold">
+        <table>
             <caption><h1>News</h1></caption>
             <tr>
                 <th>Id</th>
@@ -51,23 +66,24 @@
                 <th>Country</th>
                 <th>To startup</th>
             </tr>
-            <c:forEach var="user" items="${startups}">
+            <c:forEach var="startup" items="${startups}">
                 <tr>
-                    <td>${user.id}</td>
-                    <td>${user.name}</td>
-                    <td>${user.description}</td>
-                    <td>${user.user.login}</td>
-                    <td>${user.registrationDate}</td>
-                    <td>${user.country.name}</td>
+                    <td>${startup.id}</td>
+                    <td>${startup.name}</td>
+                    <td>${startup.description}</td>
+                    <td>${startup.user.login}</td>
+                    <td>${startup.registrationDate}</td>
+                    <td>${startup.country.name}</td>
+
                     <td>
-                        <form action="/startups/${user.id}" method="get">
-                            <input type="submit" value="show startup">
+                        <form action="/startups/${startup.id}" method="get">
+                            <input type="submit" value="Show startup">
                         </form>
                     </td>
 
                 </tr>
             </c:forEach>
         </table>
-</div>
+    </div>
 </body>
 </html>

@@ -31,22 +31,18 @@ public class UserController {
 
     private final CityService cityService;
 
-    private final PasswordEncoder passwordEncoder;
-
     /**
      * Constructor for controller
      * @param userService {@link UserService} bean
      * @param countryService {@link CountryService} bean
      * @param cityService {@link CityService} bean
-     * @param passwordEncoder {@link PasswordEncoder} bean
      */
     @Autowired
-    public UserController(UserService userService, CountryService countryService, CityService cityService, PasswordEncoder passwordEncoder) {
+    public UserController(UserService userService, CountryService countryService, CityService cityService) {
         LOGGER.info("Creating user controller");
         this.userService = userService;
         this.countryService = countryService;
         this.cityService = cityService;
-        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -98,6 +94,7 @@ public class UserController {
         User user = userService.getById(id);
         updateForm.addObject("user", user);
         updateForm.addObject("countries", countryService.getAll());
+        //TODO cities
         updateForm.addObject("cities", cityService.getAll());
         LOGGER.info("Building update page for " + user);
         return updateForm;
@@ -115,7 +112,6 @@ public class UserController {
      * @param countryIdString new id of {@link ua.goit.group6.model.Country} for user from request
      * @param cityIidString new id of {@link ua.goit.group6.model.City} for user from request
      * @return redirect link to this user profile
-     * @throws IOException if problem TODO what problem?
      */
     @PostMapping(value = "/profile/{id}/update/", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String update(@PathVariable("id") String idString,
@@ -124,14 +120,15 @@ public class UserController {
                          @RequestParam("last_name") String lastName,
                          @RequestParam("description") String description,
                          @RequestParam("country_id") String countryIdString,
-                         @RequestParam("city_id") String cityIidString)throws IOException {
+                         @RequestParam("city_id") String cityIidString){
         User user = new User();
         user.setId(Long.parseLong(idString));
-        user.setPassword(passwordEncoder.encode(password));
+        user.setPassword(password);
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setDescription(description);
         user.setCountry(countryService.getById(Long.parseLong(countryIdString)));
+        //TODO cities
         user.setCity(cityService.getById(Long.parseLong(cityIidString)));
         userService.update(user);
         LOGGER.info("User " + user + " successfully updated");

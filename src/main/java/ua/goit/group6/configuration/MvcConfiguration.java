@@ -30,7 +30,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         LOGGER.info("Handle resources");
         registry.addResourceHandler("/*.jpeg").addResourceLocations("/WEB-INF/jpeg/");
-        registry.addResourceHandler("/*.css").addResourceLocations("/WEB-INF/css/");
+        registry.addResourceHandler("**.css").addResourceLocations("/WEB-INF/css/");
         registry.addResourceHandler("/*.js").addResourceLocations("/WEB-INF/js/");
     }
 

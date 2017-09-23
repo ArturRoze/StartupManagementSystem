@@ -11,7 +11,6 @@ import ua.goit.group6.model.User;
 import ua.goit.group6.service.impl.AdminServiceImpl;
 
 /**
- * @param <>
  * @author Artyr
  */
 

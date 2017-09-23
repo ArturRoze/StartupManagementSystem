@@ -11,33 +11,72 @@
 <html>
 <head>
     <title>Profile</title>
+    <style>
+        table, td, th {
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 50%;
+        }
+
+        th, td {
+            padding: 15px;
+        }
+    </style>
 </head>
 <body>
 <div align="center">
 
-    <c:set var="id">
+    <div align="center">
+        <div align="center">
+            <form action="${pageContext.request.contextPath}/news" method="get">
+                <input type="submit" value="News">
+            </form>
+        </div>
+        <div align="center">
+            <form action="${pageContext.request.contextPath}/logout" method="post">
+                <input type="submit" value="Logout">
+            </form>
+        </div>
+    </div>
+
+    <c:set var="current_user_id">
         <sec:authentication property="principal.id"/>
     </c:set>
 
+    <c:set var="id_test" value="${user.id == current_user_id}"/>
+
+    <c:set var="isAdmin" value="false"/>
+
+    <sec:authorize access="hasRole('ADMIN')">
+        <c:set var="isAdmin" value="true"/>
+    </sec:authorize>
+
+
     <div align="center">
-
-        <table border="bold">
+        <table>
             <caption><h1>User profile</h1></caption>
-            <tr>
-                <th>Id</th>
-                <td>${user.id}</td>
-            </tr>
-            <tr>
 
-                <th>login</th>
-                <td>${user.login}</td>
-            </tr>
+            <c:if test="${id_test || isAdmin}">
+                <tr>
+                    <th>Id</th>
+                    <td>${user.id}</td>
+                </tr>
+                <tr>
+                    <th>login</th>
+                    <td>${user.login}</td>
+                </tr>
+                <tr>
+                    <th>password</th>
+                    <td>${user.password}</td>
+                </tr>
+            </c:if>
+
             <tr>
-                <th>password</th>
-                <td>${user.password}</td>
-            </tr>
-            <tr>
-                <th>email</th>
+                <th>Email</th>
                 <td>${user.email}</td>
             </tr>
             <tr>
@@ -49,7 +88,7 @@
                 <td>${user.firstName}</td>
             </tr>
             <tr>
-                <th>last name</th>
+                <th>Last name</th>
                 <td>${user.lastName}</td>
             </tr>
             <tr>
@@ -64,45 +103,36 @@
                 <th>City</th>
                 <td>${user.city.name}</td>
             </tr>
-        </table>
 
+        </table>
     </div>
     <br>
 
-    <div align="center">
-        <form action="${pageContext.request.contextPath}/news" method="get">
-            <input type="submit" value="News">
-        </form>
-    </div>
+    <c:if test="${id_test || isAdmin}">
+        <div align="center">
+            <form action="/users/profile/${user.id}/update" method="get">
+                <input type="submit" value="Update">
+            </form>
+        </div>
 
-    <div align="center">
-        <form action="/users/profile/${id}/update" method="get">
-            <input type="submit" value="Update">
-        </form>
-    </div>
+        <div align="center">
+            <form action="/users/profile/${user.id}/delete" method="get">
+                <input type="submit" value="Delete">
+            </form>
+        </div>
+        <div align="center">
+            <form action="${pageContext.request.contextPath}/startups/new/startup/" method="get">
+                <input type="submit" value="New startup">
+            </form>
+        </div>
 
-    <div align="center">
-        <form action="/users/profile/${id}/delete" method="get">
-            <input type="submit" value="Delete">
-        </form>
-    </div>
-    <div align="center">
-        <form action="${pageContext.request.contextPath}/startups/new/startup/" method="get">
-            <input type="submit" value="New startup">
-        </form>
-    </div>
+        <div align="center">
+            <form action="${pageContext.request.contextPath}/offers/new/offer/" method="get">
+                <input type="submit" value="New offer">
+            </form>
+        </div>
+    </c:if>
 
-    <div align="center">
-        <form action="${pageContext.request.contextPath}/offers/new/offer/" method="get">
-            <input type="submit" value="New offer">
-        </form>
-    </div>
-
-    <div align="center">
-        <form action="${pageContext.request.contextPath}/logout" method="post">
-            <input type="submit" value="Logout">
-        </form>
-    </div>
 </div>
 </body>
 </html>

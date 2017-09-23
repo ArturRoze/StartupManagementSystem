@@ -35,7 +35,7 @@ public class MainController {
      * Constructor for controller
      *  @param userService  {@link UserService} bean
      * @param adminService {@link AdminService} bean
-     * @param startupService
+     * @param startupService {@link StartupService} bean
      */
     @Autowired
     public MainController(UserService userService, AdminService adminService, StartupService startupService) {
@@ -93,7 +93,7 @@ public class MainController {
     /**
      * Mapping for url ":/news"
      *
-     * @return @return a {@link ModelAndView} object holding the name of jsp represented by {@code String},
+     * @return a {@link ModelAndView} object holding the name of jsp represented by {@code String},
      * and {@link java.util.List} of //TODO startups and offers from database
      * sorted by registration date in descending order
      */
