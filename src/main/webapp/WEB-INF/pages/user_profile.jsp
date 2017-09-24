@@ -107,32 +107,32 @@
         </table>
     </div>
     <br>
+    <div>
+        <c:if test="${id_test || isAdmin}">
+            <div align="center">
+                <form action="/users/profile/${user.id}/update" method="get">
+                    <input type="submit" value="Update">
+                </form>
+            </div>
 
-    <c:if test="${id_test || isAdmin}">
-        <div align="center">
-            <form action="/users/profile/${user.id}/update" method="get">
-                <input type="submit" value="Update">
-            </form>
-        </div>
+            <div align="center">
+                <form action="/users/profile/${user.id}/delete" method="get">
+                    <input type="submit" value="Delete">
+                </form>
+            </div>
+            <div align="center">
+                <form action="${pageContext.request.contextPath}/startups/new/startup" method="get">
+                    <input type="submit" value="New startup">
+                </form>
+            </div>
 
-        <div align="center">
-            <form action="/users/profile/${user.id}/delete" method="get">
-                <input type="submit" value="Delete">
-            </form>
-        </div>
-        <div align="center">
-            <form action="${pageContext.request.contextPath}/startups/new/startup" method="get">
-                <input type="submit" value="New startup">
-            </form>
-        </div>
-
-        <div align="center">
-            <form action="${pageContext.request.contextPath}/offers/new/offer" method="get">
-                <input type="submit" value="New offer">
-            </form>
-        </div>
-    </c:if>
-
+            <div align="center">
+                <form action="${pageContext.request.contextPath}/offers/new/offer" method="get">
+                    <input type="submit" value="New offer">
+                </form>
+            </div>
+        </c:if>
+    </div>
 </div>
 </body>
 </html>

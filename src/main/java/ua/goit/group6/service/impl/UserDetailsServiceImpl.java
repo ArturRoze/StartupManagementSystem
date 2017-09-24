@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ua.goit.group6.model.Admin;
-import ua.goit.group6.model.AdminDetailed;
 import ua.goit.group6.model.User;
 import ua.goit.group6.model.UserDetailed;
 import ua.goit.group6.service.AdminService;
@@ -22,7 +21,6 @@ import ua.goit.group6.service.UserService;
  * @see UserService
  * @see AdminService
  * @see UserDetailed
- * @see AdminDetailed
  */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -41,10 +39,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     /**
      * Implementation of {@link UserDetailsService} method
-     * 
+     *
      * @param username login of logging in user
-     * @return a {@link AdminDetailed} if such {@link Admin} exists or
-     *          {@link UserDetailed} if such {@link User} exists
+     * @return a {@link UserDetailed} if such {@link Admin} or {@link User} exists
      * @throws UsernameNotFoundException if neither admin nor user is not found
      */
     @Override
@@ -55,7 +52,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Admin admin = adminService.getByLogin(username);
 
         if (admin != null) {
-            return new AdminDetailed(admin);
+            return new UserDetailed(admin);
         } else {
             LOGGER.info("Admin with login:'{}' not found", username);
         }

@@ -55,6 +55,7 @@
 
     <c:choose>
     <c:when test="${id_test || isAdmin}">
+
     <form action="/users/profile/${user.id}/update/" method="post">
 
         <table>

@@ -17,7 +17,7 @@
     <sec:authentication property="principal.id"/>
 </c:set>
 <div>
-    <form action="${pageContext.request.contextPath}/startups/new/startup" method="post">
+    <form action="${pageContext.request.contextPath}/startups/new/startup/" method="post">
         <input type="number" name="user_id" value="${current_user_id}" hidden>
         <table align="center">
             <tr>

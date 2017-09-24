@@ -81,7 +81,7 @@ public class UserControllerTest {
 
         mvc.perform(get("/users/profile/" + id).with(user("user").roles("USER", "ADMIN")))
                 .andExpect(model().attribute("user", userService.getById(id)))
-                .andExpect(view().name("profile"))
+                .andExpect(view().name("user_profile"))
                 .andExpect(status().isOk());
     }
 

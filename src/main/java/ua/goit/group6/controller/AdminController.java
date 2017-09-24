@@ -32,7 +32,8 @@ public class AdminController {
 
     @GetMapping("/profile/{id}")
     public ModelAndView profile(@PathVariable("id") String idString) {
-        ModelAndView profile = new ModelAndView("profile");
+        //TODO admin profile jsp
+        ModelAndView profile = new ModelAndView("user_profile");
         long id = Long.parseLong(idString);
         Admin admin = adminService.getById(id);
         profile.addObject("admin", admin);
@@ -42,14 +43,14 @@ public class AdminController {
     @GetMapping("/profile/{id}/delete")
     public String delete(@PathVariable("id") String idString) {
         long id = Long.parseLong(idString);
-        //TODO uncomment
-        //adminService.deleteById(id);
+        adminService.deleteById(id);
         return "redirect:/logout";
     }
 
 
     @GetMapping("profile/{id}/update")
     public ModelAndView update(@PathVariable("id") String idString) {
+        //TODO admin update form
         ModelAndView updateForm = new ModelAndView("user_update_form");
         long id = Long.parseLong("id");
         Admin admin = adminService.getById(id);

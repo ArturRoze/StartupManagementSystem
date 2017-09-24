@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -12,8 +11,6 @@ import ua.goit.group6.model.User;
 import ua.goit.group6.service.CityService;
 import ua.goit.group6.service.CountryService;
 import ua.goit.group6.service.UserService;
-
-import java.io.IOException;
 
 /**
  * Controller for {@link User}
@@ -55,7 +52,7 @@ public class UserController {
      */
     @GetMapping("/profile/{id}")
     public ModelAndView profile(@PathVariable("id") String idString) {
-        ModelAndView profile = new ModelAndView("profile");
+        ModelAndView profile = new ModelAndView("user_profile");
         long id = Long.parseLong(idString);
         User user = userService.getById(id);
         profile.addObject("user", user);
