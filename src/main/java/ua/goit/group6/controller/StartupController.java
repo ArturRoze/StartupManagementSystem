@@ -28,7 +28,7 @@ public class StartupController {
         long id = Long.parseLong(idString);
         Startup startup = startupService.getById(id);
         profile.addObject("startup", startup);
-        LOGGER.info("Building profile page for " + startup);
+        LOGGER.info("Building info page for " + startup);
         return profile;
     }
 
@@ -40,5 +40,11 @@ public class StartupController {
         return startups;
     }
 
-
+    @GetMapping("{id}/delete")
+    public String delete(@PathVariable("id") String idString) {
+        startupService.deleteById(Long.parseLong(idString));
+        LOGGER.info("Redirecting to news page after deleting startup with id='" + idString + "'");
+        //TODO make logout for user but not for admin
+        return "redirect:/news";
+    }
 }

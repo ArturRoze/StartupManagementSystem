@@ -10,7 +10,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
-    <title>Profile</title>
+    <title>Profile ${user.id}</title>
     <style>
         table, td, th {
             border: 1px solid #ddd;
@@ -121,13 +121,13 @@
             </form>
         </div>
         <div align="center">
-            <form action="${pageContext.request.contextPath}/startups/new/startup/" method="get">
+            <form action="${pageContext.request.contextPath}/startups/new/startup" method="get">
                 <input type="submit" value="New startup">
             </form>
         </div>
 
         <div align="center">
-            <form action="${pageContext.request.contextPath}/offers/new/offer/" method="get">
+            <form action="${pageContext.request.contextPath}/offers/new/offer" method="get">
                 <input type="submit" value="New offer">
             </form>
         </div>

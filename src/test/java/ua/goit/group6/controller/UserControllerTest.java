@@ -86,7 +86,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void guestDeleteTEst() throws Exception {
+    public void guestDeleteTest() throws Exception {
         mvc.perform(get("/users/profile/" + id + "/delete").with(anonymous()))
                 .andExpect(status().isFound());
     }
@@ -106,15 +106,13 @@ public class UserControllerTest {
     }
 
     @Test
-    public void updateFormTEst() throws Exception {
+    public void updateFormTest() throws Exception {
         when(userService.getById(id)).thenReturn(user);
         when(countryService.getAll()).thenReturn(Collections.singletonList(country));
-        when(cityService.getAll()).thenReturn(Collections.singletonList(city));
 
         mvc.perform(get("/users/profile/" + id + "/update").with(user("user").roles("USER", "ADMIN")))
                 .andExpect(model().attribute("user", userService.getById(id)))
                 .andExpect(model().attribute("countries", countryService.getAll()))
-                .andExpect(model().attribute("cities", cityService.getAll()))
                 .andExpect(view().name("user_update_form"))
                 .andExpect(status().isOk());
     }

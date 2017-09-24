@@ -108,8 +108,16 @@
             </tr>
 
             <tr>
-                <th><input type="reset" value="Reset"></th>
+                <th><div align="center">
+                    <button onclick="goBack()">Go Back</button>
+                    <script>
+                        function goBack() {
+                            window.history.back();
+                        }
+                    </script>
+                </div></th>
                 <th><input type="submit" value="Update"></th>
+                <th><input type="reset" value="Reset"></th>
             </tr>
         </table>
 
