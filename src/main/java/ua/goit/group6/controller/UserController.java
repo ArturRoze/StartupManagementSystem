@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -12,8 +11,6 @@ import ua.goit.group6.model.User;
 import ua.goit.group6.service.CityService;
 import ua.goit.group6.service.CountryService;
 import ua.goit.group6.service.UserService;
-
-import java.io.IOException;
 
 /**
  * Controller for {@link User}
@@ -23,7 +20,7 @@ import java.io.IOException;
 @RequestMapping("/users")
 public class UserController {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     private final UserService userService;
 
@@ -31,22 +28,18 @@ public class UserController {
 
     private final CityService cityService;
 
-    private final PasswordEncoder passwordEncoder;
-
     /**
      * Constructor for controller
      * @param userService {@link UserService} bean
      * @param countryService {@link CountryService} bean
      * @param cityService {@link CityService} bean
-     * @param passwordEncoder {@link PasswordEncoder} bean
      */
     @Autowired
-    public UserController(UserService userService, CountryService countryService, CityService cityService, PasswordEncoder passwordEncoder) {
+    public UserController(UserService userService, CountryService countryService, CityService cityService) {
         LOGGER.info("Creating user controller");
         this.userService = userService;
         this.countryService = countryService;
         this.cityService = cityService;
-        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -59,7 +52,7 @@ public class UserController {
      */
     @GetMapping("/profile/{id}")
     public ModelAndView profile(@PathVariable("id") String idString) {
-        ModelAndView profile = new ModelAndView("profile");
+        ModelAndView profile = new ModelAndView("user_profile");
         long id = Long.parseLong(idString);
         User user = userService.getById(id);
         profile.addObject("user", user);
@@ -76,10 +69,7 @@ public class UserController {
      */
     @GetMapping("/profile/{id}/delete")
     public String delete(@PathVariable("id") String idString) {
-        long id = Long.parseLong(idString);
-        User user = userService.getById(id);
-        userService.delete(user);
-        //TODO make deleteById(id)
+        userService.deleteById(Long.parseLong(idString));
         LOGGER.info("Redirecting to index page after deleting user with id='" + idString + "'");
         //TODO make logout for user but not for admin
         return "redirect:/logout";
@@ -96,12 +86,11 @@ public class UserController {
      */
     @GetMapping("/profile/{id}/update")
     public ModelAndView update(@PathVariable("id") String idString) {
-        ModelAndView updateForm = new ModelAndView("update_form");
+        ModelAndView updateForm = new ModelAndView("user_update_form");
         long id = Long.parseLong(idString);
         User user = userService.getById(id);
         updateForm.addObject("user", user);
         updateForm.addObject("countries", countryService.getAll());
-        updateForm.addObject("cities", cityService.getAll());
         LOGGER.info("Building update page for " + user);
         return updateForm;
     }
@@ -116,9 +105,8 @@ public class UserController {
      * @param lastName new last name for user from request
      * @param description new description for user from request
      * @param countryIdString new id of {@link ua.goit.group6.model.Country} for user from request
-     * @param cityIidString new id of {@link ua.goit.group6.model.City} for user from request
+     * @param cityName name of {@link ua.goit.group6.model.City} for user from request
      * @return redirect link to this user profile
-     * @throws IOException if problem TODO what problem?
      */
     @PostMapping(value = "/profile/{id}/update/", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String update(@PathVariable("id") String idString,
@@ -127,16 +115,20 @@ public class UserController {
                          @RequestParam("last_name") String lastName,
                          @RequestParam("description") String description,
                          @RequestParam("country_id") String countryIdString,
-                         @RequestParam("city_id") String cityIidString)throws IOException {
+                         @RequestParam("city_name") String cityName){
+        LOGGER.info("Returning from user update form");
         User user = new User();
         user.setId(Long.parseLong(idString));
-        user.setPassword(passwordEncoder.encode(password));
+        user.setPassword(password);
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setDescription(description);
-        user.setCountry(countryService.getById(Long.parseLong(countryIdString)));
-        user.setCity(cityService.getById(Long.parseLong(cityIidString)));
-        userService.update(user);
+//        user.setCountry(countryService.getById(Long.parseLong(countryIdString)));
+
+        //TODO cities
+//        user.setCity(cityService.getById(Long.parseLong(cityIidString)));
+
+//        userService.update(user);
         LOGGER.info("User " + user + " successfully updated");
         LOGGER.info("Redirecting to profile of user with id='" + idString + "'");
         return "redirect:users/profile/" + idString;

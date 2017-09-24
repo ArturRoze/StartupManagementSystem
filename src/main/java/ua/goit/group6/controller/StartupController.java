@@ -28,17 +28,23 @@ public class StartupController {
         long id = Long.parseLong(idString);
         Startup startup = startupService.getById(id);
         profile.addObject("startup", startup);
-        LOGGER.info("Building profile page for " + startup);
+        LOGGER.info("Building info page for " + startup);
         return profile;
     }
 
     @GetMapping
     public ModelAndView list() {
         ModelAndView startups = new ModelAndView("startups_list");
-        startups.addObject("startups", startupService.getAll());
+        startups.addObject("startups", startupService.getAllDescRegistration());
         LOGGER.info("Building page with all startups");
         return startups;
     }
 
-
+    @GetMapping("{id}/delete")
+    public String delete(@PathVariable("id") String idString) {
+        startupService.deleteById(Long.parseLong(idString));
+        LOGGER.info("Redirecting to news page after deleting startup with id='" + idString + "'");
+        //TODO make logout for user but not for admin
+        return "redirect:/news";
+    }
 }

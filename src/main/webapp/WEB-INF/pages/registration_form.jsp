@@ -26,6 +26,14 @@
                 </td>
             </tr>
         </table>
+        <div align="center">
+            <button onclick="goBack()">Go Back</button>
+            <script>
+                function goBack() {
+                    window.history.back();
+                }
+            </script>
+        </div>
     </div>
 </form>
 </body>

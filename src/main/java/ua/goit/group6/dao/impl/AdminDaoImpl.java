@@ -6,12 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ua.goit.group6.dao.AdminDao;
 import ua.goit.group6.model.Admin;
 import ua.goit.group6.service.impl.AdminServiceImpl;
 
 /**
- * @param <>
  * @author Artyr
  */
 
@@ -27,6 +27,8 @@ public class AdminDaoImpl extends AbstractDaoImpl<Admin> implements AdminDao {
 
     @SuppressWarnings("unchecked")
     @Override
+    @Transactional
+
     public Admin getByLogin(String login) {
         Query query = getSession().createQuery("from Admin A where A.login like :login");
         query.setParameter("login", login);

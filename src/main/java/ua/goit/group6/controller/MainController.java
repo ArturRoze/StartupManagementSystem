@@ -3,20 +3,16 @@ package ua.goit.group6.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ua.goit.group6.model.Admin;
 import ua.goit.group6.model.User;
 import ua.goit.group6.service.AdminService;
+import ua.goit.group6.service.StartupService;
 import ua.goit.group6.service.UserService;
 
 import javax.annotation.PostConstruct;
-import java.io.IOException;
 
 /**
  * Main controller for system
@@ -27,39 +23,39 @@ import java.io.IOException;
 @RequestMapping("/")
 public class MainController {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     private final UserService userService;
 
     private final AdminService adminService;
 
-    private final PasswordEncoder passwordEncoder;
+    private final StartupService startupService;
 
     /**
      * Constructor for controller
-     *
-     * @param userService     {@link UserService} bean
-     * @param adminService    {@link AdminService} bean
-     * @param passwordEncoder {@link PasswordEncoder} bean
+     *  @param userService  {@link UserService} bean
+     * @param adminService {@link AdminService} bean
+     * @param startupService {@link StartupService} bean
      */
     @Autowired
-    public MainController(UserService userService, AdminService adminService, PasswordEncoder passwordEncoder) {
+    public MainController(UserService userService, AdminService adminService, StartupService startupService) {
         LOGGER.info("Creating index controller");
         this.userService = userService;
         this.adminService = adminService;
-        this.passwordEncoder = passwordEncoder;
+        this.startupService = startupService;
     }
 
     /**
      * Mapping for url ":/"
      *
      * @return a {@link ModelAndView} object holding the name of jsp represented by {@code String},
-     * and {@link java.util.List} of last 10 //TODO startups from database
+     * and {@link java.util.List} of last 10 startups from database
      */
     @GetMapping
     public ModelAndView index() {
         ModelAndView main = new ModelAndView("index");
-        // TODO add startup list
+//        main.addObject("startups", startupService.getAll());
+        main.addObject("startups", startupService.getLastNDesc(2));
         LOGGER.info("Building index page");
         return main;
     }
@@ -76,24 +72,20 @@ public class MainController {
     }
 
     /**
+     * /**
      * Mapping for url ":/registration/"
      * Method saves {@link User} to database
      *
-     * @param user {@link User} from page form
+     * @param login    login from the form
+     * @param password password from the form
      * @return redirect link to login page
-     * @throws IOException if registration failed
      */
     @PostMapping("registration/")
-    public String registration(@ModelAttribute("user") User user) {
-        LOGGER.info("Encoding password");
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        try {
-            LOGGER.info("Trying to save user " + user + " to database");
-            userService.save(user);
-        } catch (Exception e) {
-            LOGGER.info("Exception during saving user to database");
-            throw new RuntimeException("Exception during saving user to database");
-        }
+    public String registration(@RequestParam String login, @RequestParam String password) {
+        User user = new User();
+        user.setLogin(login);
+        user.setPassword(password);
+        userService.save(user);
         LOGGER.info("Redirecting to index page after registration");
         return "redirect:/login";
     }
@@ -101,14 +93,16 @@ public class MainController {
     /**
      * Mapping for url ":/news"
      *
-     * @return @return a {@link ModelAndView} object holding the name of jsp represented by {@code String},
+     * @return a {@link ModelAndView} object holding the name of jsp represented by {@code String},
      * and {@link java.util.List} of //TODO startups and offers from database
      * sorted by registration date in descending order
      */
-    @GetMapping("/news")
+    @GetMapping("news")
     public ModelAndView news() {
         ModelAndView news = new ModelAndView("news");
-        // TODO add startup list
+        news.addObject("startups", startupService.getAllDescRegistration());
+        //TODO add offers
+        LOGGER.info("Building news page");
         return news;
     }
 
@@ -119,23 +113,23 @@ public class MainController {
      */
     @PostConstruct
     public void InitDefaultUsers() {
+        if (adminService.getByLogin("admin") == null) {
+
+            LOGGER.info("Initialising default admin with login = 'admin', and password = 'admin' ");
+            Admin admin = new Admin();
+            admin.setLogin("admin");
+            admin.setPassword("admin");
+//            admin.setRole(User.Roles.ADMIN);
+            adminService.save(admin);
+        }
 
         if (userService.getByLogin("user") == null) {
             LOGGER.info("Initialising default user with login = 'user', and password = 'user' ");
             User user = new User();
             user.setLogin("user");
-            user.setPassword(passwordEncoder.encode("user"));
+            user.setPassword("user");
 //            user.setRole(User.Roles.USER);
             userService.save(user);
         }
-        if (adminService.getByLogin("admin") == null) {
-            LOGGER.info("Initialising default admin with login = 'admin', and password = 'admin' ");
-            Admin admin = new Admin();
-            admin.setLogin("admin");
-            admin.setPassword(passwordEncoder.encode("admin"));
-//            admin.setRole(User.Roles.ADMIN);
-            adminService.save(admin);
-        }
     }
-
 }

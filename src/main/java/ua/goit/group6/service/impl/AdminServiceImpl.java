@@ -3,6 +3,7 @@ package ua.goit.group6.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.goit.group6.dao.AdminDao;
@@ -10,8 +11,6 @@ import ua.goit.group6.dao.UserDao;
 import ua.goit.group6.model.Admin;
 import ua.goit.group6.model.User;
 import ua.goit.group6.service.AdminService;
-
-import java.util.List;
 
 
 /**
@@ -26,16 +25,19 @@ import java.util.List;
 @Service
 public class AdminServiceImpl extends AbstractBasicServiceImpl<Admin> implements AdminService {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(AdminServiceImpl.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     private final AdminDao adminDao;
     private final UserDao userDao;
+    private final PasswordEncoder passwordEncoder;
+
 
     @Autowired
-    public AdminServiceImpl(AdminDao adminDao, UserDao userDao) {
+    public AdminServiceImpl(AdminDao adminDao, UserDao userDao, PasswordEncoder passwordEncoder) {
         super(adminDao);
         this.adminDao = adminDao;
         this.userDao = userDao;
+        this.passwordEncoder = passwordEncoder;
         LOGGER.info("AdminServiceImpl created");
     }
 
@@ -45,7 +47,7 @@ public class AdminServiceImpl extends AbstractBasicServiceImpl<Admin> implements
      * @return {@link User} from repository with given login
      */
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Admin getByLogin(String login) {
         return adminDao.getByLogin(login);
     }
@@ -59,56 +61,22 @@ public class AdminServiceImpl extends AbstractBasicServiceImpl<Admin> implements
     @Override
     @Transactional
     public void save(Admin admin) {
-        if (userDao.getByLogin(admin.getLogin()) == null) {
-            super.save(admin);
-        } else {
+
+        if (userDao.getByLogin(admin.getLogin()) != null) {
             LOGGER.info("User with login:'{}' already exists", admin.getLogin());
-            //TODO Which exception should be thrown?
-            throw new RuntimeException("User with login:'" + admin.getLogin() + "' already exists");
+
+        } else if (adminDao.getByLogin(admin.getLogin()) != null){
+            LOGGER.info("Admin with login:'{}' already exists", admin.getLogin());
+
+        }else {
+            admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+            super.save(admin);
         }
     }
 
-//    @Override
-//    @Transactional(readOnly = true)
-//    public Admin getById(long id) {
-//        LOGGER.info("Get admin by id='{}' from repository", id);
-//        return adminDao.getById(id);
-//    }
-//
-//    @Override
-//    @Transactional(readOnly = true)
-//    public Admin getByLogin(String login) {
-//        LOGGER.info("Get admin by login='{}' from repository", login);
-//        return adminDao.getByLogin(login);
-//    }
-//
-//    @Override
-//    @Transactional(readOnly = true)
-//    public List<Admin> getAll() {
-//        LOGGER.info("Get all users from repository");
-//        return adminDao.readAll();
-//    }
-//
-//
-//
-//    @Override
-//    @Transactional
-//    public void update(Admin admin) {
-//        adminDao.update(admin);
-//        LOGGER.info("Update admin:{} in repository", admin);
-//    }
-//
-//    @Override
-//    @Transactional
-//    public void delete(Admin admin) {
-//        adminDao.delete(admin);
-//        LOGGER.info("Delete admin:{} from repository", admin);
-//    }
-//
-//    //@Override
-//    @Transactional
-//    public void deleteById(long id) {
-//        adminDao.deleteById(id);
-//        LOGGER.info("Delete admin with id:{} from repository", id);
-//    }
+    @Override
+    public void update(Admin admin) {
+        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+        super.update(admin);
+    }
 }

@@ -12,7 +12,7 @@
 </head>
 <body>
 <h1>OOPS SOMETHING WENT WRONG</h1>
-<a href="/">To main page</a>
+<a href="${pageContext.request.contextPath}/">To main page</a>
 
 </body>
 </html>

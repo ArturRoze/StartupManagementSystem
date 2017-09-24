@@ -42,17 +42,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 // for second sprint
                 .antMatchers("/startups/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/offers**").hasAnyRole("USER", "ADMIN")
-
-                //for development
-                .antMatchers("/test**").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/offers", "/offers/**").hasAnyRole("USER", "ADMIN")
 
                 .anyRequest().denyAll()
                 .and()
                     .formLogin()
                     .loginPage("/login")
                     .failureUrl("/error")
-                    .defaultSuccessUrl("/test1")
+                    .defaultSuccessUrl("/news")
                     .loginPage("/login")
                     .permitAll()
                 .and()

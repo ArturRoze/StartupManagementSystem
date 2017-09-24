@@ -20,19 +20,27 @@ public class UserDetailed implements UserDetails {
 
     private final Logger LOGGER = LoggerFactory.getLogger(UserDetailed.class);
 
-    private User user;
+    private BasicUser user;
     private Collection<SimpleGrantedAuthority> grantedAuthorities;
 
     public UserDetailed(User user) {
         LOGGER.info("Create UserDetailed wrapping around {}", user);
         this.user = user;
         this.grantedAuthorities = new ArrayList<>();
+        LOGGER.trace("Setting authorities");
+        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    public UserDetailed(Admin admin) {
+        LOGGER.info("Create UserDetailed wrapping around {}", admin);
+        this.user = admin;
+        this.grantedAuthorities = new ArrayList<>();
+        LOGGER.trace("Setting authorities");
+        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        LOGGER.trace("Setting authorities");
-        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
         return grantedAuthorities;
     }
 
