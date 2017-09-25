@@ -73,6 +73,8 @@ public class StartupController {
         startup.setUser(userService.getById(Long.parseLong(userIdString)));
         startup.setName(name);
         startup.setDescription(description);
+
+        if (!countryIdString.isEmpty())
         startup.setCountry(countryService.getById(Long.parseLong(countryIdString)));
 
         startupService.save(startup);

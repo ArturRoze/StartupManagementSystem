@@ -63,7 +63,11 @@
             </tr>
             <tr>
                 <th>User</th>
-                <td>${startup.user.login}</td>
+                <td><div align="center">
+                    <form action="/users/profile/${startup.user.id}" method="get">
+                        <input type="submit" value="To user ${startup.user.id} profile page">
+                    </form>
+                </div></td>
             </tr>
             <tr>
                 <th>Registration</th>

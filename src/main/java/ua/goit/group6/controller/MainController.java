@@ -3,6 +3,7 @@ package ua.goit.group6.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,15 +32,18 @@ public class MainController {
 
     private final StartupService startupService;
 
+    private final PasswordEncoder passwordEncoder;
+
     /**
      * Constructor for controller
-     *
-     * @param userService    {@link UserService} bean
+     *  @param userService    {@link UserService} bean
      * @param adminService   {@link AdminService} bean
      * @param startupService {@link StartupService} bean
+     * @param passwordEncoder {@link PasswordEncoder} bean
      */
     @Autowired
-    public MainController(UserService userService, AdminService adminService, StartupService startupService) {
+    public MainController(UserService userService, AdminService adminService, StartupService startupService, PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
         LOGGER.info("Creating index controller");
         this.userService = userService;
         this.adminService = adminService;
@@ -84,7 +88,7 @@ public class MainController {
     public String registration(@RequestParam String login, @RequestParam String password) {
         User user = new User();
         user.setLogin(login);
-        user.setPassword(password);
+        user.setPassword(passwordEncoder.encode(password));
         userService.save(user);
         LOGGER.info("Redirecting to index page after registration");
         return "redirect:/login";
@@ -118,7 +122,7 @@ public class MainController {
             LOGGER.info("Initialising default admin with login = 'admin', and password = 'admin' ");
             Admin admin = new Admin();
             admin.setLogin("admin");
-            admin.setPassword("admin");
+            admin.setPassword(passwordEncoder.encode("admin"));
             adminService.save(admin);
         }
 
@@ -126,7 +130,7 @@ public class MainController {
             LOGGER.info("Initialising default user with login = 'user', and password = 'user' ");
             User user = new User();
             user.setLogin("user");
-            user.setPassword("user");
+            user.setPassword(passwordEncoder.encode("user"));
             userService.save(user);
         }
     }

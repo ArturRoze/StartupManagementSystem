@@ -68,8 +68,14 @@
 
             <tr>
                 <td>Password</td>
-                <td>${user.password}</td>
-                <td><input type="text" name="password" value="don't work"></td>
+                <td>Enter new password</td>
+                <td><input type="text" name="password" placeholder="Enter new password"></td>
+            </tr>
+
+            <tr>
+                <td>Email</td>
+                <td>${user.email}</td>
+                <td><input type="email" name="email" value="${user.email}"></td>
             </tr>
 
             <tr>
@@ -93,29 +99,30 @@
             <tr>
                 <td>Country</td>
                 <td>${user.country.name}</td>
+                <td>
+                    <select name="country_id">
 
-                <td><select name="country_id" >
+                        <option value="${user.country.id}" selected>${user.country.name}</option>
 
-                    <option value="${user.country.id}" selected>${user.country.name}</option>
+                        <c:forEach var="country" items="${countries}">
+                            <option value="${country.id}">${country.name}</option>
+                        </c:forEach>
 
-                    <c:forEach var="country" items="${countries}">
-                        <option value="${country.id}">${country.name}</option>
-                    </c:forEach>
-
-                </select></td>
+                    </select>
+                </td>
             </tr>
 
-
-
             <tr>
-                <th><div align="center">
-                    <button onclick="goBack()">Go Back</button>
-                    <script>
-                        function goBack() {
-                            window.history.back();
-                        }
-                    </script>
-                </div></th>
+                <th>
+                    <div align="center">
+                        <button onclick="goBack()">Go Back</button>
+                        <script>
+                            function goBack() {
+                                window.history.back();
+                            }
+                        </script>
+                    </div>
+                </th>
                 <th><input type="submit" value="Update"></th>
                 <th><input type="reset" value="Reset"></th>
             </tr>

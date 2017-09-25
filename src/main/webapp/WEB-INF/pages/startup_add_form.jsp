@@ -50,7 +50,7 @@
 
             <tr>
                 <th>Choose country</th>
-                <td><select name="country_id" >
+                <td><select name="country_id">
                     <c:forEach var="country" items="${countries}">
                         <option value="${country.id}">${country.name}</option>
                     </c:forEach>
@@ -58,6 +58,16 @@
             </tr>
 
             <tr>
+                <td>
+                    <div align="center">
+                        <button onclick="goBack()">Go Back</button>
+                        <script>
+                            function goBack() {
+                                window.history.back();
+                            }
+                        </script>
+                    </div>
+                </td>
                 <td align="center">
                     <button type="submit">Enter</button>
                 </td>

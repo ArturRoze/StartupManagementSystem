@@ -22,7 +22,7 @@
                 </td>
             </tr>
             <tr>
-                <th>Enter login</th>
+                <th>Enter password</th>
                 <td>
                     <input type="password" required name="password" placeholder="Password">
                 </td>

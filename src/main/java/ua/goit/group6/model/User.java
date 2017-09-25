@@ -15,8 +15,8 @@ public class User extends BasicUser {
     @Column
     private String description;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "country_id", insertable = false, updatable = false)
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "country_id")
     private Country country;
 
 

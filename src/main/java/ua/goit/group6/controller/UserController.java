@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,15 +27,17 @@ public class UserController {
 
     private final CountryService countryService;
 
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * Constructor for controller
-     *
-     * @param userService    {@link UserService} bean
+     *  @param userService    {@link UserService} bean
      * @param countryService {@link CountryService} bean
+     * @param passwordEncoder {@link PasswordEncoder} bean
      */
     @Autowired
-    public UserController(UserService userService, CountryService countryService) {
+    public UserController(UserService userService, CountryService countryService, PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
         LOGGER.info("Creating user controller");
         this.userService = userService;
         this.countryService = countryService;
@@ -108,22 +111,25 @@ public class UserController {
     @PostMapping(value = "/profile/{id}/update/", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String update(@PathVariable("id") String idString,
                          @RequestParam("password") String password,
+                         @RequestParam("email") String email,
                          @RequestParam("first_name") String firstName,
                          @RequestParam("last_name") String lastName,
                          @RequestParam("description") String description,
                          @RequestParam("country_id") String countryIdString) {
         LOGGER.info("Returning from user update form");
         User user = userService.getById(Long.parseLong(idString));
-//        user.setPassword(password);
+
+        if (!password.isEmpty())
+        user.setPassword(passwordEncoder.encode(password));
+
+        user.setEmail(email);
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setDescription(description);
+
         if (!countryIdString.isEmpty()){
             user.setCountry(countryService.getById(Long.parseLong(countryIdString)));
         }
-
-        //TODO cities
-//        user.setCity(cityService.getById(Long.parseLong(cityIidString)));
 
         userService.update(user);
         LOGGER.info("User " + user + " successfully updated");
