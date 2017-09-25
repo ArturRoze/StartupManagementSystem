@@ -4,6 +4,21 @@
 <html>
 <head>
     <title>admin profile</title>
+    <style>
+        table, td, th {
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 50%;
+        }
+
+        th, td {
+            padding: 15px;
+        }
+    </style>
 </head>
 <body>
 <div align="center">
@@ -22,7 +37,7 @@
 
     <div>
         <c:set var="admin_current_id">
-            <sec:authentication property="id"/>
+            <sec:authentication property="principal.id"/>
         </c:set>
         <c:set var="isOwner" value="${admin_current_id == admin.id}"/>
     </div>

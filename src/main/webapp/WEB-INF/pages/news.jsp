@@ -35,6 +35,12 @@
         <sec:authentication property="principal.id"/>
     </c:set>
 
+    <c:set var="isAdmin" value="false"/>
+
+    <sec:authorize access="hasRole('ADMIN')">
+        <c:set var="isAdmin" value="true"/>
+    </sec:authorize>
+
     <div align="center">
         <form action="${pageContext.request.contextPath}/" method="get">
             <input type="submit" value="To main page">
@@ -43,7 +49,7 @@
 
     <c:choose>
 
-    <c:when test="isAdmin">
+    <c:when test="${isAdmin}">
     <div align="center">
         <form action="/admins/profile/${current_user_id}" method="get">
             <input type="submit" value="To admin profile page">

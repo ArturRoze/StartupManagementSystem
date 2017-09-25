@@ -32,7 +32,6 @@ public class AdminController {
 
     @GetMapping("/profile/{id}")
     public ModelAndView profile(@PathVariable("id") String idString) {
-        //TODO admin profile jsp
         ModelAndView profile = new ModelAndView("admin_profile");
         long id = Long.parseLong(idString);
         Admin admin = adminService.getById(id);
@@ -50,9 +49,8 @@ public class AdminController {
 
     @GetMapping("profile/{id}/update")
     public ModelAndView update(@PathVariable("id") String idString) {
-        //TODO admin update form
         ModelAndView updateForm = new ModelAndView("admin_update_form");
-        long id = Long.parseLong("id");
+        long id = Long.parseLong(idString);
         Admin admin = adminService.getById(id);
         updateForm.addObject("admin", admin);
         return updateForm;
@@ -60,15 +58,15 @@ public class AdminController {
 
     @PostMapping(value = "/profile/{id}/update/", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String update(@PathVariable("id") String idString,
-                         @RequestParam("password") String password,
+//                         @RequestParam("password") String password,
                          @RequestParam("email") String email)
 
             throws IOException {
-        Admin admin = new Admin();
-        admin.setId(Long.parseLong(idString));
-        admin.setPassword(passwordEncoder.encode(password));
+        Admin admin = adminService.getById(Long.parseLong(idString));
+//        admin.setPassword(passwordEncoder.encode(password));
         admin.setEmail(email);
-        return "redirect:/admins/profile/{id}";
+        adminService.update(admin);
+        return "redirect:/admins/profile/" + admin.getId() ;
     }
 
 
