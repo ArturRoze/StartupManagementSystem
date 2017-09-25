@@ -99,10 +99,7 @@
                 <th>Country</th>
                 <td>${user.country.name}</td>
             </tr>
-            <tr>
-                <th>City</th>
-                <td>${user.city.name}</td>
-            </tr>
+
 
         </table>
     </div>

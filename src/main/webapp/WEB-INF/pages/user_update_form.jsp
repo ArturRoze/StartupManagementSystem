@@ -101,12 +101,7 @@
                 </select></td>
             </tr>
 
-                <%--TODO make it--%>
-            <tr>
-                <td>City</td>
-                <td>${user.city.name}</td>
-                <td><input type="text" name="city_name" value="${user.city.name}"></td>
-            </tr>
+
 
             <tr>
                 <th><div align="center">

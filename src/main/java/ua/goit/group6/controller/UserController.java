@@ -14,6 +14,7 @@ import ua.goit.group6.service.UserService;
 
 /**
  * Controller for {@link User}
+ *
  * @author Boiko Ivan
  */
 @Controller
@@ -26,20 +27,18 @@ public class UserController {
 
     private final CountryService countryService;
 
-    private final CityService cityService;
 
     /**
      * Constructor for controller
-     * @param userService {@link UserService} bean
+     *
+     * @param userService    {@link UserService} bean
      * @param countryService {@link CountryService} bean
-     * @param cityService {@link CityService} bean
      */
     @Autowired
-    public UserController(UserService userService, CountryService countryService, CityService cityService) {
+    public UserController(UserService userService, CountryService countryService) {
         LOGGER.info("Creating user controller");
         this.userService = userService;
         this.countryService = countryService;
-        this.cityService = cityService;
     }
 
     /**
@@ -76,7 +75,7 @@ public class UserController {
     }
 
     /**
-     * Mapping for url ""/users/profile/{id}/update"
+     * Mapping for url "/users/profile/{id}/update"
      * Method collects data from database and sends it to {@link User} update form
      *
      * @param idString the id of user to update from url
@@ -96,16 +95,15 @@ public class UserController {
     }
 
     /**
-     * Mapping for url ""/users/profile/{id}/update/"
-     * Method updates {@link User} in database with parameters which came from page form
+     * Mapping for url "/users/profile/{id}/update/"
+     * Method updates {@link User} in database with parameters which come from page form
      *
-     * @param idString the id of user to update from url
-     * @param password new password for user from request
-     * @param firstName new first name for user from request
-     * @param lastName new last name for user from request
-     * @param description new description for user from request
+     * @param idString        the id of user to update from url
+     * @param password        new password for user from request
+     * @param firstName       new first name for user from request
+     * @param lastName        new last name for user from request
+     * @param description     new description for user from request
      * @param countryIdString new id of {@link ua.goit.group6.model.Country} for user from request
-     * @param cityName name of {@link ua.goit.group6.model.City} for user from request
      * @return redirect link to this user profile
      */
     @PostMapping(value = "/profile/{id}/update/", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -114,29 +112,27 @@ public class UserController {
                          @RequestParam("first_name") String firstName,
                          @RequestParam("last_name") String lastName,
                          @RequestParam("description") String description,
-                         @RequestParam("country_id") String countryIdString,
-                         @RequestParam("city_name") String cityName){
+                         @RequestParam("country_id") String countryIdString) {
         LOGGER.info("Returning from user update form");
-        User user = new User();
-        user.setId(Long.parseLong(idString));
+        User user = userService.getById(Long.parseLong(idString));
         user.setPassword(password);
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setDescription(description);
-//        user.setCountry(countryService.getById(Long.parseLong(countryIdString)));
+        user.setCountry(countryService.getById(Long.parseLong(countryIdString)));
 
         //TODO cities
 //        user.setCity(cityService.getById(Long.parseLong(cityIidString)));
 
-//        userService.update(user);
+        userService.update(user);
         LOGGER.info("User " + user + " successfully updated");
         LOGGER.info("Redirecting to profile of user with id='" + idString + "'");
-        return "redirect:users/profile/" + idString;
+        return "redirect:/users/profile/" + idString;
     }
 
     /**
      * Mapping for url ":/users"
-     * Method collects data from database and sends it to {@link User} update form
+     * Method collects data from database and sends it to page which shows all {@link User}
      *
      * @return a {@link ModelAndView} object holding the name of jsp represented by {@code String},
      * and {@link java.util.List} of all {@link User} from database
