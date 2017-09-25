@@ -20,11 +20,11 @@ public class Startup implements Serializable{
     private String description;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JoinColumn(name = "user_id", updatable = false)
     private User user;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "country_id",insertable = false, updatable = false)
+    @JoinColumn(name = "country_id")
     private Country country;
 
     @Column (name = "registration_date")

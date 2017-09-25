@@ -91,7 +91,7 @@
                     <td>${startup.id}</td>
                     <td>${startup.name}</td>
                     <td>${startup.description}</td>
-                    <td>${startup.user.login}</td>
+                    <td>${startup.user.id}</td>
                     <td>${startup.registrationDate}</td>
                     <td>${startup.country.name}</td>
 

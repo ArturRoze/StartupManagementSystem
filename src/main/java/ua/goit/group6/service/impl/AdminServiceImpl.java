@@ -29,15 +29,13 @@ public class AdminServiceImpl extends AbstractBasicServiceImpl<Admin> implements
 
     private final AdminDao adminDao;
     private final UserDao userDao;
-    private final PasswordEncoder passwordEncoder;
 
 
     @Autowired
-    public AdminServiceImpl(AdminDao adminDao, UserDao userDao, PasswordEncoder passwordEncoder) {
+    public AdminServiceImpl(AdminDao adminDao, UserDao userDao) {
         super(adminDao);
         this.adminDao = adminDao;
         this.userDao = userDao;
-        this.passwordEncoder = passwordEncoder;
         LOGGER.info("AdminServiceImpl created");
     }
 
@@ -69,14 +67,12 @@ public class AdminServiceImpl extends AbstractBasicServiceImpl<Admin> implements
             LOGGER.info("Admin with login:'{}' already exists", admin.getLogin());
 
         }else {
-            admin.setPassword(passwordEncoder.encode(admin.getPassword()));
             super.save(admin);
         }
     }
 
     @Override
     public void update(Admin admin) {
-        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
         super.update(admin);
     }
 }

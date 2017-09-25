@@ -28,15 +28,13 @@ public class UserServiceImpl extends AbstractBasicServiceImpl<User> implements U
 
     private final UserDao userDao;
     private final AdminDao adminDao;
-    private final PasswordEncoder passwordEncoder;
 
 
     @Autowired
-    public UserServiceImpl(AdminDao adminDao, UserDao userDao, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(AdminDao adminDao, UserDao userDao) {
         super(userDao);
         this.userDao = userDao;
         this.adminDao = adminDao;
-        this.passwordEncoder = passwordEncoder;
         LOGGER.info("UserServiceImpl created");
     }
 
@@ -69,14 +67,12 @@ public class UserServiceImpl extends AbstractBasicServiceImpl<User> implements U
             LOGGER.info("User with login:'{}' already exists", user.getLogin());
 
         } else {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
             super.save(user);
         }
     }
 
     @Override
     public void update(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         super.update(user);
     }
 }
