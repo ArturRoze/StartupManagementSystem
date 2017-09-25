@@ -69,7 +69,7 @@
             <tr>
                 <td>Password</td>
                 <td>${user.password}</td>
-                <td><input type="text" name="password" value="${user.password}"></td>
+                <td><input type="text" name="password" value="don't work"></td>
             </tr>
 
             <tr>
@@ -93,11 +93,15 @@
             <tr>
                 <td>Country</td>
                 <td>${user.country.name}</td>
+
                 <td><select name="country_id" >
+
                     <option value="${user.country.id}" selected>${user.country.name}</option>
+
                     <c:forEach var="country" items="${countries}">
                         <option value="${country.id}">${country.name}</option>
                     </c:forEach>
+
                 </select></td>
             </tr>
 

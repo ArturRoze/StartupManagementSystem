@@ -27,8 +27,6 @@ public class AdminDaoImpl extends AbstractDaoImpl<Admin> implements AdminDao {
 
     @SuppressWarnings("unchecked")
     @Override
-    @Transactional
-
     public Admin getByLogin(String login) {
         Query query = getSession().createQuery("from Admin A where A.login like :login");
         query.setParameter("login", login);

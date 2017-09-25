@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ua.goit.group6.model.User;
-import ua.goit.group6.service.CityService;
 import ua.goit.group6.service.CountryService;
 import ua.goit.group6.service.UserService;
 
@@ -115,11 +114,13 @@ public class UserController {
                          @RequestParam("country_id") String countryIdString) {
         LOGGER.info("Returning from user update form");
         User user = userService.getById(Long.parseLong(idString));
-        user.setPassword(password);
+//        user.setPassword(password);
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setDescription(description);
-        user.setCountry(countryService.getById(Long.parseLong(countryIdString)));
+        if (!countryIdString.isEmpty()){
+            user.setCountry(countryService.getById(Long.parseLong(countryIdString)));
+        }
 
         //TODO cities
 //        user.setCity(cityService.getById(Long.parseLong(cityIidString)));
