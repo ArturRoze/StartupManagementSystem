@@ -33,7 +33,7 @@ public class AdminController {
     @GetMapping("/profile/{id}")
     public ModelAndView profile(@PathVariable("id") String idString) {
         //TODO admin profile jsp
-        ModelAndView profile = new ModelAndView("user_profile");
+        ModelAndView profile = new ModelAndView("admin_profile");
         long id = Long.parseLong(idString);
         Admin admin = adminService.getById(id);
         profile.addObject("admin", admin);
@@ -51,7 +51,7 @@ public class AdminController {
     @GetMapping("profile/{id}/update")
     public ModelAndView update(@PathVariable("id") String idString) {
         //TODO admin update form
-        ModelAndView updateForm = new ModelAndView("user_update_form");
+        ModelAndView updateForm = new ModelAndView("admin_update_form");
         long id = Long.parseLong("id");
         Admin admin = adminService.getById(id);
         updateForm.addObject("admin", admin);
@@ -68,7 +68,7 @@ public class AdminController {
         admin.setId(Long.parseLong(idString));
         admin.setPassword(passwordEncoder.encode(password));
         admin.setEmail(email);
-        return "redirect:admins/profile/{id}";
+        return "redirect:/admins/profile/{id}";
     }
 
 

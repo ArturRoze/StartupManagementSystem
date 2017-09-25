@@ -41,11 +41,25 @@
         </form>
     </div>
 
+    <c:choose>
+
+    <c:when test="isAdmin">
     <div align="center">
-        <form action="/users/profile/${current_user_id}" method="get">
-            <input type="submit" value="To profile page">
+        <form action="/admins/profile/${current_user_id}" method="get">
+            <input type="submit" value="To admin profile page">
         </form>
     </div>
+    </c:when>
+
+    <c:otherwise>
+    <div align="center">
+        <form action="/users/profile/${current_user_id}" method="get">
+            <input type="submit" value="To user profile page">
+        </form>
+    </div>
+    </c:otherwise>
+
+    </c:choose>
 
     <div align="center">
         <form action="${pageContext.request.contextPath}/logout" method="post">
