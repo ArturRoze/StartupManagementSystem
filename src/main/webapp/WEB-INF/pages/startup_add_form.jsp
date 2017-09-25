@@ -11,6 +11,21 @@
 <html>
 <head>
     <title>New startup form</title>
+    <style>
+        table, td, th {
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 50%;
+        }
+
+        th, td {
+            padding: 15px;
+        }
+    </style>
 </head>
 <body>
 <c:set var="current_user_id">
@@ -33,15 +48,14 @@
                 </td>
             </tr>
 
-            <%--TODO countries--%>
-            <%--<tr>--%>
-                <%--<th>Choose country</th>--%>
-                <%--<td><select name="country_id" >--%>
-                    <%--<c:forEach var="country" items="${countries}">--%>
-                        <%--<option value="${country.id}">${country.name}</option>--%>
-                    <%--</c:forEach>--%>
-                <%--</select></td>--%>
-            <%--</tr>          --%>
+            <tr>
+                <th>Choose country</th>
+                <td><select name="country_id" >
+                    <c:forEach var="country" items="${countries}">
+                        <option value="${country.id}">${country.name}</option>
+                    </c:forEach>
+                </select></td>
+            </tr>
 
             <tr>
                 <td align="center">

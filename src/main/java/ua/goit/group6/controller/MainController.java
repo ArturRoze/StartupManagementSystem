@@ -33,8 +33,9 @@ public class MainController {
 
     /**
      * Constructor for controller
-     *  @param userService  {@link UserService} bean
-     * @param adminService {@link AdminService} bean
+     *
+     * @param userService    {@link UserService} bean
+     * @param adminService   {@link AdminService} bean
      * @param startupService {@link StartupService} bean
      */
     @Autowired
@@ -54,7 +55,6 @@ public class MainController {
     @GetMapping
     public ModelAndView index() {
         ModelAndView main = new ModelAndView("index");
-//        main.addObject("startups", startupService.getAll());
         main.addObject("startups", startupService.getLastNDesc(2));
         LOGGER.info("Building index page");
         return main;
@@ -119,7 +119,6 @@ public class MainController {
             Admin admin = new Admin();
             admin.setLogin("admin");
             admin.setPassword("admin");
-//            admin.setRole(User.Roles.ADMIN);
             adminService.save(admin);
         }
 
@@ -128,7 +127,6 @@ public class MainController {
             User user = new User();
             user.setLogin("user");
             user.setPassword("user");
-//            user.setRole(User.Roles.USER);
             userService.save(user);
         }
     }
