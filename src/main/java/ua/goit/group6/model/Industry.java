@@ -2,13 +2,15 @@ package ua.goit.group6.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "industry")
-public class Industry implements Serializable{
+public class Industry implements Serializable {
 
+    @Id
     @Column
     private Long id;
 

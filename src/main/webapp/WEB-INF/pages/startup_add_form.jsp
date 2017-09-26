@@ -57,7 +57,7 @@
 
             <tr>
                 <th>Choose industry</th>
-                <td><select name="country_id">
+                <td><select name="industry_id">
                     <c:forEach var="industry" items="${industries}">
                         <option value="${industry.id}">${industry.name}</option>
                     </c:forEach>
