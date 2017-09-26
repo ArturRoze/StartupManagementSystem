@@ -31,14 +31,14 @@
 <div align="center">
 
     <c:set var="isAdmin" value="false"/>
-    <c:set var="id_test" value="false"/>
+    <c:set var="isOwner" value="false"/>
 
     <sec:authorize access="isAuthenticated()">
         <c:set var="current_user_id">
             <sec:authentication property="principal.id"/>
         </c:set>
 
-        <c:set var="id_test" value="${startup.user.id == current_user_id}"/>
+        <c:set var="isOwner" value="${startup.user.id == current_user_id}"/>
 
         <sec:authorize access="hasRole('ADMIN')">
             <c:set var="isAdmin" value="true"/>
@@ -79,9 +79,9 @@
             </tr>
         </table>
 
-        <c:if test="${id_test || isAdmin}">
+        <c:if test="${isOwner || isAdmin}">
             <div align="center">
-                <form action="/startups/${startup.id}/update" method="get">
+                <form action="/startups/${startup.id}/edit" method="get">
                     <input type="submit" value="Update">
                 </form>
             </div>

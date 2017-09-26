@@ -49,6 +49,22 @@
             </tr>
 
             <tr>
+                <th>Enter budget</th>
+                <td>
+                    <input type="number" name="budget">
+                </td>
+            </tr>
+
+            <tr>
+                <th>Choose industry</th>
+                <td><select name="industry_id">
+                    <c:forEach var="industry" items="${industries}">
+                        <option value="${industry.id}">${industry.name}</option>
+                    </c:forEach>
+                </select></td>
+            </tr>
+
+            <tr>
                 <th>Choose country</th>
                 <td><select name="country_id">
                     <c:forEach var="country" items="${countries}">
