@@ -81,7 +81,9 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>Description</th>
-                <th>User</th>
+                <th>Industry</th>
+                <th>Owner</th>
+                <th>Budget</th>
                 <th>Registration</th>
                 <th>Country</th>
                 <th>To startup</th>
@@ -91,10 +93,11 @@
                     <td>${startup.id}</td>
                     <td>${startup.name}</td>
                     <td>${startup.description}</td>
-                    <td>${startup.user.id}</td>
+                    <td>${startup.industry.name}</td>
+                    <td>${startup.user.firstName} ${startup.user.lastName}</td>
+                    <td>${startup.budget}</td>
                     <td>${startup.registrationDate}</td>
                     <td>${startup.country.name}</td>
-
                     <td>
                         <form action="/startups/${startup.id}" method="get">
                             <input type="submit" value="Show startup">

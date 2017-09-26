@@ -35,7 +35,7 @@
     <c:set var="current_user_id">
         <sec:authentication property="principal.id"/>
     </c:set>
-    <c:set var="id_test" value="${user.id == current_user_id}"/>
+    <c:set var="isOwner" value="${user.id == current_user_id}"/>
     <c:set var="isAdmin" value="false"/>
     <sec:authorize access="hasRole('ADMIN')">
         <c:set var="isAdmin" value="true"/>
@@ -54,7 +54,7 @@
     </div>
 
     <c:choose>
-    <c:when test="${id_test || isAdmin}">
+    <c:when test="${isOwner || isAdmin}">
 
     <form action="/users/profile/${user.id}/update/" method="post">
 

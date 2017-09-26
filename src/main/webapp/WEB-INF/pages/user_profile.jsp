@@ -47,7 +47,7 @@
         <sec:authentication property="principal.id"/>
     </c:set>
 
-    <c:set var="id_test" value="${user.id == current_user_id}"/>
+    <c:set var="isOwner" value="${user.id == current_user_id}"/>
 
     <c:set var="isAdmin" value="false"/>
 
@@ -60,7 +60,7 @@
         <table>
             <caption><h1>User profile</h1></caption>
 
-            <c:if test="${id_test || isAdmin}">
+            <c:if test="${isOwner || isAdmin}">
                 <tr>
                     <th>Id</th>
                     <td>${user.id}</td>
@@ -105,7 +105,7 @@
     </div>
     <br>
     <div>
-        <c:if test="${id_test || isAdmin}">
+        <c:if test="${isOwner || isAdmin}">
             <div align="center">
                 <form action="/users/profile/${user.id}/update" method="get">
                     <input type="submit" value="Update">
