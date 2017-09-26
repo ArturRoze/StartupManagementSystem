@@ -117,6 +117,8 @@
                     <input type="submit" value="Delete">
                 </form>
             </div>
+        </c:if>
+        <c:if test="${isOwner}">
             <div align="center">
                 <form action="${pageContext.request.contextPath}/startups/new/startup" method="get">
                     <input type="submit" value="New startup">
