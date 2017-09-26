@@ -107,7 +107,7 @@
     <div>
         <c:if test="${isOwner || isAdmin}">
             <div align="center">
-                <form action="/users/profile/${user.id}/update" method="get">
+                <form action="/users/profile/${user.id}/edit" method="get">
                     <input type="submit" value="Update">
                 </form>
             </div>

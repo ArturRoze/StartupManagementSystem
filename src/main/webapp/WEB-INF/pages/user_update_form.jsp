@@ -56,7 +56,7 @@
     <c:choose>
     <c:when test="${isOwner || isAdmin}">
 
-    <form action="/users/profile/${user.id}/update/" method="post">
+    <form action="/users/profile/${user.id}/update" method="post">
 
         <table>
             <caption><h1>User update</h1></caption>

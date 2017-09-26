@@ -85,7 +85,7 @@ public class UserController {
      * user to update, list of all {@link ua.goit.group6.model.Country}
      * and list of all {@link ua.goit.group6.model.City} from database
      */
-    @GetMapping("/profile/{id}/update")
+    @GetMapping("/profile/{id}/edit")
     public ModelAndView update(@PathVariable("id") String idString) {
         ModelAndView updateForm = new ModelAndView("user_update_form");
         long id = Long.parseLong(idString);
@@ -108,7 +108,7 @@ public class UserController {
      * @param countryIdString new id of {@link ua.goit.group6.model.Country} for user from request
      * @return redirect link to this user profile
      */
-    @PostMapping(value = "/profile/{id}/update/", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(value = "/profile/{id}/update", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String update(@PathVariable("id") String idString,
                          @RequestParam("password") String password,
                          @RequestParam("email") String email,
