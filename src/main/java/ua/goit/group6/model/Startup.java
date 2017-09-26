@@ -19,6 +19,9 @@ public class Startup implements Serializable{
     @Column
     private String description;
 
+    @Column
+    private int budget;
+
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", updatable = false)
     private User user;
@@ -26,6 +29,10 @@ public class Startup implements Serializable{
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "country_id")
     private Country country;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "industry_id")
+    private Industry industry;
 
     @Column (name = "registration_date")
     private Timestamp registrationDate;
@@ -54,6 +61,14 @@ public class Startup implements Serializable{
         this.description = description;
     }
 
+    public int getBudget() {
+        return budget;
+    }
+
+    public void setBudget(int budget) {
+        this.budget = budget;
+    }
+
     public User getUser() {
         return user;
     }
@@ -68,6 +83,14 @@ public class Startup implements Serializable{
 
     public void setCountry(Country country) {
         this.country = country;
+    }
+
+    public Industry getIndustry() {
+        return industry;
+    }
+
+    public void setIndustry(Industry industry) {
+        this.industry = industry;
     }
 
     public Timestamp getRegistrationDate() {
