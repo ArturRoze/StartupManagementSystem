@@ -144,7 +144,7 @@ public class UserController {
      * @return a {@link ModelAndView} object holding the name of jsp represented by {@code String},
      * and {@link java.util.List} of all {@link User} from database
      */
-    @GetMapping
+    @GetMapping("/list")
     public ModelAndView list() {
         ModelAndView users = new ModelAndView("users_list");
         users.addObject("users", userService.getAll());

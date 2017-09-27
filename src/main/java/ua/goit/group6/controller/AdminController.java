@@ -62,7 +62,7 @@ public class AdminController {
 
         LOGGER.info("Admin: '{}' created successfully", admin);
 
-        return "redirect:/list";
+        return "redirect:/admins/list";
     }
 
     @GetMapping("profile/{id}/update")
