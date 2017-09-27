@@ -46,6 +46,24 @@ public class AdminController {
         return "redirect:/logout";
     }
 
+    @PostMapping(value = "/new/admin/", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String save(@RequestParam("login") String login,
+                       @RequestParam("password") String password,
+                       @RequestParam("email") String email) {
+
+        LOGGER.info("Received admin from admin_add_form");
+
+        Admin admin = new Admin();
+        admin.setLogin(login);
+        admin.setPassword(passwordEncoder.encode(password));
+        admin.setEmail(email);
+
+        adminService.save(admin);
+
+        LOGGER.info("Admin: '{}' created successfully", admin);
+
+        return "redirect:/admins/list";
+    }
 
     @GetMapping("profile/{id}/update")
     public ModelAndView update(@PathVariable("id") String idString) {
@@ -58,20 +76,19 @@ public class AdminController {
 
     @PostMapping(value = "/profile/{id}/update/", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String update(@PathVariable("id") String idString,
-//                         @RequestParam("password") String password,
+                         @RequestParam("password") String password,
                          @RequestParam("email") String email)
 
             throws IOException {
         Admin admin = adminService.getById(Long.parseLong(idString));
-//        admin.setPassword(passwordEncoder.encode(password));
+        admin.setPassword(passwordEncoder.encode(password));
         admin.setEmail(email);
         adminService.update(admin);
-        return "redirect:/admins/profile/" + admin.getId() ;
+        return "redirect:/admins/profile/" + admin.getId();
     }
 
-
-    @GetMapping
-    public ModelAndView list() {
+    @GetMapping("/list")
+    public ModelAndView listAdmins() {
         ModelAndView admins = new ModelAndView("admins_list");
         admins.addObject("admins", adminService.getAll());
         return admins;

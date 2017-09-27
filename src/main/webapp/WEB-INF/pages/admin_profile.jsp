@@ -74,7 +74,7 @@
 
     <div>
         <div>
-            <form action="/admins" method="get">
+            <form action="/admins/list" method="get">
                 <input type="submit" value="show all admins">
             </form>
         </div>
@@ -85,7 +85,7 @@
         </div>
     </div>
     <div>
-        <form action="/users" method="get">
+        <form action="/users/list" method="get">
             <input type="submit" value="show all users">
         </form>
     </div>
