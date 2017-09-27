@@ -104,7 +104,7 @@ public class MainController {
     @GetMapping("news")
     public ModelAndView news() {
         ModelAndView news = new ModelAndView("news");
-        news.addObject("startups", startupService.getAllDescRegistration());
+        news.addObject("startups", startupService.getAllDesc());
         //TODO add offers
         LOGGER.info("Building news page");
         return news;

@@ -77,7 +77,7 @@ public class UserController {
     }
 
     /**
-     * Mapping for url "/users/profile/{id}/update"
+     * Mapping for url "/users/profile/{id}/edit"
      * Method collects data from database and sends it to {@link User} update form
      *
      * @param idString the id of user to update from url
@@ -97,7 +97,7 @@ public class UserController {
     }
 
     /**
-     * Mapping for url "/users/profile/{id}/update/"
+     * Mapping for url "/users/profile/{id}/update"
      * Method updates {@link User} in database with parameters which come from page form
      *
      * @param idString        the id of user to update from url

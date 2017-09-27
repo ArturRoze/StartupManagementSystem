@@ -71,8 +71,4 @@ public class UserServiceImpl extends AbstractBasicServiceImpl<User> implements U
         }
     }
 
-    @Override
-    public void update(User user) {
-        super.update(user);
-    }
 }

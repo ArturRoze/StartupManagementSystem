@@ -1,6 +1,7 @@
 package ua.goit.group6.controller;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import ua.goit.group6.service.UserService;
 
 import java.util.Collections;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.anonymous;
@@ -44,8 +46,7 @@ public class UserControllerTest {
     private UserService userService;
     @Autowired
     private CountryService countryService;
-    @Autowired
-    private CityService cityService;
+
 
     @Autowired
     private WebApplicationContext context;
@@ -54,54 +55,66 @@ public class UserControllerTest {
     private Long id;
 
     private Country country;
-    private City city;
 
     @Before
     public void setUp() throws Exception {
         user = mock(User.class);
         id = 1L;
         country = mock(Country.class);
-        city = mock(City.class);
         mvc = MockMvcBuilders
                 .webAppContextSetup(context)
                 .apply(springSecurity())
                 .build();
     }
 
+    //Guest tests
+
     @Test
-    public void guestProfileTest() throws Exception {
-        String url = "/users/profile/" + id;
-        mvc.perform(get(url).with(anonymous()))
+    public void guestUserProfileTest() throws Exception {
+        mvc.perform(get("/users/profile/" + id).with(anonymous()))
                 .andExpect(status().isFound());
     }
+
+    @Test
+    public void guestUserDeleteTest() throws Exception {
+        mvc.perform(get("/users/profile/{}/delete", id).with(anonymous()))
+                .andExpect(status().isFound());
+    }
+
+    @Test
+    public void guestUserProfileUpdateFormTest() throws Exception {
+        mvc.perform(get("/users/profile/" + id + "/edit").with(anonymous()))
+                .andExpect(status().isFound());
+    }
+
+    @Test
+    public void guestUserProfileUpdateTest() throws Exception {
+        mvc.perform(get("/users/profile/" + id + "/update").with(anonymous()))
+                .andExpect(status().isFound());
+    }
+
+    @Test
+    public void guestUsersListTest() throws Exception {
+        mvc.perform(get("/users").with(anonymous()))
+                .andExpect(status().isFound());
+    }
+
+    //Authenticated users tests
 
     @Test
     public void profileTest() throws Exception {
         when(userService.getById(id)).thenReturn(user);
 
         mvc.perform(get("/users/profile/" + id).with(user("user").roles("USER", "ADMIN")))
-                .andExpect(model().attribute("user", userService.getById(id)))
+                .andExpect(model().attribute("user", equalTo(userService.getById(id))))
                 .andExpect(view().name("user_profile"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void guestDeleteTest() throws Exception {
-        mvc.perform(get("/users/profile/" + id + "/delete").with(anonymous()))
-                .andExpect(status().isFound());
-    }
-
-    @Test
-    public void deleteTEst() throws Exception {
+    public void deleteTest() throws Exception {
         mvc.perform(get("/users/profile/" + id + "/delete").with(user("user").roles("USER", "ADMIN")))
                 .andExpect(redirectedUrl("/logout"))
-                .andExpect(status().isFound());
-    }
-
-    @Test
-    public void guestProfileUpdateFormTest() throws Exception {
-        String url = "/users/profile/" + id + "/update";
-        mvc.perform(get(url).with(anonymous()))
                 .andExpect(status().isFound());
     }
 
@@ -110,9 +123,9 @@ public class UserControllerTest {
         when(userService.getById(id)).thenReturn(user);
         when(countryService.getAll()).thenReturn(Collections.singletonList(country));
 
-        mvc.perform(get("/users/profile/" + id + "/update").with(user("user").roles("USER", "ADMIN")))
+        mvc.perform(get("/users/profile/" + id + "/edit").with(user("user").roles("USER", "ADMIN")))
                 .andExpect(model().attribute("user", userService.getById(id)))
-                .andExpect(model().attribute("countries", countryService.getAll()))
+                .andExpect(model().attribute("countries", equalTo(countryService.getAll())))
                 .andExpect(view().name("user_update_form"))
                 .andExpect(status().isOk());
     }
@@ -121,24 +134,20 @@ public class UserControllerTest {
     public void updateTest() throws Exception {
     }
 
-    @Test
-    public void guestListTest() throws Exception {
-        mvc.perform(get("/users").with(anonymous()))
-                .andExpect(status().isFound());
-    }
+
 
     @Test
-    public void userListTest() throws Exception {
+    public void userUsersListTest() throws Exception {
         mvc.perform(get("/users").with(user("user").roles("USER")))
                 .andExpect(status().isForbidden());
     }
 
     @Test
-    public void adminListTest() throws Exception {
+    public void adminUsersListTest() throws Exception {
         when(userService.getAll()).thenReturn(Collections.singletonList(user));
 
         mvc.perform(get("/users").with(user("admin").roles("ADMIN")))
-                .andExpect(model().attribute("users", userService.getAll()))
+                .andExpect(model().attribute("users", equalTo(userService.getAll())))
                 .andExpect(view().name("users_list"))
                 .andExpect(status().isOk());
     }

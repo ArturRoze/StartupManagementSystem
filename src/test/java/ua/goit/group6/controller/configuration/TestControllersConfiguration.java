@@ -37,8 +37,6 @@ public class TestControllersConfiguration {
     }
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
-        return mock(BCryptPasswordEncoder.class);
-    }
+    public IndustryService industryService(){ return mock(IndustryService.class);}
 
-}
+    }

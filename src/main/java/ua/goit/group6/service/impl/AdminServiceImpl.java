@@ -41,6 +41,7 @@ public class AdminServiceImpl extends AbstractBasicServiceImpl<Admin> implements
 
     /**
      * Method reads user from repository
+     *
      * @param login string login to search in repository
      * @return {@link User} from repository with given login
      */
@@ -63,16 +64,29 @@ public class AdminServiceImpl extends AbstractBasicServiceImpl<Admin> implements
         if (userDao.getByLogin(admin.getLogin()) != null) {
             LOGGER.info("User with login:'{}' already exists", admin.getLogin());
 
-        } else if (adminDao.getByLogin(admin.getLogin()) != null){
+        } else if (adminDao.getByLogin(admin.getLogin()) != null) {
             LOGGER.info("Admin with login:'{}' already exists", admin.getLogin());
 
-        }else {
+        } else {
             super.save(admin);
         }
     }
 
     @Override
-    public void update(Admin admin) {
-        super.update(admin);
+    public void delete(Admin admin) {
+        if (getAll().size() > 1) {
+            super.delete(admin);
+        } else {
+            LOGGER.error("Trying to delete last admin");
+        }
+    }
+
+    @Override
+    public void deleteById(long id) {
+        if (getAll().size() > 1 ) {
+            super.deleteById(id);
+        } else {
+            LOGGER.error("Trying to delete last admin");
+        }
     }
 }
