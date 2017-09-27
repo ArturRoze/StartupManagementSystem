@@ -23,6 +23,7 @@ import ua.goit.group6.service.UserService;
 
 import java.util.Collections;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.anonymous;
@@ -45,8 +46,7 @@ public class UserControllerTest {
     private UserService userService;
     @Autowired
     private CountryService countryService;
-    @Autowired
-    private CityService cityService;
+
 
     @Autowired
     private WebApplicationContext context;
@@ -55,14 +55,12 @@ public class UserControllerTest {
     private Long id;
 
     private Country country;
-    private City city;
 
     @Before
     public void setUp() throws Exception {
         user = mock(User.class);
         id = 1L;
         country = mock(Country.class);
-        city = mock(City.class);
         mvc = MockMvcBuilders
                 .webAppContextSetup(context)
                 .apply(springSecurity())
@@ -79,21 +77,19 @@ public class UserControllerTest {
 
     @Test
     public void guestUserDeleteTest() throws Exception {
-        mvc.perform(get("/users/profile/" + id + "/delete").with(anonymous()))
+        mvc.perform(get("/users/profile/{}/delete", id).with(anonymous()))
                 .andExpect(status().isFound());
     }
 
     @Test
     public void guestUserProfileUpdateFormTest() throws Exception {
-        String url = "/users/profile/" + id + "/edit";
-        mvc.perform(get(url).with(anonymous()))
+        mvc.perform(get("/users/profile/" + id + "/edit").with(anonymous()))
                 .andExpect(status().isFound());
     }
 
     @Test
     public void guestUserProfileUpdateTest() throws Exception {
-        String url = "/users/profile/" + id + "/update";
-        mvc.perform(get(url).with(anonymous()))
+        mvc.perform(get("/users/profile/" + id + "/update").with(anonymous()))
                 .andExpect(status().isFound());
     }
 
@@ -103,14 +99,14 @@ public class UserControllerTest {
                 .andExpect(status().isFound());
     }
 
-    //User and admin tests
+    //Authenticated users tests
 
     @Test
     public void profileTest() throws Exception {
         when(userService.getById(id)).thenReturn(user);
 
         mvc.perform(get("/users/profile/" + id).with(user("user").roles("USER", "ADMIN")))
-                .andExpect(model().attribute("user", userService.getById(id)))
+                .andExpect(model().attribute("user", equalTo(userService.getById(id))))
                 .andExpect(view().name("user_profile"))
                 .andExpect(status().isOk());
     }
@@ -129,7 +125,7 @@ public class UserControllerTest {
 
         mvc.perform(get("/users/profile/" + id + "/edit").with(user("user").roles("USER", "ADMIN")))
                 .andExpect(model().attribute("user", userService.getById(id)))
-                .andExpect(model().attribute("countries", countryService.getAll()))
+                .andExpect(model().attribute("countries", equalTo(countryService.getAll())))
                 .andExpect(view().name("user_update_form"))
                 .andExpect(status().isOk());
     }
@@ -151,7 +147,7 @@ public class UserControllerTest {
         when(userService.getAll()).thenReturn(Collections.singletonList(user));
 
         mvc.perform(get("/users").with(user("admin").roles("ADMIN")))
-                .andExpect(model().attribute("users", userService.getAll()))
+                .andExpect(model().attribute("users", equalTo(userService.getAll())))
                 .andExpect(view().name("users_list"))
                 .andExpect(status().isOk());
     }

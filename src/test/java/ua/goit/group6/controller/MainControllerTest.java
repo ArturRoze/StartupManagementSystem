@@ -19,8 +19,10 @@ import ua.goit.group6.controller.configuration.TestControllersConfiguration;
 import ua.goit.group6.model.Admin;
 import ua.goit.group6.model.User;
 import ua.goit.group6.service.AdminService;
+import ua.goit.group6.service.StartupService;
 import ua.goit.group6.service.UserService;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.anonymous;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -48,6 +50,8 @@ public class MainControllerTest {
     private UserService userService;
     @Autowired
     private AdminService adminService;
+    @Autowired
+    private StartupService startupService;
 
     @Autowired
     private WebApplicationContext context;
@@ -69,35 +73,28 @@ public class MainControllerTest {
     @Test
     public void guestIndexTest() throws Exception {
         mvc.perform(get("/").with(anonymous()))
-                //TODO when will be startups test them
+                .andExpect(model().attribute("startups", equalTo(startupService.getLastNDesc(anyInt()))))
                 .andExpect(view().name("index"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void authenticatedIndexTest() throws Exception {
-        mvc.perform(get("/").with(user("user").roles("ADMIN", "USER")))
-                //TODO when will be startups test them
-                .andExpect(view().name("index"))
+    public void guestLoginTest() throws Exception {
+        mvc.perform(get("/login").with(anonymous()))
+                .andExpect(view().name("login_form"))
                 .andExpect(status().isOk());
-    }
-
-    @Test
-    public void logoutTest() throws Exception {
-        mvc.perform(post("/logout").with(user("user").roles("ADMIN", "USER")))
-                .andExpect(redirectedUrl("/"))
-                .andExpect(status().isFound());
     }
 
     @Test
     @Ignore //TODO complete test
-    public void registrationTest() throws Exception {
-        userService.save(user);
-        verify(userService, times(1)).save(user);
+    public void guestRegistrationTest() throws Exception {
+//        userService.save(user);
+//        verify(userService, times(1)).save(user);
 
-        mvc.perform(post("/registration/").with(anonymous()))
-                .andExpect(redirectedUrl("http://localhost/login"))
-                .andExpect(status().isFound());
+        mvc.perform(post("registration").with(anonymous()))
+                .andExpect(view().name("registration_form"))
+//                .andExpect(redirectedUrl("http://localhost/login"))
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -108,10 +105,32 @@ public class MainControllerTest {
     }
 
     @Test
-    //TODO finish after creating startups
+    public void guestLogoutTest() throws Exception {
+        mvc.perform(post("/logout").with(anonymous()))
+                .andExpect(redirectedUrl("/"))
+                .andExpect(status().isFound());
+    }
+
+    @Test
+    public void authenticatedIndexTest() throws Exception {
+        mvc.perform(get("/").with(user("user").roles("ADMIN", "USER")))
+                .andExpect(model().attribute("startups", equalTo(startupService.getLastNDesc(anyInt()))))
+                .andExpect(view().name("index"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void authenticatedLogoutTest() throws Exception {
+        mvc.perform(post("/logout").with(user("user").roles("ADMIN", "USER")))
+                .andExpect(redirectedUrl("/"))
+                .andExpect(status().isFound());
+    }
+
+    @Test
+    //TODO finish after creating startups and offers
     public void authenticatedNewsTest() throws Exception {
         mvc.perform(get("/news").with(user("user").roles("ADMIN", "USER")))
-                //TODO startups
+                //TODO startups and offers
                 .andExpect(view().name("news"))
                 .andExpect(status().isOk());
     }

@@ -22,8 +22,8 @@ public class Startup implements Serializable{
     @Column
     private int budget;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", updatable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false, updatable = false)
     private User user;
 
     @OneToOne(fetch = FetchType.EAGER)
@@ -99,5 +99,21 @@ public class Startup implements Serializable{
 
     public void setRegistrationDate(Timestamp registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+
+
+    @Override
+    public String toString() {
+        return "Startup{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", budget=" + budget +
+                ", user=" + user.getId() +
+                ", country=" + country +
+                ", industry=" + industry +
+                ", registrationDate=" + registrationDate +
+                '}';
     }
 }
