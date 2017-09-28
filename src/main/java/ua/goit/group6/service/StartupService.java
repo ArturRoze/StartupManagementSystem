@@ -10,5 +10,6 @@ public interface StartupService extends BasicService<Startup> {
     List<Startup> getAllDesc();
 
     List<Startup> getAllByUserIdDesc(int id);
+    List<Startup> getAllByUserId(int id);
 
 }

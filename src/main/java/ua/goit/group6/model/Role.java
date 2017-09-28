@@ -15,8 +15,8 @@ public class Role extends Model {
 
     @Override
     public String toString() {
-        return "Role{" + super.toString() +
-                "name='" + name + '\'' +
+        return "Role{ " + super.toString() +
+                ", name='" + name + '\'' +
                 "} " ;
     }
 }

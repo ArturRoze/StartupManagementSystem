@@ -7,11 +7,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ua.goit.group6.model.Admin;
-import ua.goit.group6.model.User;
-import ua.goit.group6.service.AdminService;
-import ua.goit.group6.service.StartupService;
-import ua.goit.group6.service.UserService;
+import ua.goit.group6.model.*;
+import ua.goit.group6.service.*;
 
 import javax.annotation.PostConstruct;
 
@@ -32,22 +29,42 @@ public class MainController {
 
     private final StartupService startupService;
 
+    private final OfferService offerService;
+
+    private final NewsService newsService;
+
     private final PasswordEncoder passwordEncoder;
+
+    private final CountryService countryService;
+
+    private final IndustryService industryService;
 
     /**
      * Constructor for controller
-     *  @param userService    {@link UserService} bean
-     * @param adminService   {@link AdminService} bean
-     * @param startupService {@link StartupService} bean
+     *
+     * @param userService     {@link UserService} bean
+     * @param adminService    {@link AdminService} bean
+     * @param startupService  {@link StartupService} bean
+     * @param offerService    {@link OfferService} bean
+     * @param newsService     {@link NewsService} bean
      * @param passwordEncoder {@link PasswordEncoder} bean
+     * @param countryService  {@link CountryService} bean
+     * @param industryService {@link IndustryService} bean
      */
     @Autowired
-    public MainController(UserService userService, AdminService adminService, StartupService startupService, PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
+    public MainController(UserService userService, AdminService adminService,
+                          StartupService startupService, OfferService offerService, NewsService newsService,
+                          PasswordEncoder passwordEncoder,
+                          CountryService countryService, IndustryService industryService) {
         LOGGER.info("Creating index controller");
+        this.countryService = countryService;
+        this.industryService = industryService;
         this.userService = userService;
         this.adminService = adminService;
+        this.passwordEncoder = passwordEncoder;
         this.startupService = startupService;
+        this.offerService = offerService;
+        this.newsService = newsService;
     }
 
     /**
@@ -105,6 +122,7 @@ public class MainController {
     public ModelAndView news() {
         ModelAndView news = new ModelAndView("news");
         news.addObject("startups", startupService.getAllDesc());
+        news.addObject("news", newsService.getAllDesc());
         //TODO add offers
         LOGGER.info("Building news page");
         return news;
@@ -117,6 +135,25 @@ public class MainController {
      */
     @PostConstruct
     public void InitDefaultUsers() {
+
+        if (countryService.getAll().isEmpty()) {
+            Country country = new Country();
+            country.setName("Ukraine");
+            countryService.save(country);
+            country.setName("USA");
+            countryService.save(country);
+        }
+
+        if (industryService.getAll().isEmpty()) {
+            Industry industry = new Industry();
+            industry.setName("IT");
+            industryService.save(industry);
+            industry.setName("Finance");
+            industryService.save(industry);
+            industry.setName("Food");
+            industryService.save(industry);
+        }
+
         if (adminService.getByLogin("admin") == null) {
 
             LOGGER.info("Initialising default admin with login = 'admin', and password = 'admin' ");
@@ -132,6 +169,22 @@ public class MainController {
             user.setLogin("user");
             user.setPassword(passwordEncoder.encode("user"));
             userService.save(user);
+
+            if (startupService.getAll().isEmpty()) {
+                Startup startup = new Startup();
+                startup.setName("First startup");
+                startup.setUser(user);
+                startup.setBudget(1000);
+                startupService.save(startup);
+            }
+
+            if (offerService.getAll().isEmpty()) {
+                Offer offer = new Offer();
+                offer.setUser(user);
+                offer.setBudget(500);
+                offerService.save(offer);
+            }
         }
+
     }
 }

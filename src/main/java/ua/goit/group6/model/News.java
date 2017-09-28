@@ -77,12 +77,12 @@ public abstract class News extends Model {
 
     @Override
     public String toString() {
-        return super.toString()+
-                "description='" + description + '\'' +
+        return super.toString() +
+                ", description='" + description + '\'' +
                 ", budget=" + budget +
-                ", user=" + user +
-                ", country=" + country +
-                ", industry=" + industry +
+                ", user=" + user.getLogin() +
+                ", country=" + country.getName() +
+                ", industry=" + industry.getName() +
                 ", registrationDate=" + registrationDate +
                 "} " ;
     }

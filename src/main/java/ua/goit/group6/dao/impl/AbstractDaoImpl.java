@@ -35,7 +35,7 @@ public abstract class AbstractDaoImpl<T> implements GeneralDao<T> {
     @Override
     @Transactional
     public T getById(int id) {
-        LOGGER.info("Get user by id='{}' from repository", id);
+        LOGGER.info("Get {} by id='{}' from repository", entityType.getName(), id);
         return getSession().get(entityType, id);
     }
 

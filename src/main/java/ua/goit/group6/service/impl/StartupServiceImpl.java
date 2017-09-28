@@ -9,6 +9,7 @@ import ua.goit.group6.model.Startup;
 import ua.goit.group6.service.StartupService;
 import ua.goit.group6.service.UserService;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,7 +30,7 @@ public class StartupServiceImpl extends AbstractBasicServiceImpl<Startup> implem
     public List<Startup> getLastNDesc(int n) {
         return getAll()
                 .stream()
-                .sorted(Comparator.comparing(Startup::getId)
+                .sorted(Comparator.comparing(Startup::getRegistrationDate)
                         .reversed())
                 .limit(n)
                 .collect(Collectors.toList());
@@ -40,7 +41,7 @@ public class StartupServiceImpl extends AbstractBasicServiceImpl<Startup> implem
     public List<Startup> getAllDesc() {
         return getAll()
                 .stream()
-                .sorted(Comparator.comparing(Startup::getId)
+                .sorted(Comparator.comparing(Startup::getRegistrationDate)
                         .reversed())
                 .collect(Collectors.toList());
     }
@@ -51,8 +52,13 @@ public class StartupServiceImpl extends AbstractBasicServiceImpl<Startup> implem
         return userDao.getById(id)
                 .getStartups()
                 .stream()
-                .sorted(Comparator.comparing(Startup::getId)
+                .sorted(Comparator.comparing(Startup::getRegistrationDate)
                         .reversed())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Startup> getAllByUserId(int id) {
+        return new ArrayList<>(userDao.getById(id).getStartups());
     }
 }

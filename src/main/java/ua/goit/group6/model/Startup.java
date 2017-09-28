@@ -22,8 +22,8 @@ public class Startup extends News{
 
     @Override
     public String toString() {
-        return "Startup{" + super.toString() +
-                "name='" + name + '\'' +
-                "} " ;
+        return "Startup{ "  +
+                ", name='" + name + '\'' +
+                "} " + super.toString();
     }
 }
