@@ -82,8 +82,8 @@ public class AdminServiceImpl extends AbstractBasicServiceImpl<Admin> implements
     }
 
     @Override
-    public void deleteById(long id) {
-        if (getAll().size() > 1 ) {
+    public void deleteById(int id) {
+        if (getAll().size() > 1) {
             super.deleteById(id);
         } else {
             LOGGER.error("Trying to delete last admin");

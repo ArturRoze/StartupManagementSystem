@@ -47,7 +47,7 @@ public class StartupServiceImpl extends AbstractBasicServiceImpl<Startup> implem
 
     @Override
     @Transactional(readOnly = true)
-    public List<Startup> getAllByUserIdDesc(Long id) {
+    public List<Startup> getAllByUserIdDesc(int id) {
         return userDao.getById(id)
                 .getStartups()
                 .stream()

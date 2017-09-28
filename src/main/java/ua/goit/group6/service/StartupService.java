@@ -9,6 +9,6 @@ public interface StartupService extends BasicService<Startup> {
     List<Startup> getLastNDesc(int n);
     List<Startup> getAllDesc();
 
-    List<Startup> getAllByUserIdDesc(Long id);
+    List<Startup> getAllByUserIdDesc(int id);
 
 }

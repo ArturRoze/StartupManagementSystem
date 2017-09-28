@@ -3,7 +3,6 @@ package ua.goit.group6.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.goit.group6.dao.CountryDao;
-import ua.goit.group6.model.City;
 import ua.goit.group6.model.Country;
 import ua.goit.group6.service.CountryService;
 

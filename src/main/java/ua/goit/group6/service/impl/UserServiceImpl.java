@@ -70,5 +70,4 @@ public class UserServiceImpl extends AbstractBasicServiceImpl<User> implements U
             super.save(user);
         }
     }
-
 }

@@ -29,7 +29,7 @@ public abstract class AbstractBasicServiceImpl<T extends Serializable> implement
 
     @Override
     @Transactional(readOnly = true)
-    public T getById(long id) {
+    public T getById(int id) {
         LOGGER.info("Get entity by id='{}' from " + dao.getClass(), id);
         return dao.getById(id);
     }
@@ -64,7 +64,7 @@ public abstract class AbstractBasicServiceImpl<T extends Serializable> implement
 
     @Override
     @Transactional
-    public void deleteById(long id) {
+    public void deleteById(int id) {
         LOGGER.info("Delete entity with id:{} from " + dao.getClass(), id);
         dao.deleteById(id);
     }

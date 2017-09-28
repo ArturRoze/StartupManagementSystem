@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface GeneralDao<T> {
 
-    T getById(long id);
+    T getById(int id);
 
     void create(T value);
 
@@ -18,5 +18,5 @@ public interface GeneralDao<T> {
 
     void delete(T value);
 
-    void deleteById(long id);
+    void deleteById(int id);
 }

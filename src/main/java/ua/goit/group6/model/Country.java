@@ -5,22 +5,10 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "country")
-public class Country implements Serializable{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+public class Country extends Model{
 
     @Column
     private String name;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -32,9 +20,8 @@ public class Country implements Serializable{
 
     @Override
     public String toString() {
-        return "Country{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return "Country{" + super.toString() +
+                "name='" + name + '\'' +
+                "} " ;
     }
 }

@@ -34,7 +34,7 @@ public abstract class AbstractDaoImpl<T> implements GeneralDao<T> {
 
     @Override
     @Transactional
-    public T getById(long id) {
+    public T getById(int id) {
         LOGGER.info("Get user by id='{}' from repository", id);
         return getSession().get(entityType, id);
     }
@@ -70,7 +70,7 @@ public abstract class AbstractDaoImpl<T> implements GeneralDao<T> {
 
     @Override
     @Transactional
-    public void deleteById(long id) {
+    public void deleteById(int id) {
         Query deleteByIdQuery = getSession().createQuery("delete from " + getCleanEntityClass(entityType) + " where id = :id");
         deleteByIdQuery.setParameter("id", id);
         deleteByIdQuery.executeUpdate();

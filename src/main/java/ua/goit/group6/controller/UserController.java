@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ua.goit.group6.model.Region;
 import ua.goit.group6.model.User;
 import ua.goit.group6.service.CountryService;
 import ua.goit.group6.service.UserService;
@@ -37,10 +38,10 @@ public class UserController {
      */
     @Autowired
     public UserController(UserService userService, CountryService countryService, PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
         LOGGER.info("Creating user controller");
         this.userService = userService;
         this.countryService = countryService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -54,7 +55,7 @@ public class UserController {
     @GetMapping("/profile/{id}")
     public ModelAndView profile(@PathVariable("id") String idString) {
         ModelAndView profile = new ModelAndView("user_profile");
-        long id = Long.parseLong(idString);
+        int id = Integer.parseInt(idString);
         User user = userService.getById(id);
         profile.addObject("user", user);
         LOGGER.info("Building profile page for " + user);
@@ -70,7 +71,7 @@ public class UserController {
      */
     @GetMapping("/profile/{id}/delete")
     public String delete(@PathVariable("id") String idString) {
-        userService.deleteById(Long.parseLong(idString));
+        userService.deleteById(Integer.parseInt(idString));
         LOGGER.info("Redirecting to index page after deleting user with id='" + idString + "'");
         //TODO make logout for user but not for admin
         return "redirect:/logout";
@@ -83,12 +84,12 @@ public class UserController {
      * @param idString the id of user to update from url
      * @return a {@link ModelAndView} object holding the name of jsp represented by {@code String} and
      * user to update, list of all {@link ua.goit.group6.model.Country}
-     * and list of all {@link ua.goit.group6.model.City} from database
+     * and list of all {@link Region} from database
      */
     @GetMapping("/profile/{id}/edit")
     public ModelAndView update(@PathVariable("id") String idString) {
         ModelAndView updateForm = new ModelAndView("user_update_form");
-        long id = Long.parseLong(idString);
+        int id = Integer.parseInt(idString);
         User user = userService.getById(id);
         updateForm.addObject("user", user);
         updateForm.addObject("countries", countryService.getAll());
@@ -115,9 +116,9 @@ public class UserController {
                          @RequestParam("first_name") String firstName,
                          @RequestParam("last_name") String lastName,
                          @RequestParam("description") String description,
-                         @RequestParam("country_id") String countryIdString) {
+                         @RequestParam(value = "country_id", required = false) String countryIdString) {
         LOGGER.info("Returning from user update form");
-        User user = userService.getById(Long.parseLong(idString));
+        User user = userService.getById(Integer.parseInt(idString));
 
         if (!password.isEmpty())
         user.setPassword(passwordEncoder.encode(password));
@@ -127,8 +128,8 @@ public class UserController {
         user.setLastName(lastName);
         user.setDescription(description);
 
-        if (!countryIdString.isEmpty()){
-            user.setCountry(countryService.getById(Long.parseLong(countryIdString)));
+        if (countryIdString != null){
+            user.setCountry(countryService.getById(Integer.parseInt(countryIdString)));
         }
 
         userService.update(user);

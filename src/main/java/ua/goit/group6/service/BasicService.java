@@ -1,5 +1,6 @@
 package ua.goit.group6.service;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  * @param <T> generic for entities extends {@link Object}
  * @author Boiko Ivan
  */
-public interface BasicService<T> {
+public interface BasicService<T extends Serializable> {
 
     /**
      * Method searches entity with given id in repository
@@ -16,7 +17,7 @@ public interface BasicService<T> {
      * @param id {@code long} id of entity to search
      * @return entity from repository
      */
-    T getById(long id);
+    T getById(int id);
 
     /**
      * Method searches all entities in repository
@@ -51,5 +52,5 @@ public interface BasicService<T> {
      *
      * @param id id of entity to remove
      */
-    void deleteById(long id);
+    void deleteById(int id);
 }

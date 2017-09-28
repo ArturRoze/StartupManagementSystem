@@ -1,7 +1,6 @@
 package ua.goit.group6.controller;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +13,8 @@ import org.springframework.web.context.WebApplicationContext;
 import ua.goit.group6.configuration.MvcConfiguration;
 import ua.goit.group6.configuration.SecurityConfiguration;
 import ua.goit.group6.controller.configuration.TestControllersConfiguration;
-import ua.goit.group6.model.City;
 import ua.goit.group6.model.Country;
 import ua.goit.group6.model.User;
-import ua.goit.group6.service.CityService;
 import ua.goit.group6.service.CountryService;
 import ua.goit.group6.service.UserService;
 
@@ -52,14 +49,14 @@ public class UserControllerTest {
     private WebApplicationContext context;
 
     private User user;
-    private Long id;
+    private Integer id;
 
     private Country country;
 
     @Before
     public void setUp() throws Exception {
         user = mock(User.class);
-        id = 1L;
+        id = 1;
         country = mock(Country.class);
         mvc = MockMvcBuilders
                 .webAppContextSetup(context)
@@ -146,7 +143,7 @@ public class UserControllerTest {
     public void adminUsersListTest() throws Exception {
         when(userService.getAll()).thenReturn(Collections.singletonList(user));
 
-        mvc.perform(get("/users").with(user("admin").roles("ADMIN")))
+        mvc.perform(get("/users/list").with(user("admin").roles("ADMIN")))
                 .andExpect(model().attribute("users", equalTo(userService.getAll())))
                 .andExpect(view().name("users_list"))
                 .andExpect(status().isOk());
