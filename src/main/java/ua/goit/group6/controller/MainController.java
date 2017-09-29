@@ -3,6 +3,7 @@ package ua.goit.group6.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -43,18 +44,21 @@ public class MainController {
      * Constructor for controller
      *
      * @param userService     {@link UserService} bean
-     * @param adminService    {@link AdminService} bean
-     * @param startupService  {@link StartupService} bean
-     * @param offerService    {@link OfferService} bean
-     * @param newsService     {@link NewsService} bean
      * @param passwordEncoder {@link PasswordEncoder} bean
+     * @param startupService  {@link StartupService} bean
+     * @param newsService     {@link NewsService} bean
+     *
+     * <p> Need to initialize database </p>
      * @param countryService  {@link CountryService} bean
      * @param industryService {@link IndustryService} bean
+     * @param adminService    {@link AdminService} bean
+     * @param offerService    {@link OfferService} bean
      */
     @Autowired
-    public MainController(UserService userService, AdminService adminService,
-                          StartupService startupService, OfferService offerService, NewsService newsService,
-                          PasswordEncoder passwordEncoder,
+    public MainController(UserService userService, PasswordEncoder passwordEncoder,
+                          StartupService startupService,NewsService newsService,
+                          AdminService adminService,
+                          OfferService offerService,
                           CountryService countryService, IndustryService industryService) {
         LOGGER.info("Creating index controller");
         this.countryService = countryService;
@@ -76,7 +80,7 @@ public class MainController {
     @GetMapping
     public ModelAndView index() {
         ModelAndView main = new ModelAndView("index");
-        main.addObject("startups", startupService.getLastNDesc(2));
+        main.addObject("startups", startupService.getLastNDesc(6));
         LOGGER.info("Building index page");
         return main;
     }
@@ -101,7 +105,7 @@ public class MainController {
      * @param password password from the form
      * @return redirect link to login page
      */
-    @PostMapping("registration/")
+    @PostMapping(value = "register", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String registration(@RequestParam String login, @RequestParam String password) {
         User user = new User();
         user.setLogin(login);
