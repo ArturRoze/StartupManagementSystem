@@ -1,13 +1,10 @@
 package ua.goit.group6.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.sql.Timestamp;
-
 
 @Entity
-@Table(name = "startup")
-public class Startup extends News{
+@Table(name = "city")
+public class Region extends Model{
 
     @Column
     private String name;
@@ -22,8 +19,8 @@ public class Startup extends News{
 
     @Override
     public String toString() {
-        return "Startup{ "  +
-                ", name='" + name + '\'' +
-                "} " + super.toString();
+        return "Region{" + super.toString()+
+                "name='" + name + '\'' +
+                "} " ;
     }
 }

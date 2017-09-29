@@ -35,15 +35,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                     .antMatchers("/", "/startups", "/startups/*").permitAll()
-                    .antMatchers("/registration", "/registration/**").not().authenticated()
+                    .antMatchers("/registration", "/register").not().authenticated()
                     .antMatchers("/news").authenticated()
-                    .antMatchers("/users", "/admins", "/admins/**").hasRole("ADMIN")
+                    .antMatchers("/users/list", "/admins", "/admins/**").hasRole("ADMIN")
                     .antMatchers("/users/**").hasAnyRole("USER", "ADMIN")
-
-                // for second sprint
-                .antMatchers("/startups/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/offers", "/offers/**").hasAnyRole("USER", "ADMIN")
-
+                    .antMatchers("/startups/**").hasAnyRole("USER", "ADMIN")
+                    .antMatchers("/offers", "/offers/**").hasAnyRole("USER", "ADMIN")
                 .anyRequest().denyAll()
                 .and()
                     .formLogin()

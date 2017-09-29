@@ -33,7 +33,7 @@ public class AdminController {
     @GetMapping("/profile/{id}")
     public ModelAndView profile(@PathVariable("id") String idString) {
         ModelAndView profile = new ModelAndView("admin_profile");
-        long id = Long.parseLong(idString);
+        int id = Integer.parseInt(idString);
         Admin admin = adminService.getById(id);
         profile.addObject("admin", admin);
         return profile;
@@ -41,7 +41,7 @@ public class AdminController {
 
     @GetMapping("/profile/{id}/delete")
     public String delete(@PathVariable("id") String idString) {
-        long id = Long.parseLong(idString);
+        int id = Integer.parseInt(idString);
         adminService.deleteById(id);
         return "redirect:/logout";
     }
@@ -68,7 +68,7 @@ public class AdminController {
     @GetMapping("profile/{id}/update")
     public ModelAndView update(@PathVariable("id") String idString) {
         ModelAndView updateForm = new ModelAndView("admin_update_form");
-        long id = Long.parseLong(idString);
+        int id = Integer.parseInt(idString);
         Admin admin = adminService.getById(id);
         updateForm.addObject("admin", admin);
         return updateForm;
@@ -80,7 +80,7 @@ public class AdminController {
                          @RequestParam("email") String email)
 
             throws IOException {
-        Admin admin = adminService.getById(Long.parseLong(idString));
+        Admin admin = adminService.getById(Integer.parseInt(idString));
         admin.setPassword(passwordEncoder.encode(password));
         admin.setEmail(email);
         adminService.update(admin);

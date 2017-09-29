@@ -2,6 +2,7 @@ package ua.goit.group6.model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -22,7 +23,11 @@ public class User extends BasicUser {
 
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    private List<Startup> startups;
+    private Set<Startup> startups;
+
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private Set<Offer> offers;
 
     public String getFirstName() {
         return firstName;
@@ -56,22 +61,31 @@ public class User extends BasicUser {
         this.country = country;
     }
 
-    public List<Startup> getStartups() {
+    public Set<Startup> getStartups() {
         return startups;
     }
 
-    public void setStartups(List<Startup> startups) {
+    public void setStartups(Set<Startup> startups) {
         this.startups = startups;
+    }
+
+    public Set<Offer> getOffers() {
+        return offers;
+    }
+
+    public void setOffers(Set<Offer> offers) {
+        this.offers = offers;
     }
 
     @Override
     public String toString() {
-        return "User{" + super.toString() +
-                "firstName='" + firstName + '\'' +
+        return "User{ " + super.toString() +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", description='" + description + '\'' +
-                ", country=" + country +
+                ", country=" + (country != null ? country.getName() : null)  +
                 ", startups=" + startups.size() +
+                ", offers=" + offers.size() +
                 "} " ;
     }
 }
