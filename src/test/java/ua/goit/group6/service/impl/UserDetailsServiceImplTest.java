@@ -40,8 +40,7 @@ public class UserDetailsServiceImplTest {
     @Mock
     private UserService userService;
 
-    @Mock
-    private UserDetails userDetailed;
+    private UserDetails details;
 
     @Test
     public void loadUserByUsernameAdminIsNotNull() {
@@ -50,7 +49,7 @@ public class UserDetailsServiceImplTest {
 
         when(adminService.getByLogin(anyString())).thenReturn(admin);
 
-        UserDetails details = userDetailsService.loadUserByUsername(anyString());
+        details = userDetailsService.loadUserByUsername(anyString());
 
         assertNotNull(details);
 
@@ -64,26 +63,9 @@ public class UserDetailsServiceImplTest {
         when(adminService.getByLogin(anyString())).thenReturn(null);
         when(userService.getByLogin(anyString())).thenReturn(user);
 
-        UserDetails details = userDetailsService.loadUserByUsername(anyString());
+        details = userDetailsService.loadUserByUsername(anyString());
 
         assertNotNull(details);
-    }
-
-    @Ignore //TODO do it
-    @Test
-    public void loadUserByUsernameAdminIsNotNullUserIsNotNull() {
-
-        Admin admin = mock(Admin.class);
-        User user = mock(User.class);
-
-        when(adminService.getByLogin(anyString())).thenReturn(admin);
-        when(userService.getByLogin(anyString())).thenReturn(user);
-
-        userDetailed = new UserDetailed(adminService.getByLogin(anyString()));
-
-        UserDetails details = userDetailsService.loadUserByUsername(anyString());
-
-        assertEquals(userDetailed, equalTo(details));
     }
 
     @Test(expected = UsernameNotFoundException.class)
@@ -93,6 +75,25 @@ public class UserDetailsServiceImplTest {
         when(userService.getByLogin(anyString())).thenReturn(null);
 
         userDetailsService.loadUserByUsername(anyString());
+    }
+
+    @Ignore //TODO do it
+    @Test
+    public void loadUserByUsernameAdminIsNotNullUserIsNotNull() {
+
+        Admin admin = mock(Admin.class);
+        User user = mock(User.class);
+
+        String username = anyString();
+
+        when(adminService.getByLogin(username)).thenReturn(admin);
+        when(userService.getByLogin(username)).thenReturn(user);
+
+        UserDetails userDetailed = new UserDetailed(adminService.getByLogin(username));
+
+        details = userDetailsService.loadUserByUsername(username);
+
+        assertEquals(userDetailed, details);
     }
 
 }

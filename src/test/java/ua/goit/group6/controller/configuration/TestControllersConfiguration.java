@@ -34,6 +34,12 @@ public class TestControllersConfiguration {
         return mock(StartupService.class);
     }
 
+    @Bean public OfferService offerService(){return mock(OfferService.class);}
+
+    @Bean public NewsService newsService(){
+        return mock(NewsService.class);
+    }
+
     @Bean
     public IndustryService industryService(){ return mock(IndustryService.class);}
 

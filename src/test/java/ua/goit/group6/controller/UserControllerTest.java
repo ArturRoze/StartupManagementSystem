@@ -1,9 +1,11 @@
 package ua.goit.group6.controller;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -21,12 +23,12 @@ import ua.goit.group6.service.UserService;
 import java.util.Collections;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.anonymous;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
@@ -86,7 +88,7 @@ public class UserControllerTest {
 
     @Test
     public void guestUserProfileUpdateTest() throws Exception {
-        mvc.perform(get("/users/profile/" + id + "/update").with(anonymous()))
+        mvc.perform(post("/users/profile/" + id + "/update").with(anonymous()))
                 .andExpect(status().isFound());
     }
 
@@ -127,15 +129,38 @@ public class UserControllerTest {
                 .andExpect(status().isOk());
     }
 
+    @Ignore //TODO complete
     @Test
     public void updateTest() throws Exception {
+        mvc.perform(post("/users/profile/{}/update", id.toString())
+                .with(user("user").roles("USER", "ADMIN"))
+
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                .param("password", "pass")
+                .param("email", "email")
+                .param("firstName", "fName")
+                .param("lastName", "lName")
+                .param("description", "desc")
+                .param("countryIdString", "1"))
+//                .content("password=pass&email=email&firstName=fName&lastName=lName&description=desc&countryIdString=1"))
+                .andExpect(redirectedUrl("/users/profile/" + id))
+                .andExpect(status().isOk());
+
+
+//        @PathVariable("id") String idString,
+//        @RequestParam("password") String password,
+//        @RequestParam("email") String email,
+//        @RequestParam("first_name") String firstName,
+//        @RequestParam("last_name") String lastName,
+//        @RequestParam("description") String description,
+//        @RequestParam(value = "country_id", required = false) String countryIdString) {
     }
 
 
 
     @Test
     public void userUsersListTest() throws Exception {
-        mvc.perform(get("/users").with(user("user").roles("USER")))
+        mvc.perform(get("/users/list").with(user("user").roles("USER")))
                 .andExpect(status().isForbidden());
     }
 
