@@ -7,5 +7,6 @@ import java.util.List;
 public interface OfferService extends BasicService<Offer> {
 
     List<Offer> getAllByUserId(int id);
+    List<Offer> getAllDesc();
 
 }

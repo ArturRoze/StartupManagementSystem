@@ -9,6 +9,7 @@ import ua.goit.group6.model.Offer;
 import ua.goit.group6.service.OfferService;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,5 +28,15 @@ public class OfferServiceImpl extends AbstractBasicServiceImpl<Offer> implements
     @Transactional(readOnly = true)
     public List<Offer> getAllByUserId(int id) {
         return new ArrayList<>(userDao.getById(id).getOffers());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Offer> getAllDesc() {
+        return getAll()
+                .stream()
+                .sorted(Comparator.comparing(Offer::getRegistrationDate)
+                        .reversed())
+                .collect(Collectors.toList());
     }
 }
