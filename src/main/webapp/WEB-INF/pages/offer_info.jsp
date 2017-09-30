@@ -47,10 +47,6 @@
                 <td>${offer.id}</td>
             </tr>
             <tr>
-                <th>login</th>
-                <td>${offer.name}</td>
-            </tr>
-            <tr>
                 <th>Description</th>
                 <td>${offer.description}</td>
             </tr>
@@ -65,6 +61,10 @@
             <tr>
                 <th>Registration</th>
                 <td>${offer.registrationDate}</td>
+            </tr>
+            <tr>
+                <th>Industry</th>
+                <td>${offer.industry.name}</td>
             </tr>
             <tr>
                 <th>Country</th>

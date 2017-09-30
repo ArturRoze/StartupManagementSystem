@@ -133,6 +133,37 @@
                 </tr>
             </c:forEach>
         </table>
+
+        <table>
+            <caption><h1>List of all user ${user.id} offers</h1></caption>
+            <tr>
+                <th>Id</th>
+                <th>Description</th>
+                <th>Industry</th>
+                <th>Owner</th>
+                <th>Budget</th>
+                <th>Registration</th>
+                <th>Country</th>
+                <th>To startup</th>
+            </tr>
+            <c:forEach var="offer" items="${user.offers}">
+                <tr>
+                    <td>${offer.id}</td>
+                    <td>${offer.description}</td>
+                    <td>${offer.industry.name}</td>
+                    <td>${offer.user.firstName} ${offer.user.lastName}</td>
+                    <td>${offer.budget}</td>
+                    <td>${offer.registrationDate}</td>
+                    <td>${offer.country.name}</td>
+                    <td>
+                        <form action="/offers/${offer.id}" method="get">
+                            <input type="submit" value="Show offer">
+                        </form>
+                    </td>
+
+                </tr>
+            </c:forEach>
+        </table>
     </div>
     <br>
 

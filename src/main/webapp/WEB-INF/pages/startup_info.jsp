@@ -54,7 +54,7 @@
                 <td>${startup.id}</td>
             </tr>
             <tr>
-                <th>login</th>
+                <th>Name</th>
                 <td>${startup.name}</td>
             </tr>
             <tr>
@@ -72,6 +72,10 @@
             <tr>
                 <th>Registration</th>
                 <td>${startup.registrationDate}</td>
+            </tr>
+            <tr>
+                <th>Industry</th>
+                <td>${startup.industry.name}</td>
             </tr>
             <tr>
                 <th>Country</th>
