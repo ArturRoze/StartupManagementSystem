@@ -2,8 +2,6 @@ package ua.goit.group6.controller.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import ua.goit.group6.service.*;
 
 import static org.mockito.Mockito.mock;
@@ -27,13 +25,19 @@ public class TestControllersConfiguration {
     }
 
     @Bean
-    public CityService cityService() {
-        return mock(CityService.class);
+    public RegionService regionService() {
+        return mock(RegionService.class);
     }
 
     @Bean
     public StartupService startupService(){
         return mock(StartupService.class);
+    }
+
+    @Bean public OfferService offerService(){return mock(OfferService.class);}
+
+    @Bean public NewsService newsService(){
+        return mock(NewsService.class);
     }
 
     @Bean

@@ -5,7 +5,7 @@
     <title>Registration</title>
 </head>
 <body>
-<form method="post" action="${pageContext.request.contextPath}/registration/">
+<form method="post" action="${pageContext.request.contextPath}/register">
     <div>
         <table align="center">
             <tr align="center">

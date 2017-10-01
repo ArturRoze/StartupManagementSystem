@@ -44,7 +44,7 @@ public class StartupController {
     @GetMapping("/{id}")
     public ModelAndView info(@PathVariable("id") String idString) {
         ModelAndView startupInfo = new ModelAndView("startup_info");
-        long id = Long.parseLong(idString);
+        int id = Integer.parseInt(idString);
         Startup startup = startupService.getById(id);
         startupInfo.addObject("startup", startup);
         LOGGER.info("Building info page for " + startup);
@@ -53,7 +53,7 @@ public class StartupController {
 
     @GetMapping("{id}/delete")
     public String delete(@PathVariable("id") String idString) {
-        startupService.deleteById(Long.parseLong(idString));
+        startupService.deleteById(Integer.parseInt(idString));
         LOGGER.info("Redirecting to news page after deleting startup with id='{}'", idString);
         return "redirect:/news";
     }
@@ -72,21 +72,21 @@ public class StartupController {
                          @RequestParam("name") String name,
                          @RequestParam("budget") String budgetString,
                          @RequestParam("description") String description,
-                         @RequestParam("country_id") String countryIdString,
-                         @RequestParam("industry_id") String industryIdString) {
+                         @RequestParam(value = "country_id", required = false) String countryIdString,
+                         @RequestParam(value = "industry_id", required = false) String industryIdString) {
         LOGGER.info("Returning from startup create form");
 
         Startup startup = new Startup();
-        startup.setUser(userService.getById(Long.parseLong(userIdString)));
+        startup.setUser(userService.getById(Integer.parseInt(userIdString)));
         startup.setName(name);
         startup.setDescription(description);
         startup.setBudget(Integer.parseInt(budgetString));
 
-        if (!countryIdString.isEmpty())
-            startup.setCountry(countryService.getById(Long.parseLong(countryIdString)));
+        if (countryIdString != null)
+            startup.setCountry(countryService.getById(Integer.parseInt(countryIdString)));
 
-        if (!industryIdString.isEmpty())
-            startup.setIndustry(industryService.getById(Long.parseLong(industryIdString)));
+        if (industryIdString != null)
+            startup.setIndustry(industryService.getById(Integer.parseInt(industryIdString)));
 
         startupService.save(startup);
         LOGGER.info("Startup '{}' successfully created", startup);
@@ -97,7 +97,7 @@ public class StartupController {
     @GetMapping("/{id}/edit")
     public ModelAndView update(@PathVariable("id") String idString) {
         ModelAndView updateForm = new ModelAndView("startup_update_form");
-        updateForm.addObject("startup", startupService.getById(Long.parseLong(idString)));
+        updateForm.addObject("startup", startupService.getById(Integer.parseInt(idString)));
         updateForm.addObject("countries", countryService.getAll());
         updateForm.addObject("industries", industryService.getAll());
         return updateForm;
@@ -108,18 +108,18 @@ public class StartupController {
                          @RequestParam("name") String name,
                          @RequestParam("budget") String budgetString,
                          @RequestParam("description") String description,
-                         @RequestParam("country_id") String countryIdString,
-                         @RequestParam("industry_id") String industryIdString) {
-        Startup startup = startupService.getById(Long.parseLong(idString));
+                         @RequestParam(value = "country_id", required = false) String countryIdString,
+                         @RequestParam(value = "industry_id", required = false) String industryIdString) {
+        Startup startup = startupService.getById(Integer.parseInt(idString));
         startup.setName(name);
         startup.setDescription(description);
         startup.setBudget(Integer.parseInt(budgetString));
 
-        if (!countryIdString.isEmpty())
-            startup.setCountry(countryService.getById(Long.parseLong(countryIdString)));
+        if (countryIdString != null)
+            startup.setCountry(countryService.getById(Integer.parseInt(countryIdString)));
 
-        if (!industryIdString.isEmpty())
-            startup.setIndustry(industryService.getById(Long.parseLong(industryIdString)));
+        if (industryIdString != null)
+            startup.setIndustry(industryService.getById(Integer.parseInt(industryIdString)));
         startupService.update(startup);
 
         return "redirect:/news";

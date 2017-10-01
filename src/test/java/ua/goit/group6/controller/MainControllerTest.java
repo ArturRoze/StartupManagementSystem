@@ -5,8 +5,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -16,14 +15,11 @@ import org.springframework.web.context.WebApplicationContext;
 import ua.goit.group6.configuration.MvcConfiguration;
 import ua.goit.group6.configuration.SecurityConfiguration;
 import ua.goit.group6.controller.configuration.TestControllersConfiguration;
-import ua.goit.group6.model.Admin;
-import ua.goit.group6.model.User;
-import ua.goit.group6.service.AdminService;
+import ua.goit.group6.service.NewsService;
 import ua.goit.group6.service.StartupService;
-import ua.goit.group6.service.UserService;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.anyInt;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.anonymous;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -46,29 +42,26 @@ public class MainControllerTest {
 
     private MockMvc mvc;
 
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private AdminService adminService;
+
     @Autowired
     private StartupService startupService;
+    @Autowired
+    private NewsService newsService;
 
     @Autowired
     private WebApplicationContext context;
 
-    private User user;
-    private Admin admin;
 
     @Before
     public void setUp() throws Exception {
-        user = mock(User.class);
-        admin = mock(Admin.class);
 
         mvc = MockMvcBuilders
                 .webAppContextSetup(context)
                 .apply(springSecurity())
                 .build();
     }
+
+    //Guest tests
 
     @Test
     public void guestIndexTest() throws Exception {
@@ -86,15 +79,27 @@ public class MainControllerTest {
     }
 
     @Test
-    @Ignore //TODO complete test
-    public void guestRegistrationTest() throws Exception {
-//        userService.save(user);
-//        verify(userService, times(1)).save(user);
+    public void guestLogoutTest() throws Exception {
+        mvc.perform(post("/logout").with(anonymous()))
+                .andExpect(redirectedUrl("/"))
+                .andExpect(status().isFound());
+    }
 
-        mvc.perform(post("registration").with(anonymous()))
+    @Test
+    public void guestRegistrationFormTest() throws Exception {
+        mvc.perform(get("/registration").with(anonymous()))
                 .andExpect(view().name("registration_form"))
-//                .andExpect(redirectedUrl("http://localhost/login"))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void guestRegistrationTest() throws Exception {
+        mvc.perform(post("/register").with(anonymous())
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                .param("login", "login")
+                .param("password", "pass"))
+                .andExpect(redirectedUrl("/login"))
+                .andExpect(status().isFound());
     }
 
     @Test
@@ -104,12 +109,7 @@ public class MainControllerTest {
                 .andExpect(status().isFound());
     }
 
-    @Test
-    public void guestLogoutTest() throws Exception {
-        mvc.perform(post("/logout").with(anonymous()))
-                .andExpect(redirectedUrl("/"))
-                .andExpect(status().isFound());
-    }
+    //Authenticated tests
 
     @Test
     public void authenticatedIndexTest() throws Exception {
@@ -126,21 +126,17 @@ public class MainControllerTest {
                 .andExpect(status().isFound());
     }
 
+    @Ignore //TODO complete test
     @Test
-    //TODO finish after creating startups and offers
     public void authenticatedNewsTest() throws Exception {
+        int newsOnPage = 6;
+
         mvc.perform(get("/news").with(user("user").roles("ADMIN", "USER")))
-                //TODO startups and offers
+                .andExpect(model().attribute("current_page", 1))
+                .andExpect(model().attribute("pages_count", 1))
+                .andExpect(model().attribute("news_list", equalTo(newsService.getNPageWithMNews(1, newsOnPage))))
                 .andExpect(view().name("news"))
                 .andExpect(status().isOk());
     }
 
-    @Test
-    public void initDefaultUsersTest() throws Exception {
-        userService.save(user);
-        verify(userService, times(1)).save(user);
-
-        adminService.save(admin);
-        verify(adminService, times(1)).save(admin);
-    }
 }

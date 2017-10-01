@@ -1,12 +1,10 @@
 package ua.goit.group6.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "industry")
-public class Industry extends Model {
+@Table(name = "city")
+public class Region extends Model{
 
     @Column
     private String name;
@@ -21,8 +19,8 @@ public class Industry extends Model {
 
     @Override
     public String toString() {
-        return "Industry{" + super.toString() +
+        return "Region{" + super.toString()+
                 "name='" + name + '\'' +
-                "} ";
+                "} " ;
     }
 }

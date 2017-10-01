@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ua.goit.group6.dao.UserDao;
 import ua.goit.group6.model.User;
-import ua.goit.group6.service.impl.AdminServiceImpl;
 
 /**
  * @author Artyr
