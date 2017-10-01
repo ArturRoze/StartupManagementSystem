@@ -1,26 +1,48 @@
-#table {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    width: 80%;
+.bd-navbar {
+    background-color: #cfd2d6;
+    box-shadow: rgba(0, 0, 0, 0.05) 0 0.5rem 1rem, rgba(0, 0, 0, 0.1) 0 -1px 0.2rem inset;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: sticky;
+    padding: 0.5rem 1rem;
+    top: 0;
+    z-index: 1071;
 }
 
-#table td, #table th {
-    border: 1px solid #ddd;
-    padding: 8px;
+.brand {
+    font-family: 'Pacifico', cursive;
+    color: #1e7e34;
+    text-decoration: none;
+    font-size: 2em;
+    float: left;
+    margin-left: 1rem;
 }
 
-#table tr:nth-child(even) {
-    background-color: #f2f2f2;
+.menu {
+    text-decoration: none;
+    margin-left: auto;
+    flex-direction: row;
+    display: flex;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none initial initial;
+    box-sizing: inherit;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0;
+    -webkit-margin-end: 0;
+    -webkit-padding-start: 40px;
 }
 
-#table tr:hover {
-    background-color: #ddd;
+.logo {
+    width: 4rem;
+    float: left;
 }
 
-#table th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #4CAF50;
-    color: white;
+img {
+    height: 4rem;
+    width: 4rem;
 }
