@@ -105,7 +105,7 @@ public class MainController {
      * @param password password from the form
      * @return redirect link to login page
      */
-    @PostMapping(value = "register", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String registration(@RequestParam String login, @RequestParam String password) {
         User user = new User();
         user.setLogin(login);
