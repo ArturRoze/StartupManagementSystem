@@ -11,8 +11,15 @@
     <title>Error page</title>
 </head>
 <body>
-<h1>OOPS SOMETHING WENT WRONG</h1>
-<a href="${pageContext.request.contextPath}/">To main page</a>
+<h1 align="center">OOPS SOMETHING WENT WRONG</h1>
+<div align="center">
+    <button onclick="goBack()">Go Back</button>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</div>
 
 </body>
 </html>

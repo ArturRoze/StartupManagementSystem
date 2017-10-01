@@ -74,11 +74,11 @@
     </div>
 
     <div align="center">
-
         <table>
             <caption><h1>News</h1></caption>
             <tr>
                 <th>Id</th>
+                <th>Class name</th>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Industry</th>
@@ -88,25 +88,95 @@
                 <th>Country</th>
                 <th>To startup</th>
             </tr>
-            <c:forEach var="startup" items="${startups}">
+
+            <c:forEach var="news" items="${news_list}">
                 <tr>
-                    <td>${startup.id}</td>
-                    <td>${startup.name}</td>
-                    <td>${startup.description}</td>
-                    <td>${startup.industry.name}</td>
-                    <td>${startup.user.firstName} ${startup.user.lastName}</td>
-                    <td>${startup.budget}</td>
-                    <td>${startup.registrationDate}</td>
-                    <td>${startup.country.name}</td>
-                    <td>
-                        <form action="/startups/${startup.id}" method="get">
-                            <input type="submit" value="Show startup">
-                        </form>
-                    </td>
+                    <td>${news.id}</td>
+                    <td>${news['class'].simpleName}</td>
+
+                    <c:choose>
+                        <c:when test="${news['class'].simpleName eq 'Startup'}">
+                            <td>${news.name}</td>
+                        </c:when>
+                        <c:otherwise>
+                            <td></td>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <td>${news.description}</td>
+                    <td>${news.industry.name}</td>
+                    <td>${news.user.firstName} ${news.user.lastName}</td>
+                    <td>${news.budget}</td>
+                    <td>${news.registrationDate}</td>
+                    <td>${news.country.name}</td>
+
+                    <c:choose>
+                        <c:when test="${news['class'].simpleName eq 'Startup'}">
+                            <td>
+                                <form action="/startups/${news.id}" method="get">
+                                    <input type="submit" value="Show startup">
+                                </form>
+                            </td>
+                        </c:when>
+                        <c:when test="${news['class'].simpleName eq 'Offer'}">
+                            <td>
+                                <form action="/offers/${news.id}" method="get">
+                                    <input type="submit" value="Show offer">
+                                </form>
+                            </td>
+                        </c:when>
+                        <c:otherwise>
+                            <td></td>
+                        </c:otherwise>
+                    </c:choose>
 
                 </tr>
             </c:forEach>
         </table>
+
+        <br>
+
+        <div>
+
+            <table>
+                <tr>
+                    <c:if test="${current_page > 1}">
+                        <th>
+                            <form action="${pageContext.request.contextPath}/news" method="get">
+                                <input type="number" name="page" value="1" hidden>
+                                <input type="submit" value="First page">
+                            </form>
+                        </th>
+                        <th>
+                            <form action="${pageContext.request.contextPath}/news" method="get">
+                                <input type="number" name="page" value="${current_page -1}" hidden>
+                                <input type="submit" value="Previous page">
+                            </form>
+                        </th>
+                    </c:if>
+
+                    <th>
+                        Page ${current_page} of ${pages_count}
+                    </th>
+
+                    <c:if test="${current_page < pages_count}">
+                        <th>
+                            <form action="${pageContext.request.contextPath}/news" method="get">
+                                <input type="number" name="page" value="${current_page + 1}" hidden>
+                                <input type="submit" value="Next page">
+                            </form>
+                        </th>
+                        <th>
+                            <form action="${pageContext.request.contextPath}/news" method="get">
+                                <input type="number" name="page" value="${pages_count}" hidden>
+                                <input type="submit" value="Last page">
+                            </form>
+                        </th>
+                    </c:if>
+                </tr>
+            </table>
+        </div>
+
     </div>
 </body>
 </html>

@@ -47,8 +47,8 @@ public class MainController {
      * @param passwordEncoder {@link PasswordEncoder} bean
      * @param startupService  {@link StartupService} bean
      * @param newsService     {@link NewsService} bean
-     *
-     * <p> Need to initialize database </p>
+     *                        <p>
+     *                        <p> Need to initialize database </p>
      * @param countryService  {@link CountryService} bean
      * @param industryService {@link IndustryService} bean
      * @param adminService    {@link AdminService} bean
@@ -56,7 +56,7 @@ public class MainController {
      */
     @Autowired
     public MainController(UserService userService, PasswordEncoder passwordEncoder,
-                          StartupService startupService,NewsService newsService,
+                          StartupService startupService, NewsService newsService,
                           AdminService adminService,
                           OfferService offerService,
                           CountryService countryService, IndustryService industryService) {
@@ -119,15 +119,33 @@ public class MainController {
      * Mapping for url ":/news"
      *
      * @return a {@link ModelAndView} object holding the name of jsp represented by {@code String},
-     * and {@link java.util.List} of //TODO startups and offers from database
+     * and {@link java.util.List} of startups and offers from database
      * sorted by registration date in descending order
      */
     @GetMapping("news")
-    public ModelAndView news() {
+    public ModelAndView news(@RequestParam(value = "page", required = false) String page) {
+        int currentPage = 1;
+        int pagesCount = newsService.getCountOfPages(6);
+
+        if (page != null) {
+
+            try {
+                currentPage = Integer.parseInt(page);
+            } catch (NumberFormatException e) {
+                return new ModelAndView("error");
+            }
+
+            if (currentPage < 1) {
+                currentPage = 1;
+            } else if (currentPage > pagesCount) {
+                currentPage = pagesCount;
+            }
+        }
+
         ModelAndView news = new ModelAndView("news");
-        news.addObject("startups", startupService.getAllDesc());
-        news.addObject("news", newsService.getAllDesc());
-        //TODO add offers
+        news.addObject("current_page", currentPage);
+        news.addObject("pages_count", pagesCount);
+        news.addObject("news_list", newsService.getNPageWithMNews(currentPage, 6));
         LOGGER.info("Building news page");
         return news;
     }
@@ -138,7 +156,7 @@ public class MainController {
      * and writes they to database
      */
     @PostConstruct
-    public void InitDefaultUsers() {
+    public void initDefaultDatabase() {
 
         if (countryService.getAll().isEmpty()) {
             Country country = new Country();
