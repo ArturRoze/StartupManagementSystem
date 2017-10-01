@@ -37,7 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // base access for resources
                 .antMatchers("/*.css", "/*.svg").permitAll()
                 .antMatchers("/", "/startups", "/startups/*").permitAll()
-                .antMatchers("/registration", "/registration/**").not().authenticated()
+                .antMatchers("/registration", "/register").not().authenticated()
 
                 //authorized access
                 .antMatchers("/news").authenticated()
