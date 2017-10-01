@@ -32,7 +32,7 @@
 <div align="center">
 
     <table>
-        <caption><h1>List of all startups</h1></caption>
+        <caption><h1>Recent startups</h1></caption>
         <tr>
             <th>Id</th>
             <th>Name</th>

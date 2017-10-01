@@ -7,8 +7,13 @@ import java.util.List;
 
 public interface NewsService {
 
+    List<News> getAll();
+
     List<News> getAllDesc();
 
     List<News> getAllByUserIdDesc(int id);
 
+    int getCountOfPages(int newsPerPage);
+
+    List<News> getNPageWithMNews(int pageNumber, int newsAmount);
 }

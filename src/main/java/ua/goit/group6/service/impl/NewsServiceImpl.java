@@ -28,15 +28,19 @@ public class NewsServiceImpl implements NewsService {
         this.userDao = userDao;
     }
 
-
     @Override
     @Transactional(readOnly = true)
-    public List<News> getAllDesc() {
+    public List<News> getAll() {
         List<News> news = new ArrayList<>();
         news.addAll(startupDao.readAll());
         news.addAll(offerDao.readAll());
+        return news;
+    }
 
-        return news.stream()
+    @Override
+    public List<News> getAllDesc() {
+
+        return getAll().stream()
                 .sorted(Comparator.comparing(News::getRegistrationDate)
                         .reversed())
                 .collect(Collectors.toList());
@@ -52,6 +56,20 @@ public class NewsServiceImpl implements NewsService {
         return news.stream()
                 .sorted(Comparator.comparing(News::getRegistrationDate)
                         .reversed())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public int getCountOfPages(int newsPerPage) {
+        return (getAll().size() % newsPerPage) == 0 ? (getAll().size() / newsPerPage) : (getAll().size() / newsPerPage) + 1;
+    }
+
+    @Override
+    public List<News> getNPageWithMNews(int pageNumber, int newsAmount) {
+        return getAllDesc()
+                .stream()
+                .skip((pageNumber - 1) * newsAmount)
+                .limit(newsAmount)
                 .collect(Collectors.toList());
     }
 }
