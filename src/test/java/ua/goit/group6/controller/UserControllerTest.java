@@ -146,7 +146,7 @@ public class UserControllerTest {
     public void adminUsersListTest() throws Exception {
         when(userService.getAll()).thenReturn(Collections.singletonList(user));
 
-        mvc.perform(get("/users").with(user("admin").roles("ADMIN")))
+        mvc.perform(get("/users/list").with(user("admin").roles("ADMIN")))
                 .andExpect(model().attribute("users", equalTo(userService.getAll())))
                 .andExpect(view().name("users_list"))
                 .andExpect(status().isOk());

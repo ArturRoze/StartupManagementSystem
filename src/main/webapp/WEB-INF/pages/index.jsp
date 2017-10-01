@@ -4,65 +4,41 @@
 <html>
 <head>
     <title>Head Page</title>
-    <style>
-        table, td, th {
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 50%;
-        }
-
-        th, td {
-            padding: 15px;
-        }
-    </style>
+    <%@include file="header.jsp" %>
 </head>
 <body>
-<div align="center">
-    <h1> Welcome Page </h1>
-    <a href="${pageContext.request.contextPath}/login">Login</a><br>
-    <a href="${pageContext.request.contextPath}/registration">Registration</a><br>
-    <a href="${pageContext.request.contextPath}/news">To news page</a><br>
-    <a href="${pageContext.request.contextPath}/startups">Show all startups</a><br>
-
-</div>
-<div align="center">
-
-    <table>
-        <caption><h1>List of all products</h1></caption>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Industry</th>
-            <th>Owner</th>
-            <th>Budget</th>
-            <th>Registration</th>
-            <th>Country</th>
-            <th>To startup</th>
-        </tr>
+<%@include file="navbar.jsp" %>
+<div class="container">
+    <h1 class="bd-title text-center">Welcome Page</h1>
+    <h2 class="text-center">List of all products</h2>
+    <div class="row">
+        <div class="col-md-1">Id</div>
+        <div class="col-md-2">Name</div>
+        <div class="col-md-3">Description</div>
+        <div class="col-md-1">Industry</div>
+        <div class="col-md-1">Owner</div>
+        <div class="col-md-1">Budget</div>
+        <div class="col-md-1">Registration</div>
+        <div class="col-md-1">Country</div>
+        <div class="col-md-1">To startup</div>
+    </div>
+    <div class="row">
         <c:forEach var="startup" items="${startups}">
-            <tr>
-                <td>${startup.id}</td>
-                <td>${startup.name}</td>
-                <td>${startup.description}</td>
-                <td>${startup.industry.name}</td>
-                <td>${startup.user.firstName} ${startup.user.lastName}</td>
-                <td>${startup.budget}</td>
-                <td>${startup.registrationDate}</td>
-                <td>${startup.country.name}</td>
-                <td>
-                    <form action="/startups/${startup.id}" method="get">
-                        <input type="submit" value="Show startup">
-                    </form>
-                </td>
-
-            </tr>
+            <div class="col-md-1">${startup.id}</div>
+            <div class="col-md-2">${startup.name}</div>
+            <div class="col-md-3">${startup.description}</div>
+            <div class="col-md-1">${startup.industry.name}</div>
+            <div class="col-md-1">${startup.user.firstName} ${startup.user.lastName}</div>
+            <div class="col-md-1">${startup.budget}</div>
+            <div class="col-md-1">${startup.registrationDate}</div>
+            <div class="col-md-1">${startup.country.name}</div>
+            <div class="col-md-1">
+                <form action="/startups/${startup.id}" method="get">
+                    <input type="submit" value="Show this startup" class="btn btn-primary">
+                </form>
+            </div>
         </c:forEach>
-    </table>
+    </div>
 
 </div>
 </body>

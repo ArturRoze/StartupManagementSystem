@@ -29,9 +29,8 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         LOGGER.info("Handle resources");
-        registry.addResourceHandler("/*.jpeg").addResourceLocations("/WEB-INF/jpeg/");
-        registry.addResourceHandler("**.css").addResourceLocations("/WEB-INF/css/");
-        registry.addResourceHandler("/*.js").addResourceLocations("/WEB-INF/js/");
+        registry.addResourceHandler("/*.css").addResourceLocations("/WEB-INF/css/");
+        registry.addResourceHandler("/*.svg").addResourceLocations("/WEB-INF/images/");
     }
 
     @Override
@@ -40,7 +39,6 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         registry.addViewController("/login").setViewName("login_form");
         registry.addViewController("/error").setViewName("error");
         registry.addViewController("/registration").setViewName("registration_form");
-        registry.addViewController("/offers/new/offer").setViewName("offer_add_form");
         registry.addViewController("/admins/new/admin").setViewName("admin_add_form");
     }
 
