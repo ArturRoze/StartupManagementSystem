@@ -43,14 +43,14 @@ public abstract class AbstractDaoImpl<T> implements GeneralDao<T> {
     @Transactional
     public void create(T value) {
         getSession().save(value);
-        LOGGER.info("Save user:{} to repository", value);
+        LOGGER.info("Save entity:{} to repository", value);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     @Transactional
     public List<T> readAll() {
-        LOGGER.info("Get all users from repository");
+        LOGGER.info("Get all entities from repository");
         return (List<T>) getSession().createQuery("from " + getCleanEntityClass(entityType)).list();
     }
 
@@ -58,14 +58,14 @@ public abstract class AbstractDaoImpl<T> implements GeneralDao<T> {
     @Transactional
     public void update(T value) {
         getSession().update(value);
-        LOGGER.info("Update user:{} in repository", value);
+        LOGGER.info("Update entity:{} in repository", value);
     }
 
     @Override
     @Transactional
     public void delete(T value) {
         getSession().remove(value);
-        LOGGER.info("delete user:{} from repository", value);
+        LOGGER.info("delete entity:{} from repository", value);
     }
 
     @Override
@@ -74,7 +74,7 @@ public abstract class AbstractDaoImpl<T> implements GeneralDao<T> {
         Query deleteByIdQuery = getSession().createQuery("delete from " + getCleanEntityClass(entityType) + " where id = :id");
         deleteByIdQuery.setParameter("id", id);
         deleteByIdQuery.executeUpdate();
-        LOGGER.info("delete user with id:{} from repository", id);
+        LOGGER.info("delete entity with id:{} from repository", id);
     }
 
     private String getCleanEntityClass(Class<?> entityClass) {

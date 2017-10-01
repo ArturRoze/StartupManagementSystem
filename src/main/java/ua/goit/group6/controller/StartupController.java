@@ -109,7 +109,7 @@ public class StartupController {
                          @RequestParam("budget") String budgetString,
                          @RequestParam("description") String description,
                          @RequestParam(value = "country_id", required = false) String countryIdString,
-                         @RequestParam(value = "industry_id",required = false) String industryIdString) {
+                         @RequestParam(value = "industry_id", required = false) String industryIdString) {
         Startup startup = startupService.getById(Integer.parseInt(idString));
         startup.setName(name);
         startup.setDescription(description);

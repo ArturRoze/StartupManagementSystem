@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository;
 import ua.goit.group6.dao.IndustryDao;
 import ua.goit.group6.model.Industry;
 
+/**
+ * @author Ivan
+ */
 @Repository
 public class IndustryDaoImpl extends AbstractDaoImpl<Industry> implements IndustryDao {
 

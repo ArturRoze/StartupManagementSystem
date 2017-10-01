@@ -32,8 +32,9 @@ public class UserController {
 
     /**
      * Constructor for controller
-     *  @param userService    {@link UserService} bean
-     * @param countryService {@link CountryService} bean
+     *
+     * @param userService     {@link UserService} bean
+     * @param countryService  {@link CountryService} bean
      * @param passwordEncoder {@link PasswordEncoder} bean
      */
     @Autowired
@@ -121,14 +122,14 @@ public class UserController {
         User user = userService.getById(Integer.parseInt(idString));
 
         if (!password.isEmpty())
-        user.setPassword(passwordEncoder.encode(password));
+            user.setPassword(passwordEncoder.encode(password));
 
         user.setEmail(email);
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setDescription(description);
 
-        if (countryIdString != null){
+        if (countryIdString != null) {
             user.setCountry(countryService.getById(Integer.parseInt(countryIdString)));
         }
 

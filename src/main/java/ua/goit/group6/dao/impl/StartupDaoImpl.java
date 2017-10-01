@@ -6,6 +6,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ua.goit.group6.dao.StartupDao;
 import ua.goit.group6.model.Startup;
+
+/**
+ * @author Artyr
+ */
 @Repository
 @Transactional
 public class StartupDaoImpl extends AbstractDaoImpl<Startup> implements StartupDao {

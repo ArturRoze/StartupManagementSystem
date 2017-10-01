@@ -7,6 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.goit.group6.dao.OfferDao;
 import ua.goit.group6.model.Offer;
 
+/**
+ * @author Artyr
+ */
 @Repository
 @Transactional
 public class OfferDaoImpl extends AbstractDaoImpl<Offer> implements OfferDao {

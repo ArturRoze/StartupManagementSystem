@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository;
 import ua.goit.group6.dao.RegionDao;
 import ua.goit.group6.model.Region;
 
+/**
+ * @author Artyr,Ivan
+ */
 @Repository
 public class RegionDaoImpl extends AbstractDaoImpl<Region> implements RegionDao {
 

@@ -1,7 +1,8 @@
 package ua.goit.group6.model;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "industry")
@@ -22,6 +23,6 @@ public class Industry extends Model {
     public String toString() {
         return "Industry{" + super.toString() +
                 "name='" + name + '\'' +
-                "} " ;
+                "} ";
     }
 }
