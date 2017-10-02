@@ -1,6 +1,7 @@
 package ua.goit.group6.configuration;
 
 import com.zaxxer.hikari.HikariDataSource;
+import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,8 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Properties;
 
 /**
@@ -42,14 +45,30 @@ public class DatabaseConfiguration {
     @Value("${db.dialect}")
     private String dialect;
 
+//    @Bean
+//    public DataSource dataSource() {
+//        HikariDataSource dataSource = new HikariDataSource();
+//        dataSource.setDriverClassName(driver);
+//        dataSource.setJdbcUrl(url);
+//        dataSource.setUsername(userName);
+//        dataSource.setPassword(password);
+//        return dataSource;
+//    }
+
     @Bean
-    public DataSource dataSource() {
-        HikariDataSource dataSource = new HikariDataSource();
-        dataSource.setDriverClassName(driver);
-        dataSource.setJdbcUrl(url);
-        dataSource.setUsername(userName);
-        dataSource.setPassword(password);
-        return dataSource;
+    public BasicDataSource dataSource() throws URISyntaxException {
+        URI dbUri = new URI(System.getenv("CLEARDB_DATABASE_URL"));
+
+        String username = dbUri.getUserInfo().split(":")[0];
+        String password = dbUri.getUserInfo().split(":")[1];
+        String dbUrl = "jdbc:mysql://" + dbUri.getHost() + dbUri.getPath();
+
+        BasicDataSource basicDataSource = new BasicDataSource();
+        basicDataSource.setUrl(dbUrl);
+        basicDataSource.setUsername(username);
+        basicDataSource.setPassword(password);
+
+        return basicDataSource;
     }
 
     @Bean
