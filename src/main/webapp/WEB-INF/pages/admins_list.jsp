@@ -50,7 +50,7 @@
         </table>
 
         <div align="center">
-            <form action="/admins/profile/${current_user_id}" method="get">
+            <form action="${pageContext.request.contextPath}/admins/profile/${current_user_id}" method="get">
                 <input type="submit" value="To admin profile">
             </form>
         </div>
