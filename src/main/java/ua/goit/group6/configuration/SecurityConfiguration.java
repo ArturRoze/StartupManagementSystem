@@ -41,7 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 //authorized access
                 .antMatchers("/news").authenticated()
-                .antMatchers("/users", "/admins", "/admins/**").hasRole("ADMIN")
+                .antMatchers("/users/list", "/admins", "/admins/**").hasRole("ADMIN")
                 .antMatchers("/users/**").hasAnyRole("USER", "ADMIN")
 
                 // for second sprint

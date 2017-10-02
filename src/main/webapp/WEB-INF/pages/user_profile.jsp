@@ -185,13 +185,14 @@
     <div>
         <c:if test="${isOwner || isAdmin}">
             <div align="center">
-                <form action="${pageContext.request.contextPath}/users/profile/${user.id}/edit" method="get">
+                <form action="/users/profile/${user.id}/edit" method="get">
                     <input type="submit" value="Update">
                 </form>
             </div>
 
             <div align="center">
                 <form action="${pageContext.request.contextPath}/users/profile/${user.id}/delete" method="get">
+                    <input type="text" value="${isAdmin}" name="isAdmin" hidden>
                     <input type="submit" value="Delete">
                 </form>
             </div>
