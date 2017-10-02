@@ -158,11 +158,11 @@ public class UserControllerTest {
 
 
 
-    @Test
-    public void userUsersListTest() throws Exception {
-        mvc.perform(get("/users/list").with(user("user").roles("USER")))
-                .andExpect(status().isForbidden());
-    }
+//    @Test
+//    public void userUsersListTest() throws Exception {
+//        mvc.perform(get("/users/list").with(user("user").roles("USER")))
+//                .andExpect(status().isForbidden());
+//    }
 
     @Test
     public void adminUsersListTest() throws Exception {

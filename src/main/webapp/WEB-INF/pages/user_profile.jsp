@@ -125,7 +125,7 @@
                     <td>${startup.registrationDate}</td>
                     <td>${startup.country.name}</td>
                     <td>
-                        <form action="/startups/${startup.id}" method="get">
+                        <form action="${pageContext.request.contextPath}/startups/${startup.id}" method="get">
                             <input type="submit" value="Show startup">
                         </form>
                     </td>
@@ -156,7 +156,7 @@
                     <td>${offer.registrationDate}</td>
                     <td>${offer.country.name}</td>
                     <td>
-                        <form action="/offers/${offer.id}" method="get">
+                        <form action="${pageContext.request.contextPath}/offers/${offer.id}" method="get">
                             <input type="submit" value="Show offer">
                         </form>
                     </td>
@@ -191,7 +191,7 @@
             </div>
 
             <div align="center">
-                <form action="/users/profile/${user.id}/delete" method="get">
+                <form action="${pageContext.request.contextPath}/users/profile/${user.id}/delete" method="get">
                     <input type="text" value="${isAdmin}" name="isAdmin" hidden>
                     <input type="submit" value="Delete">
                 </form>

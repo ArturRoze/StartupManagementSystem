@@ -37,7 +37,7 @@
 </div>
 
 <div>
-    <form action="/admins/profile/${admin.id}/update/" method="post">
+    <form action="${pageContext.request.contextPath}/admins/profile/${admin.id}/update/" method="post">
         <table>
             <caption><h3>Admin edit</h3></caption>
             <tr>

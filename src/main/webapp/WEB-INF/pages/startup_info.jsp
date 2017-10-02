@@ -64,7 +64,7 @@
             <tr>
                 <th>User</th>
                 <td><div align="center">
-                    <form action="/users/profile/${startup.user.id}" method="get">
+                    <form action="${pageContext.request.contextPath}/users/profile/${startup.user.id}" method="get">
                         <input type="submit" value="To user ${startup.user.id} profile page">
                     </form>
                 </div></td>
@@ -85,13 +85,13 @@
 
         <c:if test="${isOwner || isAdmin}">
             <div align="center">
-                <form action="/startups/${startup.id}/edit" method="get">
+                <form action="${pageContext.request.contextPath}/startups/${startup.id}/edit" method="get">
                     <input type="submit" value="Update">
                 </form>
             </div>
 
             <div align="center">
-                <form action="/startups/${startup.id}/delete" method="get">
+                <form action="${pageContext.request.contextPath}/startups/${startup.id}/delete" method="get">
                     <input type="submit" value="Delete">
                 </form>
             </div>

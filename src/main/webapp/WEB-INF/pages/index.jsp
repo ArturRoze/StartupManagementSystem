@@ -33,7 +33,7 @@
             <div class="col-md-1">${startup.registrationDate}</div>
             <div class="col-md-1">${startup.country.name}</div>
             <div class="col-md-1">
-                <form action="/startups/${startup.id}" method="get">
+                <form action="${pageContext.request.contextPath}/startups/${startup.id}" method="get">
                     <input type="submit" value="Show this startup" class="btn btn-primary">
                 </form>
             </div>

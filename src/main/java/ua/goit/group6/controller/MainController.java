@@ -192,20 +192,20 @@ public class MainController {
             user.setPassword(passwordEncoder.encode("user"));
             userService.save(user);
 
-            if (startupService.getAll().isEmpty()) {
-                Startup startup = new Startup();
-                startup.setName("First startup");
-                startup.setUser(user);
-                startup.setBudget(1000);
-                startupService.save(startup);
-            }
-
-            if (offerService.getAll().isEmpty()) {
-                Offer offer = new Offer();
-                offer.setUser(user);
-                offer.setBudget(500);
-                offerService.save(offer);
-            }
+//            if (startupService.getAll().isEmpty()) {
+//                Startup startup = new Startup();
+//                startup.setName("First startup");
+//                startup.setUser(user);
+//                startup.setBudget(1000);
+//                startupService.save(startup);
+//            }
+//
+//            if (offerService.getAll().isEmpty()) {
+//                Offer offer = new Offer();
+//                offer.setUser(user);
+//                offer.setBudget(500);
+//                offerService.save(offer);
+//            }
         }
 
     }
