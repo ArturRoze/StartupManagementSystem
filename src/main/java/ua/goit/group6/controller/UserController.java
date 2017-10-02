@@ -68,14 +68,23 @@ public class UserController {
      * Method deletes {@link User} with chosen id from database
      *
      * @param idString the id of user to delete from url
-     * @return redirect link to logout
+     * @return redirect link to logout if
      */
     @GetMapping("/profile/{id}/delete")
-    public String delete(@PathVariable("id") String idString) {
-        userService.deleteById(Integer.parseInt(idString));
-        LOGGER.info("Redirecting to index page after deleting user with id='" + idString + "'");
-        //TODO make logout for user but not for admin
-        return "redirect:/logout";
+    public String delete(@PathVariable("id") String idString,
+                         @RequestParam(value = "isAdmin", required = false) boolean isAdmin) {
+        try{
+            userService.deleteById(Integer.parseInt(idString));
+        } catch (Exception e){
+            return "redirect:/error";
+        }
+        if (isAdmin) {
+            LOGGER.info("Redirecting to user list after deleting user with id='" + idString + "'");
+            return "redirect:/users/list";
+        } else {
+            LOGGER.info("Redirecting to index page after deleting user with id='" + idString + "'");
+            return "redirect:/logout";
+        }
     }
 
     /**

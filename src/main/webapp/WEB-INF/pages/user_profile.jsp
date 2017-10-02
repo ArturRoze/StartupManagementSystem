@@ -192,6 +192,7 @@
 
             <div align="center">
                 <form action="/users/profile/${user.id}/delete" method="get">
+                    <input type="text" value="${isAdmin}" name="isAdmin" hidden>
                     <input type="submit" value="Delete">
                 </form>
             </div>
