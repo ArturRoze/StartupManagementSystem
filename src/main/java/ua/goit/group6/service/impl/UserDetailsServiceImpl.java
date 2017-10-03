@@ -32,9 +32,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     public UserDetailsServiceImpl(AdminService adminService, UserService userService) {
+        LOGGER.info("Creating UserDetailsServiceImpl");
         this.adminService = adminService;
         this.userService = userService;
-        LOGGER.info("UserDetailsServiceImpl created");
     }
 
     /**

@@ -85,6 +85,21 @@ public class UserDetailed implements UserDetails {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserDetailed)) return false;
+
+        UserDetailed that = (UserDetailed) o;
+
+        return user != null ? user.equals(that.user) : that.user == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return user != null ? user.hashCode() : 0;
+    }
+
+    @Override
     public String toString() {
         return "UserDetailed{" +
                 "user=" + user +

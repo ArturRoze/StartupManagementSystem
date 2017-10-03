@@ -44,7 +44,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/users/list", "/admins", "/admins/**").hasRole("ADMIN")
                 .antMatchers("/users/**").hasAnyRole("USER", "ADMIN")
 
-                // for second sprint
                 .antMatchers("/startups/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/offers", "/offers/**").hasAnyRole("USER", "ADMIN")
 

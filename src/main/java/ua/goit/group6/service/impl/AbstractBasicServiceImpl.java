@@ -18,13 +18,13 @@ import java.util.List;
  */
 public abstract class AbstractBasicServiceImpl<T extends Serializable> implements BasicService<T> {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     private final GeneralDao<T> dao;
 
     AbstractBasicServiceImpl(GeneralDao<T> dao) {
+        LOGGER.info("Creating" + getClass());
         this.dao = dao;
-        LOGGER.info(this.getClass().toString() + " created");
     }
 
     @Override

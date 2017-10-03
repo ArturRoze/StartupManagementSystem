@@ -78,6 +78,38 @@ public class User extends BasicUser {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        if (!super.equals(o)) return false;
+
+        User user = (User) o;
+
+        if (getFirstName() != null ? !getFirstName().equals(user.getFirstName()) : user.getFirstName() != null)
+            return false;
+        if (getLastName() != null ? !getLastName().equals(user.getLastName()) : user.getLastName() != null)
+            return false;
+        if (getDescription() != null ? !getDescription().equals(user.getDescription()) : user.getDescription() != null)
+            return false;
+        if (getCountry() != null ? !getCountry().equals(user.getCountry()) : user.getCountry() != null) return false;
+        if (getStartups() != null ? !getStartups().equals(user.getStartups()) : user.getStartups() != null)
+            return false;
+        return getOffers() != null ? getOffers().equals(user.getOffers()) : user.getOffers() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (getFirstName() != null ? getFirstName().hashCode() : 0);
+        result = 31 * result + (getLastName() != null ? getLastName().hashCode() : 0);
+        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
+        result = 31 * result + (getCountry() != null ? getCountry().hashCode() : 0);
+        result = 31 * result + (getStartups() != null ? getStartups().hashCode() : 0);
+        result = 31 * result + (getOffers() != null ? getOffers().hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "User{ " + super.toString() +
                 ", firstName='" + firstName + '\'' +

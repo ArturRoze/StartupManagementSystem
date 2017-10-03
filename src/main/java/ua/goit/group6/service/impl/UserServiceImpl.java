@@ -3,7 +3,6 @@ package ua.goit.group6.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.goit.group6.dao.AdminDao;
@@ -29,13 +28,11 @@ public class UserServiceImpl extends AbstractBasicServiceImpl<User> implements U
     private final UserDao userDao;
     private final AdminDao adminDao;
 
-
     @Autowired
     public UserServiceImpl(AdminDao adminDao, UserDao userDao) {
         super(userDao);
         this.userDao = userDao;
         this.adminDao = adminDao;
-        LOGGER.info("UserServiceImpl created");
     }
 
     /**
@@ -52,7 +49,7 @@ public class UserServiceImpl extends AbstractBasicServiceImpl<User> implements U
 
     /**
      * Method saves {@link User} to repository if no {@link ua.goit.group6.model.Admin}
-     * with such login exists
+     * or user with such login exists
      *
      * @param user User to save
      */
