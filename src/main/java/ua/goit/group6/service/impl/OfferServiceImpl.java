@@ -16,18 +16,9 @@ import java.util.stream.Collectors;
 @Service
 public class OfferServiceImpl extends AbstractBasicServiceImpl<Offer> implements OfferService {
 
-    private final UserDao userDao;
-
     @Autowired
-    OfferServiceImpl(OfferDao dao, UserDao userDao) {
+    OfferServiceImpl(OfferDao dao) {
         super(dao);
-        this.userDao = userDao;
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Offer> getAllByUserId(int id) {
-        return new ArrayList<>(userDao.getById(id).getOffers());
     }
 
     @Override

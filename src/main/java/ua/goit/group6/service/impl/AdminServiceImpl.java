@@ -3,7 +3,6 @@ package ua.goit.group6.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.goit.group6.dao.AdminDao;
@@ -36,7 +35,6 @@ public class AdminServiceImpl extends AbstractBasicServiceImpl<Admin> implements
         super(adminDao);
         this.adminDao = adminDao;
         this.userDao = userDao;
-        LOGGER.info("AdminServiceImpl created");
     }
 
     /**
@@ -53,7 +51,7 @@ public class AdminServiceImpl extends AbstractBasicServiceImpl<Admin> implements
 
     /**
      * Method saves {@link Admin} to repository if no {@link User}
-     * with such login exists
+     * or admin with such login exists
      *
      * @param admin Admin to save
      */
@@ -72,6 +70,11 @@ public class AdminServiceImpl extends AbstractBasicServiceImpl<Admin> implements
         }
     }
 
+    /**
+     * Method checks if the last admin left in repository
+     *
+     * @param admin admin to delete
+     */
     @Override
     public void delete(Admin admin) {
         if (getAll().size() > 1) {
@@ -81,6 +84,11 @@ public class AdminServiceImpl extends AbstractBasicServiceImpl<Admin> implements
         }
     }
 
+    /**
+     * Method checks if the last admin left in repository
+     *
+     * @param id id of admin to delete
+     */
     @Override
     public void deleteById(int id) {
         if (getAll().size() > 1) {

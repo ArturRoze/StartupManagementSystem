@@ -79,7 +79,7 @@
                     <td>${user.country.name}</td>
 
                     <td>
-                        <form action="${pageContext.request.contextPath}/users/profile/${current_user_id}" method="get">
+                        <form action="${pageContext.request.contextPath}/users/profile/${user.id}" method="get">
                             <input type="submit" value="Show profile">
                         </form>
                     </td>

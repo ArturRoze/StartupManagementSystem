@@ -1,7 +1,6 @@
 package ua.goit.group6.service.impl;
 
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -16,7 +15,6 @@ import ua.goit.group6.model.UserDetailed;
 import ua.goit.group6.service.AdminService;
 import ua.goit.group6.service.UserService;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -42,6 +40,8 @@ public class UserDetailsServiceImplTest {
 
     private UserDetails details;
 
+    private UserDetailed detailed;
+
     @Test
     public void loadUserByUsernameAdminIsNotNull() {
 
@@ -53,6 +53,20 @@ public class UserDetailsServiceImplTest {
 
         assertNotNull(details);
 
+    }
+
+    @Test
+    public void loadUserByUsernameAdminIsNotNullReturn() {
+
+        Admin admin = mock(Admin.class);
+
+        when(adminService.getByLogin(anyString())).thenReturn(admin);
+
+        detailed = new UserDetailed(admin);
+
+        details = userDetailsService.loadUserByUsername(anyString());
+
+        assertEquals(detailed, details);
     }
 
     @Test
@@ -68,6 +82,21 @@ public class UserDetailsServiceImplTest {
         assertNotNull(details);
     }
 
+    @Test
+    public void loadUserByUsernameAdminIsNullUserIsNotNullReturn() {
+
+        User user = mock(User.class);
+
+        when(adminService.getByLogin(anyString())).thenReturn(null);
+        when(userService.getByLogin(anyString())).thenReturn(user);
+
+        detailed = new UserDetailed(user);
+
+        details = userDetailsService.loadUserByUsername(anyString());
+
+        assertEquals(detailed, details);
+    }
+
     @Test(expected = UsernameNotFoundException.class)
     public void loadUserByUsernameAdminIsNullUserIsNull() {
 
@@ -76,24 +105,4 @@ public class UserDetailsServiceImplTest {
 
         userDetailsService.loadUserByUsername(anyString());
     }
-
-    @Ignore //TODO do it
-    @Test
-    public void loadUserByUsernameAdminIsNotNullUserIsNotNull() {
-
-        Admin admin = mock(Admin.class);
-        User user = mock(User.class);
-
-        String username = anyString();
-
-        when(adminService.getByLogin(username)).thenReturn(admin);
-        when(userService.getByLogin(username)).thenReturn(user);
-
-        UserDetails userDetailed = new UserDetailed(adminService.getByLogin(username));
-
-        details = userDetailsService.loadUserByUsername(username);
-
-        assertEquals(userDetailed, details);
-    }
-
 }

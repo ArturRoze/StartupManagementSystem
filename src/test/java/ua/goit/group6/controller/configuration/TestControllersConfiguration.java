@@ -25,11 +25,6 @@ public class TestControllersConfiguration {
     }
 
     @Bean
-    public RegionService regionService() {
-        return mock(RegionService.class);
-    }
-
-    @Bean
     public StartupService startupService(){
         return mock(StartupService.class);
     }
@@ -42,5 +37,4 @@ public class TestControllersConfiguration {
 
     @Bean
     public IndustryService industryService(){ return mock(IndustryService.class);}
-
     }
