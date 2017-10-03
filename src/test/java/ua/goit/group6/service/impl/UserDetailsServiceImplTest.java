@@ -105,23 +105,4 @@ public class UserDetailsServiceImplTest {
 
         userDetailsService.loadUserByUsername(anyString());
     }
-
-    @Test
-    public void loadUserByUsernameAdminIsNotNullUserIsNotNullReturn() {
-
-        Admin admin = mock(Admin.class);
-        User user = mock(User.class);
-
-        String username = anyString();
-
-        when(adminService.getByLogin(username)).thenReturn(admin);
-        when(userService.getByLogin(username)).thenReturn(user);
-
-        detailed = new UserDetailed(admin);
-
-        details = userDetailsService.loadUserByUsername(username);
-
-        assertEquals(detailed, details);
-    }
-
 }
