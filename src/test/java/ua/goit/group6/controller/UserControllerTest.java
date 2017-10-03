@@ -156,13 +156,11 @@ public class UserControllerTest {
 //        @RequestParam(value = "country_id", required = false) String countryIdString) {
     }
 
-
-
-//    @Test
-//    public void userUsersListTest() throws Exception {
-//        mvc.perform(get("/users/list").with(user("user").roles("USER")))
-//                .andExpect(status().isForbidden());
-//    }
+    @Test
+    public void userUsersListTest() throws Exception {
+        mvc.perform(get("/users/list").with(user("user").roles("USER")))
+                .andExpect(status().isForbidden());
+    }
 
     @Test
     public void adminUsersListTest() throws Exception {
