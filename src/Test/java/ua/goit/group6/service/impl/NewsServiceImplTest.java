@@ -82,7 +82,8 @@ public class NewsServiceImplTest {
         when(startup.getRegistrationDate()).thenReturn(startupReqDate);
         when(offer.getRegistrationDate()).thenReturn(offerReqDate);
 
-        when(startupReqDate.compareTo(offerReqDate)).thenReturn(1);
+        //TODO WTF
+//        when(startupReqDate.compareTo(offerReqDate)).thenReturn(1);
 
         news = new ArrayList<>();
         news.addAll(startupDao.readAll());

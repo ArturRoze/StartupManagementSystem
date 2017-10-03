@@ -24,12 +24,12 @@ public class Role extends Model {
         return getName() != null ? getName().equals(role.getName()) : role.getName() == null;
     }
 
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
-        return result;
-    }
+//    @Override
+//    public int hashCode() {
+//        int result = super.hashCode();
+//        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+//        return result;
+//    }
 
     @Override
     public String toString() {

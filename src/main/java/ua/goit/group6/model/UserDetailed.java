@@ -94,10 +94,10 @@ public class UserDetailed implements UserDetails {
         return user != null ? user.equals(that.user) : that.user == null;
     }
 
-    @Override
-    public int hashCode() {
-        return user != null ? user.hashCode() : 0;
-    }
+//    @Override
+//    public int hashCode() {
+//        return user != null ? user.hashCode() : 0;
+//    }
 
     @Override
     public String toString() {

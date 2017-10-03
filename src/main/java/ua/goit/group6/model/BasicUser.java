@@ -67,15 +67,15 @@ public abstract class BasicUser extends Model{
         return getRegistrationDate() != null ? getRegistrationDate().equals(basicUser.getRegistrationDate()) : basicUser.getRegistrationDate() == null;
     }
 
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (getLogin() != null ? getLogin().hashCode() : 0);
-        result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
-        result = 31 * result + (getEmail() != null ? getEmail().hashCode() : 0);
-        result = 31 * result + (getRegistrationDate() != null ? getRegistrationDate().hashCode() : 0);
-        return result;
-    }
+//    @Override
+//    public int hashCode() {
+//        int result = super.hashCode();
+//        result = 31 * result + (getLogin() != null ? getLogin().hashCode() : 0);
+//        result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
+//        result = 31 * result + (getEmail() != null ? getEmail().hashCode() : 0);
+//        result = 31 * result + (getRegistrationDate() != null ? getRegistrationDate().hashCode() : 0);
+//        return result;
+//    }
 
     @Override
     public String toString() {

@@ -93,17 +93,17 @@ public abstract class News extends Model {
         return getRegistrationDate() != null ? getRegistrationDate().equals(news.getRegistrationDate()) : news.getRegistrationDate() == null;
     }
 
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
-        result = 31 * result + getBudget();
-        result = 31 * result + (getUser() != null ? getUser().hashCode() : 0);
-        result = 31 * result + (getCountry() != null ? getCountry().hashCode() : 0);
-        result = 31 * result + (getIndustry() != null ? getIndustry().hashCode() : 0);
-        result = 31 * result + (getRegistrationDate() != null ? getRegistrationDate().hashCode() : 0);
-        return result;
-    }
+//    @Override
+//    public int hashCode() {
+//        int result = super.hashCode();
+//        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
+//        result = 31 * result + getBudget();
+//        result = 31 * result + (getUser() != null ? getUser().hashCode() : 0);
+//        result = 31 * result + (getCountry() != null ? getCountry().hashCode() : 0);
+//        result = 31 * result + (getIndustry() != null ? getIndustry().hashCode() : 0);
+//        result = 31 * result + (getRegistrationDate() != null ? getRegistrationDate().hashCode() : 0);
+//        return result;
+//    }
 
     @Override
     public String toString() {

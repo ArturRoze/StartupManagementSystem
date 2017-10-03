@@ -97,17 +97,17 @@ public class User extends BasicUser {
         return getOffers() != null ? getOffers().equals(user.getOffers()) : user.getOffers() == null;
     }
 
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (getFirstName() != null ? getFirstName().hashCode() : 0);
-        result = 31 * result + (getLastName() != null ? getLastName().hashCode() : 0);
-        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
-        result = 31 * result + (getCountry() != null ? getCountry().hashCode() : 0);
-        result = 31 * result + (getStartups() != null ? getStartups().hashCode() : 0);
-        result = 31 * result + (getOffers() != null ? getOffers().hashCode() : 0);
-        return result;
-    }
+//    @Override
+//    public int hashCode() {
+//        int result = super.hashCode();
+//        result = 31 * result + (getFirstName() != null ? getFirstName().hashCode() : 0);
+//        result = 31 * result + (getLastName() != null ? getLastName().hashCode() : 0);
+//        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
+//        result = 31 * result + (getCountry() != null ? getCountry().hashCode() : 0);
+//        result = 31 * result + (getStartups() != null ? getStartups().hashCode() : 0);
+//        result = 31 * result + (getOffers() != null ? getOffers().hashCode() : 0);
+//        return result;
+//    }
 
     @Override
     public String toString() {
