@@ -31,14 +31,12 @@ public class NewsServiceImpl implements NewsService {
 
     private final StartupDao startupDao;
     private final OfferDao offerDao;
-    private final UserDao userDao;
 
     @Autowired
-    public NewsServiceImpl(StartupDao startupDao, OfferDao offerDao, UserDao userDao) {
+    public NewsServiceImpl(StartupDao startupDao, OfferDao offerDao) {
         LOGGER.info("Creating " + getClass().getSimpleName());
         this.startupDao = startupDao;
         this.offerDao = offerDao;
-        this.userDao = userDao;
     }
 
     /**
@@ -65,19 +63,6 @@ public class NewsServiceImpl implements NewsService {
     public List<News> getAllDesc() {
         LOGGER.info("Sorting all news by decreasing registration date");
         return getAll().stream()
-                .sorted(Comparator.comparing(News::getRegistrationDate)
-                        .reversed())
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<News> getAllByUserIdDesc(int id) {
-        List<News> news = new ArrayList<>();
-        news.addAll(userDao.getById(id).getStartups());
-        news.addAll(userDao.getById(id).getOffers());
-
-        return news.stream()
                 .sorted(Comparator.comparing(News::getRegistrationDate)
                         .reversed())
                 .collect(Collectors.toList());

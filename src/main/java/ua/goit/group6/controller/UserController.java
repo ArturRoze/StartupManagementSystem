@@ -68,14 +68,15 @@ public class UserController {
      * Method deletes {@link User} with chosen id from database
      *
      * @param idString the id of user to delete from url
-     * @return redirect link to logout if
+     * @param isAdmin  check who delete user
+     * @return redirect link to logout if owner deletes himself, or to news page if admin deletes user
      */
     @GetMapping("/profile/{id}/delete")
     public String delete(@PathVariable("id") String idString,
                          @RequestParam(value = "isAdmin", required = false) boolean isAdmin) {
-        try{
+        try {
             userService.deleteById(Integer.parseInt(idString));
-        } catch (Exception e){
+        } catch (Exception e) {
             return "redirect:/error";
         }
         if (isAdmin) {
@@ -97,7 +98,7 @@ public class UserController {
      * and list of all {@link Region} from database
      */
     @GetMapping("/profile/{id}/edit")
-    public ModelAndView update(@PathVariable("id") String idString) {
+    public ModelAndView updateForm(@PathVariable("id") String idString) {
         ModelAndView updateForm = new ModelAndView("user_update_form");
         int id = Integer.parseInt(idString);
         User user = userService.getById(id);
