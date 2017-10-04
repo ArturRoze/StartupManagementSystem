@@ -1,0 +1,7 @@
+{
+  "name": "Startup Management System",
+  "description": "Portal to search startups or investors",
+  "repository": "https://github.com/ArturRoze/StartupManagementSystem",
+  "logo": "https://startup-management-system.herokuapp.com/favicon.png",
+  "keywords": ["goit", "startup", "investors"]
+}
