@@ -15,11 +15,11 @@ import ua.goit.group6.model.Startup;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -46,7 +46,7 @@ public class NewsServiceImplTest {
     @Mock
     private Offer offer;
 
-    private List<News> news;
+    private List<News> newsExpected;
 
     @Test
     public void getAllNotNull() throws Exception {
@@ -63,18 +63,15 @@ public class NewsServiceImplTest {
         when(startupDao.readAll()).thenReturn(Collections.singletonList(startup));
         when(offerDao.readAll()).thenReturn(Collections.singletonList(offer));
 
-        news = new ArrayList<>();
-        news.addAll(startupDao.readAll());
-        news.addAll(offerDao.readAll());
+        newsExpected = new ArrayList<>();
+        newsExpected.addAll(startupDao.readAll());
+        newsExpected.addAll(offerDao.readAll());
 
-        assertEquals(news, newsService.getAll());
+        assertEquals(newsExpected, newsService.getAll());
     }
 
     @Test
     public void getAllDesc() throws Exception {
-
-        when(startupDao.readAll()).thenReturn(Collections.singletonList(startup));
-        when(offerDao.readAll()).thenReturn(Collections.singletonList(offer));
 
         Timestamp startupReqDate = mock(Timestamp.class);
         Timestamp offerReqDate = mock(Timestamp.class);
@@ -82,14 +79,16 @@ public class NewsServiceImplTest {
         when(startup.getRegistrationDate()).thenReturn(startupReqDate);
         when(offer.getRegistrationDate()).thenReturn(offerReqDate);
 
-        //TODO WTF
-//        when(startupReqDate.compareTo(offerReqDate)).thenReturn(1);
+        when(startupDao.readAll()).thenReturn(Collections.singletonList(startup));
+        when(offerDao.readAll()).thenReturn(Collections.singletonList(offer));
 
-        news = new ArrayList<>();
-        news.addAll(startupDao.readAll());
-        news.addAll(offerDao.readAll());
+        assertEquals(1, startupReqDate.compareTo(offerReqDate));
 
-        assertEquals(news, newsService.getAllDesc());
+        newsExpected = new ArrayList<>();
+        newsExpected.addAll(startupDao.readAll());
+        newsExpected.addAll(offerDao.readAll());
+
+        assertEquals(newsExpected, newsService.getAllDesc());
 
     }
 
@@ -108,7 +107,67 @@ public class NewsServiceImplTest {
 
 
     @Test
-    public void getNPageWithMNews() throws Exception {
+    public void getNPageWithMNews_onePageCase() throws Exception {
+
+        int newsPerPage = 6;
+        int pageNumber = 1;
+
+        Timestamp startupReqDate = mock(Timestamp.class);
+        Timestamp offerReqDate = mock(Timestamp.class);
+
+        when(startup.getRegistrationDate()).thenReturn(startupReqDate);
+        when(offer.getRegistrationDate()).thenReturn(offerReqDate);
+
+        when(startupDao.readAll()).thenReturn(Arrays.asList(startup, startup));
+        when(offerDao.readAll()).thenReturn(Arrays.asList(offer, offer));
+
+        newsExpected = new ArrayList<>();
+        newsExpected.addAll(startupDao.readAll());
+        newsExpected.addAll(offerDao.readAll());
+
+        assertEquals(newsExpected, newsService.getNPageWithMNews(pageNumber, newsPerPage));
     }
 
+    @Test
+    public void getNPageWithMNews_moreThanOnePageCase() throws Exception {
+
+        int newsPerPage = 3;
+        int pageNumber = 2;
+
+        Timestamp startupReqDate = mock(Timestamp.class);
+        Timestamp offerReqDate = mock(Timestamp.class);
+
+        when(startup.getRegistrationDate()).thenReturn(startupReqDate);
+        when(offer.getRegistrationDate()).thenReturn(offerReqDate);
+
+
+
+        when(startupDao.readAll()).thenReturn(Arrays.asList(startup, startup));
+        when(offerDao.readAll()).thenReturn(Arrays.asList(offer, offer));
+
+        newsExpected = new ArrayList<>();
+//        newsExpected.addAll(startupDao.readAll());
+        newsExpected.add(offerDao.readAll().get(1));
+
+        assertEquals(newsExpected, newsService.getNPageWithMNews(pageNumber, newsPerPage));
+    }
+
+    @Test
+    public void getNPageWithMNews_noNewsCase() throws Exception {
+
+        int newsPerPage = 6;
+        int pageNumber = 1;
+
+
+        when(startupDao.readAll()).thenReturn(Collections.emptyList());
+        when(offerDao.readAll()).thenReturn(Collections.emptyList());
+
+        newsExpected = new ArrayList<>();
+        newsExpected.addAll(startupDao.readAll());
+        newsExpected.addAll(offerDao.readAll());
+
+        assertEquals(0, newsService.getAll().size());
+
+        assertEquals(newsExpected, newsService.getNPageWithMNews(pageNumber, newsPerPage));
+    }
 }
