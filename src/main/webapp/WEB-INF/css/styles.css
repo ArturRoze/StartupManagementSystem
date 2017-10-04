@@ -14,7 +14,7 @@ html, body {
 
 .footer {
     flex: 1 0 auto;
-    height: 0;
+    height: 5rem;
 }
 
 h1 {
