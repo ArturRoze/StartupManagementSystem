@@ -30,8 +30,6 @@ public class MainController {
 
     private final StartupService startupService;
 
-    private final OfferService offerService;
-
     private final NewsService newsService;
 
     private final PasswordEncoder passwordEncoder;
@@ -52,13 +50,11 @@ public class MainController {
      * @param countryService  {@link CountryService} bean
      * @param industryService {@link IndustryService} bean
      * @param adminService    {@link AdminService} bean
-     * @param offerService    {@link OfferService} bean
      */
     @Autowired
     public MainController(UserService userService, PasswordEncoder passwordEncoder,
                           StartupService startupService, NewsService newsService,
                           AdminService adminService,
-                          OfferService offerService,
                           CountryService countryService, IndustryService industryService) {
         LOGGER.info("Creating index controller");
         this.countryService = countryService;
@@ -67,7 +63,6 @@ public class MainController {
         this.adminService = adminService;
         this.passwordEncoder = passwordEncoder;
         this.startupService = startupService;
-        this.offerService = offerService;
         this.newsService = newsService;
     }
 
@@ -105,7 +100,7 @@ public class MainController {
      * @param password password from the form
      * @return redirect link to login page
      */
-    @PostMapping(value = "register", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String registration(@RequestParam String login, @RequestParam String password) {
         User user = new User();
         user.setLogin(login);
@@ -191,21 +186,6 @@ public class MainController {
             user.setLogin("user");
             user.setPassword(passwordEncoder.encode("user"));
             userService.save(user);
-
-            if (startupService.getAll().isEmpty()) {
-                Startup startup = new Startup();
-                startup.setName("First startup");
-                startup.setUser(user);
-                startup.setBudget(1000);
-                startupService.save(startup);
-            }
-
-            if (offerService.getAll().isEmpty()) {
-                Offer offer = new Offer();
-                offer.setUser(user);
-                offer.setBudget(500);
-                offerService.save(offer);
-            }
         }
 
     }

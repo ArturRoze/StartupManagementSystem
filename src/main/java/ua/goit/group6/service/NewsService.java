@@ -1,17 +1,19 @@
 package ua.goit.group6.service;
 
 import ua.goit.group6.model.News;
-import ua.goit.group6.model.User;
 
 import java.util.List;
 
+/**
+ * Interface for {@link News} service
+ *
+ * @author Boiko Ivan
+ */
 public interface NewsService {
 
     List<News> getAll();
 
     List<News> getAllDesc();
-
-    List<News> getAllByUserIdDesc(int id);
 
     int getCountOfPages(int newsPerPage);
 

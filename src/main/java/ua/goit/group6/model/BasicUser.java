@@ -19,8 +19,6 @@ public abstract class BasicUser extends Model{
     @Column (name = "registration_date")
     private Timestamp registrationDate;
 
-    public BasicUser() {
-    }
 
     public String getLogin() {
         return login;
@@ -53,6 +51,31 @@ public abstract class BasicUser extends Model{
     public void setRegistrationDate(Timestamp registrationDate) {
         this.registrationDate = registrationDate;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BasicUser)) return false;
+        if (!super.equals(o)) return false;
+
+        BasicUser basicUser = (BasicUser) o;
+
+        if (getLogin() != null ? !getLogin().equals(basicUser.getLogin()) : basicUser.getLogin() != null) return false;
+        if (getPassword() != null ? !getPassword().equals(basicUser.getPassword()) : basicUser.getPassword() != null)
+            return false;
+        if (getEmail() != null ? !getEmail().equals(basicUser.getEmail()) : basicUser.getEmail() != null) return false;
+        return getRegistrationDate() != null ? getRegistrationDate().equals(basicUser.getRegistrationDate()) : basicUser.getRegistrationDate() == null;
+    }
+
+//    @Override
+//    public int hashCode() {
+//        int result = super.hashCode();
+//        result = 31 * result + (getLogin() != null ? getLogin().hashCode() : 0);
+//        result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
+//        result = 31 * result + (getEmail() != null ? getEmail().hashCode() : 0);
+//        result = 31 * result + (getRegistrationDate() != null ? getRegistrationDate().hashCode() : 0);
+//        return result;
+//    }
 
     @Override
     public String toString() {

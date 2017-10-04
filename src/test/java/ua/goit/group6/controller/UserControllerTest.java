@@ -123,7 +123,7 @@ public class UserControllerTest {
         when(countryService.getAll()).thenReturn(Collections.singletonList(country));
 
         mvc.perform(get("/users/profile/" + id + "/edit").with(user("user").roles("USER", "ADMIN")))
-                .andExpect(model().attribute("user", userService.getById(id)))
+                .andExpect(model().attribute("user", equalTo(userService.getById(id))))
                 .andExpect(model().attribute("countries", equalTo(countryService.getAll())))
                 .andExpect(view().name("user_update_form"))
                 .andExpect(status().isOk());
@@ -155,8 +155,6 @@ public class UserControllerTest {
 //        @RequestParam("description") String description,
 //        @RequestParam(value = "country_id", required = false) String countryIdString) {
     }
-
-
 
     @Test
     public void userUsersListTest() throws Exception {
