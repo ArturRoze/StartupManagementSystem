@@ -1,15 +1,67 @@
+html, body {
+    height: 100%;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.content {
+    flex: 1 0 auto;
+}
+
+.footer {
+    flex: 1 0 auto;
+    height: 5rem;
+}
+
+h1 {
+    font-size: 4.5rem;
+    font-weight: 100;
+    margin-top: 4rem;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    color: #888;
+    font-weight: 300;
+}
+
+.material-icons.f18 { font-size: 1.8rem; }
+.material-icons.f24 { font-size: 2.4rem; }
+
+span i {
+    vertical-align: middle;
+}
+
 .bd-navbar {
     background-color: #cfd2d6;
-    box-shadow: rgba(0, 0, 0, 0.05) 0 0.5rem 1rem, rgba(0, 0, 0, 0.1) 0 -1px 0.2rem inset;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    box-shadow: rgba(0, 0, 0, 0.05) 0 0.5rem 1rem, rgba(0, 0, 0, 0.1) 0 -1px 0.5rem inset;
     position: sticky;
-    padding: 0.5rem 1rem;
+    padding: 1rem 1rem;
     top: 0;
     z-index: 1071;
+}
+
+.padd0 {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.padd05 {
+    padding: 0.5rem;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.hight-7rem {
+    min-height: 10rem;
 }
 
 .brand {
@@ -22,14 +74,6 @@
 }
 
 .menu {
-    text-decoration: none;
-    margin-left: auto;
-    flex-direction: row;
-    display: flex;
-    padding-left: 0;
-    margin-bottom: 0;
-    list-style: none initial initial;
-    box-sizing: inherit;
     -webkit-margin-before: 1em;
     -webkit-margin-after: 1em;
     -webkit-margin-start: 0;
@@ -42,7 +86,7 @@
     float: left;
 }
 
-img {
+img.logo {
     height: 4rem;
     width: 4rem;
 }

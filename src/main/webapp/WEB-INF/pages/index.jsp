@@ -7,39 +7,35 @@
     <%@include file="header.jsp" %>
 </head>
 <body>
-<%@include file="navbar.jsp" %>
-<div class="container">
-    <h1 class="bd-title text-center">Welcome Page</h1>
-    <h2 class="text-center">List of all products</h2>
-    <div class="row">
-        <div class="col-md-1">Id</div>
-        <div class="col-md-2">Name</div>
-        <div class="col-md-3">Description</div>
-        <div class="col-md-1">Industry</div>
-        <div class="col-md-1">Owner</div>
-        <div class="col-md-1">Budget</div>
-        <div class="col-md-1">Registration</div>
-        <div class="col-md-1">Country</div>
-        <div class="col-md-1">To startup</div>
-    </div>
-    <div class="row">
-        <c:forEach var="startup" items="${startups}">
-            <div class="col-md-1">${startup.id}</div>
-            <div class="col-md-2">${startup.name}</div>
-            <div class="col-md-3">${startup.description}</div>
-            <div class="col-md-1">${startup.industry.name}</div>
-            <div class="col-md-1">${startup.user.firstName} ${startup.user.lastName}</div>
-            <div class="col-md-1">${startup.budget}</div>
-            <div class="col-md-1">${startup.registrationDate}</div>
-            <div class="col-md-1">${startup.country.name}</div>
-            <div class="col-md-1">
-                <form action="${pageContext.request.contextPath}/startups/${startup.id}" method="get">
-                    <input type="submit" value="Show this startup" class="btn btn-primary">
-                </form>
+<div class="wrapper">
+    <div class="content">
+        <%@include file="navbar.jsp" %>
+        <div class="container">
+            <h1 class="text-center">Welcome</h1>
+            <h2 class="text-center">List of all startups</h2>
+            <hr>
+            <div class="row">
+                <c:forEach var="startup" items="${startups}">
+                    <div class="col-md-4 padd05">
+                        <a class="btn btn-light btn-block" href="${pageContext.request.contextPath}/startups/${startup.id}" role="button">
+                            <div class="btn-block hight-7rem">
+                                <i class="material-icons f24">work</i>
+                                <div>Industry: ${startup.industry.name}</div>
+                                <div>${startup.country.name}</div>
+                                <div class="btn-block">
+                                    <h4>${startup.name}</h4>
+                                </div>
+                                <div>${startup.description}</div>
+                                <div>${startup.budget}</div>
+                            </div>
+                        </a>
+                    </div>
+                </c:forEach>
             </div>
-        </c:forEach>
+        </div>
     </div>
-
+    <%@include file="footer.jsp" %>
 </div>
+
 </body>
 </html>

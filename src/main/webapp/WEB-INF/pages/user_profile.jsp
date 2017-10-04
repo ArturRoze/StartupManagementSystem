@@ -1,34 +1,14 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: root
-  Date: 20.09.2017
-  Time: 19:52
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <title>Profile ${user.id}</title>
-    <style>
-        table, td, th {
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 50%;
-        }
-
-        th, td {
-            padding: 15px;
-        }
-    </style>
+    <%@include file="header.jsp"%>
 </head>
 <body>
-<div align="center">
+<%@include file="navbar.jsp"%>
+<div class="container">
 
     <div align="center">
         <div align="center">
@@ -185,14 +165,13 @@
     <div>
         <c:if test="${isOwner || isAdmin}">
             <div align="center">
-                <form action="/users/profile/${user.id}/edit" method="get">
+                <form action="${pageContext.request.contextPath}/users/profile/${user.id}/edit" method="get">
                     <input type="submit" value="Update">
                 </form>
             </div>
 
             <div align="center">
                 <form action="${pageContext.request.contextPath}/users/profile/${user.id}/delete" method="get">
-                    <input type="text" value="${isAdmin}" name="isAdmin" hidden>
                     <input type="submit" value="Delete">
                 </form>
             </div>

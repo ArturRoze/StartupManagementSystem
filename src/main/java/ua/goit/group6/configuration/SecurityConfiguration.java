@@ -35,7 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 // base access for resources
-                .antMatchers("/*.css", "/*.svg").permitAll()
+                .antMatchers("/*.css", "/*.svg", "/*.png", "/*.jpg").permitAll()
                 .antMatchers("/", "/startups", "/startups/*").permitAll()
                 .antMatchers("/registration", "/register").not().authenticated()
 
@@ -46,6 +46,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 .antMatchers("/startups/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/offers", "/offers/**").hasAnyRole("USER", "ADMIN")
+
 
                 .anyRequest().denyAll()
                 .and()

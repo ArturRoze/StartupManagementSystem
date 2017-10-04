@@ -18,6 +18,7 @@ import org.springframework.web.servlet.view.JstlView;
  *
  * @author Boiko Ivan
  * @author Artyr
+ * @author voksus
  */
 @Configuration
 @EnableWebMvc
@@ -31,6 +32,8 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         LOGGER.info("Handle resources");
         registry.addResourceHandler("/*.css").addResourceLocations("/WEB-INF/css/");
         registry.addResourceHandler("/*.svg").addResourceLocations("/WEB-INF/images/");
+        registry.addResourceHandler("/*.png").addResourceLocations("/WEB-INF/images/");
+        registry.addResourceHandler("/*.jpg").addResourceLocations("/WEB-INF/images/");
     }
 
     @Override
