@@ -31,7 +31,7 @@
 
     <c:when test="${isAdmin}">
     <div align="center">
-        <form action="/admins/profile/${current_user_id}" method="get">
+        <form action="${pageContext.request.contextPath}/admins/profile/${current_user_id}" method="get">
             <input type="submit" value="To admin profile page">
         </form>
     </div>
@@ -39,7 +39,7 @@
 
     <c:otherwise>
     <div align="center">
-        <form action="/users/profile/${current_user_id}" method="get">
+        <form action="${pageContext.request.contextPath}/users/profile/${current_user_id}" method="get">
             <input type="submit" value="To user profile page">
         </form>
     </div>
@@ -93,14 +93,14 @@
                     <c:choose>
                         <c:when test="${news['class'].simpleName eq 'Startup'}">
                             <td>
-                                <form action="/startups/${news.id}" method="get">
+                                <form action="${pageContext.request.contextPath}/startups/${news.id}" method="get">
                                     <input type="submit" value="Show startup">
                                 </form>
                             </td>
                         </c:when>
                         <c:when test="${news['class'].simpleName eq 'Offer'}">
                             <td>
-                                <form action="/offers/${news.id}" method="get">
+                                <form action="${pageContext.request.contextPath}/offers/${news.id}" method="get">
                                     <input type="submit" value="Show offer">
                                 </form>
                             </td>

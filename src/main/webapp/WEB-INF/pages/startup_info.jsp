@@ -70,7 +70,7 @@
 
             <div class="navbar padd0">
                 <div>
-                    <form action="/users/profile/${startup.user.id}" method="get">
+                    <form action="${pageContext.request.contextPath}/users/profile/${startup.user.id}" method="get">
                         <input class="btn btn-info" type="submit"
                                value="Go to user ${startup.user.firstName} ${startup.user.lastName} profile page">
                     </form>
@@ -79,12 +79,12 @@
                 <c:if test="${isOwner || isAdmin}">
                     <div>
                         <div class="d-lg-inline-block">
-                            <form action="/startups/${startup.id}/edit" method="get">
+                            <form action="${pageContext.request.contextPath}/startups/${startup.id}/edit" method="get">
                                 <input class="btn btn-primary ml-md-3 mb-md-0" type="submit" value="Update">
                             </form>
                         </div>
                         <div class="d-lg-inline-block">
-                            <form action="/startups/${startup.id}/delete" method="get">
+                            <form action="${pageContext.request.contextPath}/startups/${startup.id}/delete" method="get">
                                 <input class="btn btn-danger ml-md-3 mb-md-0" type="submit" value="Delete">
                             </form>
                         </div>

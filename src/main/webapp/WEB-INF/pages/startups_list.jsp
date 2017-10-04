@@ -55,7 +55,7 @@
                 <td>${startup.registrationDate}</td>
                 <td>${startup.country.name}</td>
                 <td>
-                    <form action="/startups/${startup.id}" method="get">
+                    <form action="${pageContext.request.contextPath}/startups/${startup.id}" method="get">
                         <input type="submit" value="Show startup">
                     </form>
                 </td>

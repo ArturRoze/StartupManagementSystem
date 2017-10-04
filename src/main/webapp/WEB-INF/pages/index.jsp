@@ -17,7 +17,7 @@
             <div class="row">
                 <c:forEach var="startup" items="${startups}">
                     <div class="col-md-4 padd05">
-                        <a class="btn btn-light btn-block" href="/startups/${startup.id}" role="button">
+                        <a class="btn btn-light btn-block" href="${pageContext.request.contextPath}/startups/${startup.id}" role="button">
                             <div class="btn-block hight-7rem">
                                 <i class="material-icons f24">work</i>
                                 <div>Industry: ${startup.industry.name}</div>

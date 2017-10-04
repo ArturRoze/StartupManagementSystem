@@ -42,7 +42,7 @@
         </div>
 
         <div align="center">
-            <form action="/admins/profile/${current_user_id}" method="get">
+            <form action="${pageContext.request.contextPath}/admins/profile/${current_user_id}" method="get">
                 <input type="submit" value="Admin profile">
             </form>
         </div>
@@ -79,7 +79,7 @@
                     <td>${user.country.name}</td>
 
                     <td>
-                        <form action="/users/profile/${current_user_id}" method="get">
+                        <form action="${pageContext.request.contextPath}/users/profile/${user.id}" method="get">
                             <input type="submit" value="Show profile">
                         </form>
                     </td>

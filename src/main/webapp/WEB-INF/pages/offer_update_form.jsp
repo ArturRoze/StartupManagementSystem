@@ -39,7 +39,7 @@
 </div>
 
 <div align="center">
-    <form action="/users/profile/${current_user_id}" method="get">
+    <form action="${pageContext.request.contextPath}/users/profile/${current_user_id}" method="get">
         <input type="submit" value="To profile page">
     </form>
 </div>
@@ -47,7 +47,7 @@
     <c:choose>
         <c:when test="${isOwner || isAdmin}">
 
-            <form action="/offers/${offer.id}/update" method="post">
+            <form action="${pageContext.request.contextPath}/offers/${offer.id}/update" method="post">
 
                 <table>
                     <caption><h1>Offer update</h1></caption>

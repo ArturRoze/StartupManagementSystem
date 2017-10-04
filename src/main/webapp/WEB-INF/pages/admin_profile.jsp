@@ -60,12 +60,12 @@
     <c:if test="${isOwner}">
         <div>
             <div>
-                <form action="/admins/profile/${admin.id}/update" method="get">
+                <form action="${pageContext.request.contextPath}/admins/profile/${admin.id}/update" method="get">
                     <input type="submit" value="update">
                 </form>
             </div>
             <div>
-                <form action="/admins/profile/${admin.id}/delete" method="get">
+                <form action="${pageContext.request.contextPath}/admins/profile/${admin.id}/delete" method="get">
                     <input type="submit" value="delete">
                 </form>
             </div>
@@ -74,18 +74,18 @@
 
     <div>
         <div>
-            <form action="/admins/list" method="get">
+            <form action="${pageContext.request.contextPath}/admins/list" method="get">
                 <input type="submit" value="show all admins">
             </form>
         </div>
         <div>
-            <form action="/admins/new/admin" method="get">
+            <form action="${pageContext.request.contextPath}/admins/new/admin" method="get">
                 <input type="submit" value="create new admin">
             </form>
         </div>
     </div>
     <div>
-        <form action="/users/list" method="get">
+        <form action="${pageContext.request.contextPath}/users/list" method="get">
             <input type="submit" value="show all users">
         </form>
     </div>
