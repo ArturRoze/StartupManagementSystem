@@ -5,7 +5,7 @@
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/ArturRoze/StartupManagementSystem/tree/master)
 
-####Final Project on JavaEE #6 course (GoIT) of group #6
+#### Final Project on JavaEE #6 course (GoIT) of group #6
 
 The Startup Management System provides users with convenient tools to found startups 
 and find investors for user’s startups.
@@ -14,7 +14,7 @@ The core of the Startup Management System is a Java application and a SQL (MySQL
 
 The application has been built according to Model-View-Controller architecture pattern.
  
-####Frameworks and Technologies: 
+#### Frameworks and Technologies: 
  - SQL - MySQL; 
  - Spring Framework(Core, MVC, Security); 
  - ORM - Hibernate; 
