@@ -26,6 +26,7 @@ public class UserServiceImpl extends AbstractBasicServiceImpl<User> implements U
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     private final UserDao userDao;
+
     private final AdminDao adminDao;
 
     @Autowired
@@ -44,6 +45,7 @@ public class UserServiceImpl extends AbstractBasicServiceImpl<User> implements U
     @Override
     @Transactional(readOnly = true)
     public User getByLogin(String login) {
+        LOGGER.info("Get user with login:'{}'", login);
         return userDao.getByLogin(login);
     }
 

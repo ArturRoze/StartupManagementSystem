@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.goit.group6.dao.OfferDao;
 import ua.goit.group6.dao.StartupDao;
-import ua.goit.group6.dao.UserDao;
 import ua.goit.group6.model.News;
 import ua.goit.group6.service.NewsService;
 
@@ -30,6 +29,7 @@ public class NewsServiceImpl implements NewsService {
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     private final StartupDao startupDao;
+
     private final OfferDao offerDao;
 
     @Autowired

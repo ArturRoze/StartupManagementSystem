@@ -6,12 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.goit.group6.dao.StartupDao;
-import ua.goit.group6.dao.UserDao;
 import ua.goit.group6.model.Startup;
 import ua.goit.group6.service.StartupService;
-import ua.goit.group6.service.UserService;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;

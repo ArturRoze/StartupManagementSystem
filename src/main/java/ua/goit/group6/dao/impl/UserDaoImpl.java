@@ -13,11 +13,10 @@ import ua.goit.group6.model.User;
 /**
  * @author Artyr
  */
-
 @Repository
 public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(UserDaoImpl.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     @Autowired
     public UserDaoImpl(SessionFactory sessionFactory) {

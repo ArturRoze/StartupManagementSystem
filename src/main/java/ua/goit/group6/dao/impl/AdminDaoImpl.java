@@ -12,11 +12,10 @@ import ua.goit.group6.model.Admin;
 /**
  * @author Artyr
  */
-
 @Repository
 public class AdminDaoImpl extends AbstractDaoImpl<Admin> implements AdminDao {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(AdminDaoImpl.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     @Autowired
     public AdminDaoImpl(SessionFactory sessionFactory) {
