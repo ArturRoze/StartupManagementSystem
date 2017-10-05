@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.goit.group6.dao.OfferDao;
 import ua.goit.group6.dao.StartupDao;
-import ua.goit.group6.dao.UserDao;
 import ua.goit.group6.model.News;
 import ua.goit.group6.service.NewsService;
 
@@ -60,7 +59,7 @@ public class NewsServiceImpl implements NewsService {
      * @return list of news sorted by registration date
      */
     @Override
-    public List<News> getAllDesc() {
+    public List<News> getAllByRegistration() {
         LOGGER.info("Sorting all news by decreasing registration date");
         return getAll().stream()
                 .sorted(Comparator.comparing(News::getRegistrationDate)
@@ -92,7 +91,7 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public List<News> getNPageWithMNews(int pageNumber, int newsAmount) {
         LOGGER.info("Returning {} page with {} news on it", pageNumber, newsAmount);
-        return getAllDesc()
+        return getAllByRegistration()
                 .stream()
                 .skip((pageNumber - 1) * newsAmount)
                 .limit(newsAmount)

@@ -7,5 +7,5 @@ import java.util.List;
 public interface StartupService extends BasicService<Startup> {
     
     List<Startup> getLastNDesc(int n);
-    List<Startup> getAllDesc();
+    List<Startup> getAllByRegistration();
 }

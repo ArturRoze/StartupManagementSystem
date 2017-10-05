@@ -49,7 +49,7 @@ public class NewsServiceImplTest {
     private List<News> newsExpected;
 
     @Test
-    public void getAllNotNull() throws Exception {
+    public void getAll_NotNull() throws Exception {
 
         when(startupDao.readAll()).thenReturn(Collections.singletonList(startup));
         when(offerDao.readAll()).thenReturn(Collections.singletonList(offer));
@@ -58,7 +58,7 @@ public class NewsServiceImplTest {
     }
 
     @Test
-    public void getAll() throws Exception {
+    public void getAll_return() throws Exception {
 
         when(startupDao.readAll()).thenReturn(Collections.singletonList(startup));
         when(offerDao.readAll()).thenReturn(Collections.singletonList(offer));
@@ -71,7 +71,22 @@ public class NewsServiceImplTest {
     }
 
     @Test
-    public void getAllDesc() throws Exception {
+    public void getAll_noNews() throws Exception {
+
+        when(startupDao.readAll()).thenReturn(Collections.emptyList());
+        when(offerDao.readAll()).thenReturn(Collections.emptyList());
+
+        newsExpected = new ArrayList<>();
+        newsExpected.addAll(startupDao.readAll());
+        newsExpected.addAll(offerDao.readAll());
+
+        assertEquals(0, newsService.getAll().size());
+
+        assertEquals(newsExpected, newsService.getAll());
+    }
+
+    @Test
+    public void getAllByRegistration() throws Exception {
 
         Timestamp startupReqDate = mock(Timestamp.class);
         Timestamp offerReqDate = mock(Timestamp.class);
@@ -88,7 +103,7 @@ public class NewsServiceImplTest {
         newsExpected.addAll(startupDao.readAll());
         newsExpected.addAll(offerDao.readAll());
 
-        assertEquals(newsExpected, newsService.getAllDesc());
+        assertEquals(newsExpected, newsService.getAllByRegistration());
 
     }
 
@@ -140,13 +155,10 @@ public class NewsServiceImplTest {
         when(startup.getRegistrationDate()).thenReturn(startupReqDate);
         when(offer.getRegistrationDate()).thenReturn(offerReqDate);
 
-
-
         when(startupDao.readAll()).thenReturn(Arrays.asList(startup, startup));
         when(offerDao.readAll()).thenReturn(Arrays.asList(offer, offer));
 
         newsExpected = new ArrayList<>();
-//        newsExpected.addAll(startupDao.readAll());
         newsExpected.add(offerDao.readAll().get(1));
 
         assertEquals(newsExpected, newsService.getNPageWithMNews(pageNumber, newsPerPage));

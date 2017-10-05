@@ -15,13 +15,17 @@ import org.springframework.web.context.WebApplicationContext;
 import ua.goit.group6.configuration.MvcConfiguration;
 import ua.goit.group6.configuration.SecurityConfiguration;
 import ua.goit.group6.controller.configuration.TestControllersConfiguration;
+import ua.goit.group6.model.Offer;
 import ua.goit.group6.model.Startup;
 import ua.goit.group6.service.NewsService;
 import ua.goit.group6.service.StartupService;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.anonymous;
@@ -46,7 +50,6 @@ public class MainControllerTest {
 
     private MockMvc mvc;
 
-
     @Autowired
     private StartupService startupService;
     @Autowired
@@ -55,9 +58,11 @@ public class MainControllerTest {
     @Autowired
     private WebApplicationContext context;
 
-    private int newsOnPage = 1;
+    private int pageNumber;
+    private int newsOnPage;
 
     private Startup startup;
+    private Offer offer;
 
     @Before
     public void setUp() throws Exception {
@@ -66,21 +71,15 @@ public class MainControllerTest {
                 .webAppContextSetup(context)
                 .apply(springSecurity())
                 .build();
-
     }
 
     //Guest tests
 
-    @Ignore //TODO not correct work
     @Test
     public void guestIndexTest() throws Exception {
-//        startup = mock(Startup.class);
-//
-//        when(startupService.getLastNDesc(newsOnPage)).thenReturn(Collections.singletonList(startup));
 
         mvc.perform(get("/").with(anonymous()))
-//                .andExpect(model().attribute("startups", equalTo(Collections.singletonList(startup))))
-                .andExpect(model().attribute("startups", equalTo(startupService.getLastNDesc(newsOnPage))))
+                .andExpect(model().attribute("startups", startupService.getLastNDesc(anyInt())))
                 .andExpect(view().name("index"))
                 .andExpect(status().isOk());
     }
@@ -119,7 +118,6 @@ public class MainControllerTest {
     @Test
     public void guestNewsTest() throws Exception {
         mvc.perform(get("/news").with(anonymous()))
-                .andExpect(redirectedUrl("http://localhost/login"))
                 .andExpect(status().isFound());
     }
 
@@ -142,16 +140,26 @@ public class MainControllerTest {
 
     @Ignore //TODO complete test
     @Test
-    public void authenticatedNewsTest() throws Exception {
+    public void authenticatedNewsTest_onePage() throws Exception {
 
-        when(newsService.getCountOfPages(newsOnPage)).thenReturn(1);
+        startup = mock(Startup.class);
+        offer = mock(Offer.class);
+
+        pageNumber = 2;
+        newsOnPage = 2;
+
+        when(newsService.getAll()).thenReturn(Arrays.asList(startup, startup, offer));
+
+        when(newsService.getCountOfPages(newsOnPage)).thenReturn(2);
 
         int pagesCount = newsService.getCountOfPages(newsOnPage);
 
+        assertEquals(2, pagesCount);
+
         mvc.perform(get("/news").with(user("user").roles("ADMIN", "USER")))
-                .andExpect(model().attribute("current_page", 1))
-                .andExpect(model().attribute("pages_count", equalTo(pagesCount)))
-                .andExpect(model().attribute("news_list", equalTo(newsService.getNPageWithMNews(1, newsOnPage))))
+                .andExpect(model().attribute("current_page", pageNumber))
+//                .andExpect(model().attribute("pages_count", pagesCount))
+                .andExpect(model().attribute("news_list", equalTo(newsService.getNPageWithMNews(pageNumber, newsOnPage))))
                 .andExpect(view().name("news"))
                 .andExpect(status().isOk());
     }

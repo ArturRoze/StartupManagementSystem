@@ -40,7 +40,7 @@ public class StartupServiceImpl extends AbstractBasicServiceImpl<Startup> implem
 
     @Override
     @Transactional(readOnly = true)
-    public List<Startup> getAllDesc() {
+    public List<Startup> getAllByRegistration() {
         LOGGER.info("Sorting startups by registration date in descending order");
         return getAll()
                 .stream()
