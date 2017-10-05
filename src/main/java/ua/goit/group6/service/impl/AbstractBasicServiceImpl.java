@@ -23,7 +23,7 @@ public abstract class AbstractBasicServiceImpl<T extends Serializable> implement
     private final GeneralDao<T> dao;
 
     AbstractBasicServiceImpl(GeneralDao<T> dao) {
-        LOGGER.info("Creating" + getClass());
+        LOGGER.info("Creating " + getClass());
         this.dao = dao;
     }
 
@@ -37,7 +37,7 @@ public abstract class AbstractBasicServiceImpl<T extends Serializable> implement
     @Override
     @Transactional(readOnly = true)
     public List<T> getAll() {
-        LOGGER.info("Get all users from " + dao.getClass());
+        LOGGER.info("Get all entities from " + dao.getClass());
         return dao.readAll();
     }
 

@@ -13,6 +13,7 @@ import ua.goit.group6.model.Startup;
 @Repository
 @Transactional
 public class StartupDaoImpl extends AbstractDaoImpl<Startup> implements StartupDao {
+
     @Autowired
     public StartupDaoImpl(SessionFactory sessionFactory) {
         super(sessionFactory);

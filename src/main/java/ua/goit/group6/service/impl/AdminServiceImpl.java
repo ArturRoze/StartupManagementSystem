@@ -15,7 +15,7 @@ import ua.goit.group6.service.AdminService;
 /**
  * Service for managing {@link Admin} in repository
  *
- * @author Boiko Ivan
+ * @author Boiko Ivan, Artur
  * @see AbstractBasicServiceImpl
  * @see AdminService
  * @see AdminDao
@@ -27,8 +27,8 @@ public class AdminServiceImpl extends AbstractBasicServiceImpl<Admin> implements
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     private final AdminDao adminDao;
-    private final UserDao userDao;
 
+    private final UserDao userDao;
 
     @Autowired
     public AdminServiceImpl(AdminDao adminDao, UserDao userDao) {
@@ -46,6 +46,7 @@ public class AdminServiceImpl extends AbstractBasicServiceImpl<Admin> implements
     @Override
     @Transactional(readOnly = true)
     public Admin getByLogin(String login) {
+        LOGGER.info("Get admin with login: '{}'", login);
         return adminDao.getByLogin(login);
     }
 

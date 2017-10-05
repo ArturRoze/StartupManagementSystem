@@ -13,10 +13,13 @@ import ua.goit.group6.dao.GeneralDao;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
+/**
+ * @author Artyr
+ */
 @NoRepositoryBean
 public abstract class AbstractDaoImpl<T> implements GeneralDao<T> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractDaoImpl.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     private SessionFactory sessionFactory;
 

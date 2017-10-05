@@ -13,11 +13,16 @@ import ua.goit.group6.service.AdminService;
 
 import java.io.IOException;
 
+/**
+ * Controller for {@link Admin}
+ *
+ * @author Artyr
+ */
 @Controller
 @RequestMapping("/admins")
 public class AdminController {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(AdminController.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     private final AdminService adminService;
 
@@ -32,6 +37,7 @@ public class AdminController {
 
     @GetMapping("/profile/{id}")
     public ModelAndView profile(@PathVariable("id") String idString) {
+        LOGGER.info("Get profile of Admin with id");
         ModelAndView profile = new ModelAndView("admin_profile");
         int id = Integer.parseInt(idString);
         Admin admin = adminService.getById(id);
@@ -41,6 +47,7 @@ public class AdminController {
 
     @GetMapping("/profile/{id}/delete")
     public String delete(@PathVariable("id") String idString) {
+        LOGGER.info("delete admin with id");
         int id = Integer.parseInt(idString);
         adminService.deleteById(id);
         return "redirect:/logout";
@@ -67,10 +74,12 @@ public class AdminController {
 
     @GetMapping("profile/{id}/update")
     public ModelAndView update(@PathVariable("id") String idString) {
+        LOGGER.info("Update profile of Admin with id: '{}'", idString);
         ModelAndView updateForm = new ModelAndView("admin_update_form");
         int id = Integer.parseInt(idString);
         Admin admin = adminService.getById(id);
         updateForm.addObject("admin", admin);
+        LOGGER.info("Received admin from admin_add_form");
         return updateForm;
     }
 
@@ -81,9 +90,12 @@ public class AdminController {
 
             throws IOException {
         Admin admin = adminService.getById(Integer.parseInt(idString));
+        LOGGER.info("Received admin from form: '{}'", admin);
         admin.setPassword(passwordEncoder.encode(password));
         admin.setEmail(email);
         adminService.update(admin);
+        LOGGER.info("Admin: '{}' created successfully", admin);
+
         return "redirect:/admins/profile/" + admin.getId();
     }
 
