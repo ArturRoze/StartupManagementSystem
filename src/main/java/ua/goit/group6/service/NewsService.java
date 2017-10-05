@@ -13,7 +13,7 @@ public interface NewsService {
 
     List<News> getAll();
 
-    List<News> getAllDesc();
+    List<News> getAllByRegistration();
 
     int getCountOfPages(int newsPerPage);
 
