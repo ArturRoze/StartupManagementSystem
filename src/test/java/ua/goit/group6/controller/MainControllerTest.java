@@ -66,6 +66,7 @@ public class MainControllerTest {
                 .webAppContextSetup(context)
                 .apply(springSecurity())
                 .build();
+
     }
 
     //Guest tests
@@ -142,7 +143,9 @@ public class MainControllerTest {
     @Ignore //TODO complete test
     @Test
     public void authenticatedNewsTest() throws Exception {
+
         when(newsService.getCountOfPages(newsOnPage)).thenReturn(1);
+
         int pagesCount = newsService.getCountOfPages(newsOnPage);
 
         mvc.perform(get("/news").with(user("user").roles("ADMIN", "USER")))
