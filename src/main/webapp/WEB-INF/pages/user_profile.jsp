@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Profile ${user.id}</title>
-    <%@include file="header.jsp"%>
+    <%@include file="header_config.jsp"%>
 </head>
 <body>
 <%@include file="navbar.jsp"%>

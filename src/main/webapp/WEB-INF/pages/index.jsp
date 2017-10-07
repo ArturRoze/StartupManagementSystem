@@ -4,33 +4,36 @@
 <html>
 <head>
     <title>Head Page</title>
-    <%@include file="header.jsp" %>
+    <%@include file="header_config.jsp" %>
 </head>
 <body>
 <div class="wrapper">
     <div class="content">
         <%@include file="navbar.jsp" %>
         <div class="container">
-            <h1 class="text-center">Welcome</h1>
-            <h2 class="text-center">List of all startups</h2>
-            <hr>
+            <h1 class="text-center mt-4">Welcome</h1>
+            <h2 class="text-center mt-2">List of all startups</h2>
+            <hr class="my-2">
             <div class="row">
-                <c:forEach var="startup" items="${startups}">
-                    <div class="col-md-4 padd05">
-                        <a class="btn btn-light btn-block" href="${pageContext.request.contextPath}/startups/${startup.id}" role="button">
-                            <div class="btn-block hight-7rem">
-                                <i class="material-icons f24">work</i>
-                                <div>Industry: ${startup.industry.name}</div>
-                                <div>${startup.country.name}</div>
-                                <div class="btn-block">
-                                    <h4>${startup.name}</h4>
-                                </div>
-                                <div>${startup.description}</div>
-                                <div>${startup.budget}</div>
-                            </div>
-                        </a>
-                    </div>
+                <c:forEach var="item" items="${startups}">
+                    <%@include file="item.jsp" %>
                 </c:forEach>
+            </div>
+            <hr class="mt-2 mb-4">
+            <%-- TODO make buttons 'create_startup' and 'view_all_startups' --%>
+            <div class="btn-toolbar align-content-center">
+                <a class="btn btn-success btn-lg"
+                   href="${pageContext.request.contextPath}/startups/new/startup" role="button">
+                    Add startup
+                </a>
+                <a class="btn btn-primary ml-3"
+                   href="${pageContext.request.contextPath}/offers/new/offer" role="button">
+                    Add offer
+                </a>
+                <a class="btn btn-outline-dark ml-auto"
+                   href="${pageContext.request.contextPath}/startups" role="button">
+                    View All startups
+                </a>
             </div>
         </div>
     </div>

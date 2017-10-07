@@ -45,6 +45,7 @@ public class DatabaseConfiguration {
     @Value("${db.dialect}")
     private String dialect;
 
+    // configured for local usage
 //    @Bean
 //    public DataSource dataSource() {
 //        HikariDataSource dataSource = new HikariDataSource();
@@ -55,6 +56,7 @@ public class DatabaseConfiguration {
 //        return dataSource;
 //    }
 
+    // configured for HEROKU
     @Bean
     public BasicDataSource dataSource() throws URISyntaxException {
         URI dbUri = new URI(System.getenv("CLEARDB_DATABASE_URL"));

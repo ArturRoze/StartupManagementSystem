@@ -4,27 +4,12 @@
 <html>
 <head>
     <title>Startup: "${startup.name}"</title>
-    <%@include file="header.jsp" %>
+    <%@include file="header_config.jsp" %>
 </head>
 <body>
 <div class="wrapper">
     <div class="content">
         <%@include file="navbar.jsp" %>
-
-        <c:set var="isAdmin" value="false"/>
-        <c:set var="isOwner" value="false"/>
-
-        <sec:authorize access="isAuthenticated()">
-            <c:set var="current_user_id">
-                <sec:authentication property="principal.id"/>
-            </c:set>
-
-            <c:set var="isOwner" value="${startup.user.id == current_user_id}"/>
-
-            <sec:authorize access="hasRole('ADMIN')">
-                <c:set var="isAdmin" value="true"/>
-            </sec:authorize>
-        </sec:authorize>
         <div class="container">
             <h2 class="text-center">Startup info</h2>
             <div class="row">
