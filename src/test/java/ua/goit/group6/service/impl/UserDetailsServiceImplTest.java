@@ -56,7 +56,7 @@ public class UserDetailsServiceImplTest {
     }
 
     @Test
-    public void loadUserByUsernameAdminIsNotNullReturn() {
+    public void loadUserByUsernameAdminIsNotNullReturn() throws Exception {
 
         Admin admin = mock(Admin.class);
 
@@ -70,7 +70,7 @@ public class UserDetailsServiceImplTest {
     }
 
     @Test
-    public void loadUserByUsernameAdminIsNullUserIsNotNull() {
+    public void loadUserByUsernameAdminIsNullUserIsNotNull() throws Exception {
 
         User user = mock(User.class);
 
@@ -83,7 +83,7 @@ public class UserDetailsServiceImplTest {
     }
 
     @Test
-    public void loadUserByUsernameAdminIsNullUserIsNotNullReturn() {
+    public void loadUserByUsernameAdminIsNullUserIsNotNullReturn() throws Exception {
 
         User user = mock(User.class);
 
@@ -98,7 +98,7 @@ public class UserDetailsServiceImplTest {
     }
 
     @Test(expected = UsernameNotFoundException.class)
-    public void loadUserByUsernameAdminIsNullUserIsNull() {
+    public void loadUserByUsernameAdminIsNullUserIsNull() throws Exception {
 
         when(adminService.getByLogin(anyString())).thenReturn(null);
         when(userService.getByLogin(anyString())).thenReturn(null);
