@@ -42,21 +42,6 @@ public class OfferController {
     }
 
     /**
-     * Mapping for url ":/offers"
-     * Method collects data from database and sends it to page which shows all {@link Offer}
-     *
-     * @return a {@link ModelAndView} object holding {@link Offer} of jsp represented by {@code String},
-     * and {@link java.util.List} of all {@link Offer} from database
-     */
-    @GetMapping
-    public ModelAndView list() {
-        ModelAndView offers = new ModelAndView("startups_list");
-        offers.addObject("offers", offerService.getAllDesc());
-        LOGGER.info("Building page with all offers");
-        return offers;
-    }
-
-    /**
      * Mapping for url ":/offers/{id}"
      * Method collects data from database and sends it to {@link Offer} info page
      *
@@ -128,10 +113,10 @@ public class OfferController {
         offer.setDescription(description);
         offer.setBudget(Integer.parseInt(budgetString));
 
-        if (countryIdString != null)
+        if (countryIdString != null && !countryIdString.isEmpty())
             offer.setCountry(countryService.getById(Integer.parseInt(countryIdString)));
 
-        if (industryIdString != null)
+        if (industryIdString != null && !industryIdString.isEmpty())
             offer.setIndustry(industryService.getById(Integer.parseInt(industryIdString)));
 
         offerService.save(offer);
