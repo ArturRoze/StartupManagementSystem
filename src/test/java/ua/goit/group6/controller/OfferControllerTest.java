@@ -1,7 +1,6 @@
 package ua.goit.group6.controller;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +20,6 @@ import ua.goit.group6.service.CountryService;
 import ua.goit.group6.service.IndustryService;
 import ua.goit.group6.service.OfferService;
 import ua.goit.group6.service.UserService;
-
-import java.util.Collections;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.mockito.Mockito.mock;
@@ -134,13 +131,14 @@ public class OfferControllerTest {
     }
 
     @Test
-    @Ignore //TODO
     public void updateOfferTest() throws Exception {
+        when(offerService.getById(id)).thenReturn(offer);
+
         mvc.perform(post("/offers/" + id + "/update").with(user("user").roles("USER", "ADMIN"))
-                .param("budget", "budget")
+                .param("budget", "1")
                 .param("description", "description")
-                .param("country_id", "country_id")
-                .param("industry_id", "industry_id"))
+                .param("country_id", "1")
+                .param("industry_id", "1"))
 
                 .andExpect(redirectedUrl("/news"))
                 .andExpect(status().isFound());

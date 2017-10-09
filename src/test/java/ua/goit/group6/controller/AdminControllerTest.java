@@ -1,7 +1,6 @@
 package ua.goit.group6.controller;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,9 +98,9 @@ public class AdminControllerTest {
     }
 
     @Test
-    @Ignore //TODO
     public void updateAdminTest() throws Exception {
-        when(admin.getId()).thenReturn(id);
+        when(adminService.getById(id)).thenReturn(admin);
+
         mvc.perform(post("/admins/profile/" + id + "/update/").with(user("admin").roles("ADMIN"))
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                 .param("password", "pass")
