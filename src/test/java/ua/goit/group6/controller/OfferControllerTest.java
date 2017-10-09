@@ -93,13 +93,17 @@ public class OfferControllerTest {
     }
 
     @Test
-    //TODO this test
     public void newOfferTest() throws Exception {
+        when(offerService.getById(id)).thenReturn(offer);
 
+        mvc.perform(get("/offers/new/offer").with(user("user").roles("USER")))
+                .andExpect(model().attribute("offer", equalTo(countryService.getById(id))))
+                .andExpect(model().attribute("offer", equalTo(industryService.getById(id))))
+                .andExpect(view().name("offer_add_form"))
+                .andExpect(status().isOk());
     }
 
     @Test
-    @Ignore //TODO
     public void createOfferTest() throws Exception {
 
         when(userService.getById(id)).thenReturn(user);
@@ -130,7 +134,7 @@ public class OfferControllerTest {
     }
 
     @Test
-    @Ignore
+    @Ignore //TODO
     public void updateOfferTest() throws Exception {
         mvc.perform(post("/offers/" + id + "/update").with(user("user").roles("USER", "ADMIN"))
                 .param("budget", "budget")

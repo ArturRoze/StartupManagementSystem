@@ -111,8 +111,8 @@ public abstract class News extends Model {
                 ", description='" + description + '\'' +
                 ", budget=" + budget +
                 ", user=" + user.getLogin() +
-                ", country=" + country.getName() +
-                ", industry=" + industry.getName() +
+                ", country=" + (country != null ? country.getName() : null) +
+                ", industry=" + (industry != null ? industry.getName() : null) +
                 ", registrationDate=" + registrationDate +
                 "} " ;
     }
