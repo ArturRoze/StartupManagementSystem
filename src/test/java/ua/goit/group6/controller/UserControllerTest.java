@@ -51,6 +51,7 @@ public class UserControllerTest {
     private WebApplicationContext context;
 
     private User user;
+
     private Integer id;
 
     private Country country;

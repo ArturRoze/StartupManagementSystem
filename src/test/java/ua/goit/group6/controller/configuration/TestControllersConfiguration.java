@@ -25,16 +25,22 @@ public class TestControllersConfiguration {
     }
 
     @Bean
-    public StartupService startupService(){
+    public StartupService startupService() {
         return mock(StartupService.class);
     }
 
-    @Bean public OfferService offerService(){return mock(OfferService.class);}
+    @Bean
+    public OfferService offerService() {
+        return mock(OfferService.class);
+    }
 
-    @Bean public NewsService newsService(){
+    @Bean
+    public NewsService newsService() {
         return mock(NewsService.class);
     }
 
     @Bean
-    public IndustryService industryService(){ return mock(IndustryService.class);}
+    public IndustryService industryService() {
+        return mock(IndustryService.class);
     }
+}
