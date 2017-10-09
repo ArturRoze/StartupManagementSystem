@@ -92,8 +92,7 @@ public class MainController {
     }
 
     /**
-     * /**
-     * Mapping for url ":/registration/"
+     * Mapping for url ":/register?"
      * Method saves {@link User} to database
      *
      * @param login    login from the form
