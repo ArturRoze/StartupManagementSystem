@@ -102,9 +102,7 @@ public class OfferControllerTest {
 
     @Test
     public void createOfferTest() throws Exception {
-
         when(userService.getById(id)).thenReturn(user);
-        when(user.getId()).thenReturn(id);
 
         mvc.perform(post("/offers/new/offer/").with(user("user").roles("USER"))
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
