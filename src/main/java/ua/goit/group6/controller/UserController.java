@@ -94,8 +94,7 @@ public class UserController {
      *
      * @param idString the id of user to update from url
      * @return a {@link ModelAndView} object holding the name of jsp represented by {@code String} and
-     * user to update, list of all {@link ua.goit.group6.model.Country}
-     * and list of all {@link Region} from database
+     * user to update and list of all {@link ua.goit.group6.model.Country} from database
      */
     @GetMapping("/profile/{id}/edit")
     public ModelAndView updateForm(@PathVariable("id") String idString) {
@@ -109,7 +108,7 @@ public class UserController {
     }
 
     /**
-     * Mapping for url "/users/profile/{id}/update"
+     * Mapping for url "/users/profile/{id}/update?"
      * Method updates {@link User} in database with parameters which come from page form
      *
      * @param idString        the id of user to update from url
@@ -139,7 +138,7 @@ public class UserController {
         user.setLastName(lastName);
         user.setDescription(description);
 
-        if (countryIdString != null) {
+        if (countryIdString != null && !countryIdString.isEmpty()) {
             user.setCountry(countryService.getById(Integer.parseInt(countryIdString)));
         }
 
