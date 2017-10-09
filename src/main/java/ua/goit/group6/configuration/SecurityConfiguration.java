@@ -41,6 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 //authorized access
                 .antMatchers("/news").authenticated()
+                .antMatchers("/startups/new/startup**", "/offers/new/offer**").hasRole("USER")
                 .antMatchers("/users/list", "/admins", "/admins/**").hasRole("ADMIN")
                 .antMatchers("/users/**").hasAnyRole("USER", "ADMIN")
 

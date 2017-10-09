@@ -75,7 +75,7 @@ public class MainController {
     @GetMapping
     public ModelAndView index() {
         ModelAndView main = new ModelAndView("index");
-        main.addObject("startups", startupService.getLastNDesc(6));
+        main.addObject("startups", startupService.getLastN(6));
         LOGGER.info("Building index page");
         return main;
     }

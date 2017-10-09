@@ -13,6 +13,14 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Service for {@link Startup}
+ *
+ * @author Boiko Ivan
+ * @see AbstractBasicServiceImpl
+ * @see StartupService
+ * @see StartupDao
+ */
 @Service
 public class StartupServiceImpl extends AbstractBasicServiceImpl<Startup> implements StartupService {
 
@@ -23,9 +31,16 @@ public class StartupServiceImpl extends AbstractBasicServiceImpl<Startup> implem
         super(dao);
     }
 
+    /**
+     * Method sorts startups by registration date in decrease order
+     * and returns limited amount of them
+     *
+     * @param n amount of startups to return
+     * @return list of n startups sorted by registration date
+     */
     @Override
     @Transactional(readOnly = true)
-    public List<Startup> getLastNDesc(int n) {
+    public List<Startup> getLastN(int n) {
         LOGGER.info("Returning last {} startups from repository", n);
         return getAll()
                 .stream()
@@ -35,9 +50,14 @@ public class StartupServiceImpl extends AbstractBasicServiceImpl<Startup> implem
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Method sorts startups by registration date in decrease order
+     *
+     * @return list of all startups sorted by registration date
+     */
     @Override
     @Transactional(readOnly = true)
-    public List<Startup> getAllByRegistration() {
+    public List<Startup> getAllByDecreaseRegistration() {
         LOGGER.info("Sorting startups by registration date in descending order");
         return getAll()
                 .stream()
