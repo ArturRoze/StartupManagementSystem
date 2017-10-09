@@ -14,12 +14,14 @@ import org.springframework.web.context.WebApplicationContext;
 import ua.goit.group6.configuration.MvcConfiguration;
 import ua.goit.group6.configuration.SecurityConfiguration;
 import ua.goit.group6.controller.configuration.TestControllersConfiguration;
-import ua.goit.group6.model.Offer;
+import ua.goit.group6.model.Startup;
 import ua.goit.group6.model.User;
 import ua.goit.group6.service.CountryService;
 import ua.goit.group6.service.IndustryService;
-import ua.goit.group6.service.OfferService;
+import ua.goit.group6.service.StartupService;
 import ua.goit.group6.service.UserService;
+
+import java.util.Collections;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.mockito.Mockito.mock;
@@ -36,7 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         MvcConfiguration.class,
         SecurityConfiguration.class,
         TestControllersConfiguration.class})
-public class OfferControllerTest {
+public class StartupControllerTest {
 
     private MockMvc mvc;
 
@@ -44,7 +46,7 @@ public class OfferControllerTest {
     private WebApplicationContext context;
 
     @Autowired
-    private OfferService offerService;
+    private StartupService startupService;
 
     @Autowired
     private CountryService countryService;
@@ -55,7 +57,7 @@ public class OfferControllerTest {
     @Autowired
     private UserService userService;
 
-    private Offer offer;
+    private Startup startup;
 
     private Integer id;
 
@@ -63,7 +65,7 @@ public class OfferControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        offer = mock(Offer.class);
+        startup = mock(Startup.class);
         id = 1;
         user = mock(User.class);
         mvc = MockMvcBuilders
@@ -73,40 +75,51 @@ public class OfferControllerTest {
     }
 
     @Test
-    public void infoOfferTest() throws Exception {
-        when(offerService.getById(id)).thenReturn(offer);
+    public void listStartupsTest() throws Exception {
+        when(startupService.getAll()).thenReturn(Collections.singletonList(startup));
 
-        mvc.perform(get("/offers/" + id).with(user("user").roles("USER", "ADMIN")))
-                .andExpect(model().attribute("offer", equalTo(offerService.getById(id))))
-                .andExpect(view().name("offer_info"))
+        mvc.perform(get("/startups").with(user("user").roles("USER", "ADMIN")))
+                .andExpect(model().attribute("startups", equalTo(startupService.getAllByRegistration())))
+                .andExpect(view().name("startups_list"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void deleteOfferTest() throws Exception {
-        mvc.perform(get("/offers/" + id + "/delete").with(user("user").roles("USER", "ADMIN")))
+    public void infoStartupTest() throws Exception {
+        when(startupService.getById(id)).thenReturn(startup);
+
+        mvc.perform(get("/startups/" + id).with(user("user").roles("USER", "ADMIN")))
+                .andExpect(model().attribute("startup", equalTo(startupService.getById(id))))
+                .andExpect(view().name("startup_info"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void deleteStartupByIdTest() throws Exception {
+        mvc.perform(get("/startups/" + id + "/delete").with(user("user").roles("USER", "ADMIN")))
                 .andExpect(redirectedUrl("/news"))
                 .andExpect(status().isFound());
     }
 
     @Test
-    public void newOfferTest() throws Exception {
-        when(offerService.getById(id)).thenReturn(offer);
+    public void newStartupFormTest() throws Exception {
+        when(startupService.getById(id)).thenReturn(startup);
 
-        mvc.perform(get("/offers/new/offer").with(user("user").roles("USER")))
-                .andExpect(model().attribute("offer", equalTo(countryService.getById(id))))
-                .andExpect(model().attribute("offer", equalTo(industryService.getById(id))))
-                .andExpect(view().name("offer_add_form"))
+        mvc.perform(get("/startups/new/startup").with(user("user").roles("USER")))
+                .andExpect(model().attribute("startup", equalTo(countryService.getById(id))))
+                .andExpect(model().attribute("startup", equalTo(industryService.getById(id))))
+                .andExpect(view().name("startup_add_form"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void createOfferTest() throws Exception {
+    public void createStartupTest() throws Exception {
         when(userService.getById(id)).thenReturn(user);
 
-        mvc.perform(post("/offers/new/offer/").with(user("user").roles("USER"))
+        mvc.perform(post("/startups/new/startup/").with(user("user").roles("USER"))
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                 .param("user_id", "1")
+                .param("name", "aa")
                 .param("budget", "11")
                 .param("description", "desc")
                 .param("country_id", "")
@@ -117,22 +130,23 @@ public class OfferControllerTest {
     }
 
     @Test
-    public void updateOfferFormTest() throws Exception {
-        when(offerService.getById(id)).thenReturn(offer);
+    public void updateStartupFormTest() throws Exception {
+        when(startupService.getById(id)).thenReturn(startup);
 
-        mvc.perform(get("/offers/" + id + "/edit").with(user("user").roles("USER", "ADMIN")))
-                .andExpect(model().attribute("offer", equalTo(offerService.getById(id))))
+        mvc.perform(get("/startups/" + id + "/edit").with(user("user").roles("USER", "ADMIN")))
+                .andExpect(model().attribute("startup", equalTo(startupService.getById(id))))
                 .andExpect(model().attribute("countries", equalTo(countryService.getAll())))
                 .andExpect(model().attribute("industries", equalTo(industryService.getAll())))
-                .andExpect(view().name("offer_update_form"))
+                .andExpect(view().name("startup_update_form"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void updateOfferTest() throws Exception {
-        when(offerService.getById(id)).thenReturn(offer);
+    public void updateStartupTest() throws Exception {
+        when(startupService.getById(id)).thenReturn(startup);
 
-        mvc.perform(post("/offers/" + id + "/update").with(user("user").roles("USER", "ADMIN"))
+        mvc.perform(post("/startups/" + id + "/update").with(user("user").roles("USER", "ADMIN"))
+                .param("name", "A")
                 .param("budget", "1")
                 .param("description", "description")
                 .param("country_id", "1")
