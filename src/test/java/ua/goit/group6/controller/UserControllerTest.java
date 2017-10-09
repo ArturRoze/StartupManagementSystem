@@ -43,9 +43,9 @@ public class UserControllerTest {
 
     @Autowired
     private UserService userService;
+
     @Autowired
     private CountryService countryService;
-
 
     @Autowired
     private WebApplicationContext context;
@@ -130,31 +130,21 @@ public class UserControllerTest {
                 .andExpect(status().isOk());
     }
 
-    @Ignore //TODO complete
     @Test
     public void updateTest() throws Exception {
-        mvc.perform(post("/users/profile/{}/update", id.toString())
-                .with(user("user").roles("USER", "ADMIN"))
+        when(userService.getById(id)).thenReturn(user);
 
+        mvc.perform(post("/users/profile/" + id + "/update").with(user("admin").roles("ADMIN"))
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                 .param("password", "pass")
                 .param("email", "email")
-                .param("firstName", "fName")
-                .param("lastName", "lName")
-                .param("description", "desc")
-                .param("countryIdString", "1"))
-//                .content("password=pass&email=email&firstName=fName&lastName=lName&description=desc&countryIdString=1"))
+                .param("first_name", "s")
+                .param("last_name", "a")
+                .param("description", "email")
+                .param("country_id", ""))
+
                 .andExpect(redirectedUrl("/users/profile/" + id))
-                .andExpect(status().isOk());
-
-
-//        @PathVariable("id") String idString,
-//        @RequestParam("password") String password,
-//        @RequestParam("email") String email,
-//        @RequestParam("first_name") String firstName,
-//        @RequestParam("last_name") String lastName,
-//        @RequestParam("description") String description,
-//        @RequestParam(value = "country_id", required = false) String countryIdString) {
+                .andExpect(status().isFound());
     }
 
     @Test

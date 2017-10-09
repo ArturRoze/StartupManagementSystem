@@ -49,6 +49,20 @@ public class AdminServiceImplTest {
     }
 
     @Test
+    public void getById() {
+        // arrange
+        Admin expectedAdmin = configureAdminDaoToGetLogin();
+        when(adminDao.getById(expectedAdmin.getId())).thenReturn(expectedAdmin);
+
+        // action
+        Admin actualAdmin = adminService.getById(1);
+
+        //assert
+        assertNotNull("get by id from UserServiceImpl returned not Null object", actualAdmin);
+        assertEquals(expectedAdmin, actualAdmin);
+    }
+
+    @Test
     public void getByLogin_returns_null_if_such_login_does_not_existTest() {
         // arrange
         configureAdminDaoToGetLogin();
@@ -64,9 +78,17 @@ public class AdminServiceImplTest {
     public void saveTest() {
 
         Admin admin = configureAdminDaoToGetLogin();
-        doAnswer(i -> null).when(adminDao).create(admin);
+        doAnswer(invocation -> null).when(adminDao).create(admin);
         adminService.save(admin);
         verify(adminDao, times(1)).create(admin);
+    }
+
+    @Test
+    public void updateTest() throws Exception {
+        Admin admin = configureAdminDaoToGetLogin();
+        doAnswer(invocation -> null).when(adminDao).update(admin);
+        adminService.update(admin);
+        verify(adminDao, times(1)).update(admin);
     }
 
     @Test
