@@ -29,8 +29,13 @@ h2 {
     font-weight: 300;
 }
 
+a {
+    cursor: pointer
+}
+
 .material-icons.f18 { font-size: 1.8rem; }
 .material-icons.f24 { font-size: 2.4rem; }
+
 .text-success50 { color: rgba(40, 167, 69, 0.3)}
 .text-primary50 { color: rgba(0, 123, 255, 0.3)}
 
@@ -42,7 +47,7 @@ span i {
     background-color: #cfd2d6;
     box-shadow: rgba(0, 0, 0, 0.05) 0 0.5rem 1rem, rgba(0, 0, 0, 0.1) 0 -1px 0.5rem inset;
     position: sticky;
-    padding: 1rem 1rem;
+    padding: 0.6rem 1rem;
     top: 0;
     z-index: 1071;
 }
@@ -56,11 +61,15 @@ span i {
     padding: 0.5rem;
 }
 
-.w-btn-corr {
+.btn-w-0 {
+    min-width: 7.6rem;
+}
+
+.btn-w-1 {
     min-width: 3.5rem;
 }
 
-.h-btn-corr {
+.btn-h-1 {
     padding-top: 0.75rem;
 }
 
@@ -72,11 +81,15 @@ span i {
     height: 100%;
 }
 
-.description {
+.description-height {
     min-height: 6.2rem;
+}
+
+.description {
     white-space: normal;
-    /*text-overflow: ellipsis;*/
-    /*text-overflow-mode: ;*/
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 4rem;
 }
 
 .hight-desc {

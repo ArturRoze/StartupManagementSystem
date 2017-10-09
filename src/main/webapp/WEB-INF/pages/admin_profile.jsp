@@ -4,91 +4,88 @@
 <html>
 <head>
     <title>admin profile</title>
-    <style>
-        table, td, th {
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 50%;
-        }
-
-        th, td {
-            padding: 15px;
-        }
-    </style>
+    <%@include file="header_config.jsp" %>
 </head>
 <body>
-<div align="center">
-    <div align="center">
-        <div align="center">
-            <form action="${pageContext.request.contextPath}/news" method="get">
-                <input type="submit" value="News">
-            </form>
-        </div>
-        <div align="center">
-            <form action="${pageContext.request.contextPath}/logout" method="post">
-                <input type="submit" value="Logout">
-            </form>
-        </div>
-    </div>
+<div class="wrapper">
+    <div class="content">
+        <%@include file="navbar.jsp" %>
+        <div class="container">
+            <div align="center">
+                <div align="center">
+                    <div align="center">
+                        <form action="${pageContext.request.contextPath}/news" method="get">
+                            <input type="submit" value="News">
+                        </form>
+                    </div>
+                    <div align="center">
+                        <form action="${pageContext.request.contextPath}/logout" method="post">
+                            <input type="submit" value="Logout">
+                        </form>
+                    </div>
+                </div>
 
-    <div>
-        <c:set var="admin_current_id">
-            <sec:authentication property="principal.id"/>
-        </c:set>
-        <c:set var="isOwner" value="${admin_current_id == admin.id}"/>
-    </div>
-    <div>
-        <table>
-            <caption><h3>Admin profile</h3></caption>
-            <tr>
-                <th>id</th>
-                <td>${admin.id}</td>
-            </tr>
-            <th>login</th>
-            <td>${admin.login}</td>
-            </tr>
-            <th>email</th>
-            <td>${admin.email}</td>
-            </tr>
-        </table>
-    </div>
+                <div>
+                    <%-- TODO fix variable admin_current_id to current_user_id --%>
+                    <c:set var="admin_current_id">
+                        <sec:authentication property="principal.id"/>
+                    </c:set>
+                    <c:set var="isOwner" value="${admin_current_id == admin.id}"/>
+                </div>
+                <div>
+                    <table>
+                        <caption><h3>Admin profile</h3></caption>
+                        <tr>
+                            <th>id</th>
+                            <td>${admin.id}</td>
+                        </tr>
+                        <th>login</th>
+                        <td>${admin.login}</td>
+                        </tr>
+                        <th>email</th>
+                        <td>${admin.email}</td>
+                        </tr>
+                    </table>
+                </div>
 
-    <c:if test="${isOwner}">
-        <div>
-            <div>
-                <form action="${pageContext.request.contextPath}/admins/profile/${admin.id}/update" method="get">
-                    <input type="submit" value="update">
-                </form>
+                <c:if test="${isOwner}">
+                    <div>
+                        <div>
+                            <form action="${pageContext.request.contextPath}/admins/profile/${admin.id}/update"
+                                  method="get">
+                                <input type="submit" value="update">
+                            </form>
+                        </div>
+                        <div>
+                            <form action="${pageContext.request.contextPath}/admins/profile/${admin.id}/delete"
+                                  method="get">
+                                <input type="submit" value="delete">
+                            </form>
+                        </div>
+                    </div>
+                </c:if>
+
+                <div>
+                    <div>
+                        <form action="${pageContext.request.contextPath}/admins/list" method="get">
+                            <input type="submit" value="show all admins">
+                        </form>
+                    </div>
+                    <div>
+                        <form action="${pageContext.request.contextPath}/admins/new/admin" method="get">
+                            <input type="submit" value="create new admin">
+                        </form>
+                    </div>
+                </div>
+                <div>
+                    <form action="${pageContext.request.contextPath}/users/list" method="get">
+                        <input type="submit" value="show all users">
+                    </form>
+                </div>
             </div>
-            <div>
-                <form action="${pageContext.request.contextPath}/admins/profile/${admin.id}/delete" method="get">
-                    <input type="submit" value="delete">
-                </form>
-            </div>
-        </div>
-    </c:if>
-
-    <div>
-        <div>
-            <form action="${pageContext.request.contextPath}/admins/list" method="get">
-                <input type="submit" value="show all admins">
-            </form>
-        </div>
-        <div>
-            <form action="${pageContext.request.contextPath}/admins/new/admin" method="get">
-                <input type="submit" value="create new admin">
-            </form>
         </div>
     </div>
-    <div>
-        <form action="${pageContext.request.contextPath}/users/list" method="get">
-            <input type="submit" value="show all users">
-        </form>
-    </div>
+    <%@include file="footer.jsp" %>
 </div>
 
 </body>

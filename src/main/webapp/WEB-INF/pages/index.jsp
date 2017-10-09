@@ -12,7 +12,7 @@
         <%@include file="navbar.jsp" %>
         <div class="container">
             <h1 class="text-center mt-4">Welcome</h1>
-            <h2 class="text-center mt-2">List of all startups</h2>
+            <h2 class="text-center mt-2">Recent startups</h2>
             <hr class="my-2">
             <div class="row">
                 <c:forEach var="item" items="${startups}">
@@ -20,17 +20,16 @@
                 </c:forEach>
             </div>
             <hr class="mt-2 mb-4">
-            <%-- TODO make buttons 'create_startup' and 'view_all_startups' --%>
             <div class="btn-toolbar align-content-center">
                 <a class="btn btn-success btn-lg"
                    href="${pageContext.request.contextPath}/startups/new/startup" role="button">
                     Add startup
                 </a>
-                <a class="btn btn-primary ml-3"
+                <a class="btn btn-primary btn-lg ml-3"
                    href="${pageContext.request.contextPath}/offers/new/offer" role="button">
                     Add offer
                 </a>
-                <a class="btn btn-outline-dark ml-auto"
+                <a class="btn btn-dark btn-lg ml-auto"
                    href="${pageContext.request.contextPath}/startups" role="button">
                     View All startups
                 </a>
@@ -39,6 +38,5 @@
     </div>
     <%@include file="footer.jsp" %>
 </div>
-
 </body>
 </html>

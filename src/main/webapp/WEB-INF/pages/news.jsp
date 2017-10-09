@@ -11,9 +11,8 @@
     <div class="content">
         <%@include file="navbar.jsp" %>
         <div class="container">
-            <h1 class="text-center">News</h1>
+            <h1 class="text-center mt-4">News</h1>
             <hr>
-
             <div align="center">
                 <div class="row">
                         <c:forEach var="item" items="${news_list}">

@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-4 text-left">
-                <a class="btn btn-light disabled" role="button" aria-disabled="true">&copy 2017 by group#6</a>
+                <a class="btn btn-light disabled" role="button" aria-disabled="true">&copy 2017 by team6</a>
             </div>
             <div class="col-4 text-center">
                 <a class="btn btn-light" href="${pageContext.request.contextPath}/about_us">About our team</a>

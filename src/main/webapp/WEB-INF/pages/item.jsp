@@ -8,11 +8,13 @@
                     <div class="text-left mb-1">${item.industry.name}</div>
                     <div class="text-left mb-1">${item.country.name}</div>
                     <hr class="my-2">
-                    <div class="text-truncate description">
+                    <div class="description-height">
                         <div class="mb-2">
                             <h4>${item.name}</h4>
                         </div>
-                        <div>${item.description}</div>
+                        <div class="description">
+                                ${item.description}
+                        </div>
                     </div>
                     <hr class="my-2">
                     <div class="float-right align-bottom text-success"><h5>${item.budget} &#8372;</h5></div>
@@ -27,7 +29,11 @@
                     <div class="text-left mb-1">${item.industry.name}</div>
                     <div class="text-left mb-1">${item.country.name}</div>
                     <hr class="my-2">
-                    <div class="text-truncate hight-3rem description pt-1">${item.description}</div>
+                    <div class="description-height">
+                        <div class="description pt-1">
+                                ${item.description}
+                        </div>
+                    </div>
                     <hr class="my-2">
                     <div class="float-right align-bottom text-primary"><h5>${item.budget} &#8372;</h5></div>
                 </div>

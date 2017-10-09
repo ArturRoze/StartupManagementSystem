@@ -5,7 +5,7 @@
                 <div class="logo">
                     <img src="${pageContext.request.contextPath}/logo.svg">
                 </div>
-                <div class="brand">Startup Management System</div>
+                <div class="brand ">Startup Management System</div>
             </a>
         </div>
         <div class="menu">
@@ -18,12 +18,9 @@
                     <sec:authentication property="principal.id"/>
                 </c:set>
 
-                <c:set var="isOwner" value="${startup.user.id == current_user_id}"/>
-
                 <sec:authorize access="hasRole('ADMIN')">
                     <c:set var="isAdmin" value="true"/>
                 </sec:authorize>
-                <%--</sec:authorize>--%>
 
                 <a class="btn btn-outline-info d-lg-inline-block mb-md-0"
                    href="${pageContext.request.contextPath}/" role="button">
