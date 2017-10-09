@@ -4,46 +4,28 @@
 <html>
 <head>
     <title>Startup: "${startup.name}"</title>
-    <%@include file="header.jsp" %>
+    <%@include file="header_config.jsp" %>
 </head>
 <body>
 <div class="wrapper">
     <div class="content">
         <%@include file="navbar.jsp" %>
-
-        <c:set var="isAdmin" value="false"/>
-        <c:set var="isOwner" value="false"/>
-
-        <sec:authorize access="isAuthenticated()">
-            <c:set var="current_user_id">
-                <sec:authentication property="principal.id"/>
-            </c:set>
-
-            <c:set var="isOwner" value="${startup.user.id == current_user_id}"/>
-
-            <sec:authorize access="hasRole('ADMIN')">
-                <c:set var="isAdmin" value="true"/>
-            </sec:authorize>
-        </sec:authorize>
         <div class="container">
-            <h2 class="text-center">Startup info</h2>
+            <c:set var="isOwner" value="${startup.user.id == current_user_id}"/>
+            <h2 class="text-center">Details about startup#${startup.id}</h2>
             <div class="row">
                 <div class="col-md-6 padd05">
                     <div class="btn-block">
                         <table class="table table-hover">
                             <tr>
-                                <th style="width: 25%" scope="row">Id</th>
-                                <td>${startup.id}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Industry</th>
-                                <td>${startup.industry.name}</td>
-                            </tr>
-                            <tr>
                                 <th scope="row">Name</th>
                                 <td>
                                     <h4>${startup.name}</h4>
                                 </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Description</th>
+                                <td>${startup.description}</td>
                             </tr>
                         </table>
                     </div>
@@ -52,16 +34,16 @@
                     <div class="btn-block">
                         <table class="table table-hover">
                             <tr>
-                                <th style="width: 25%" scope="row">Registration</th>
-                                <td>${startup.registrationDate}</td>
+                                <th scope="row">Industry</th>
+                                <td>${startup.industry.name}</td>
                             </tr>
                             <tr>
                                 <th scope="row">Country</th>
                                 <td>${startup.country.name}</td>
                             </tr>
                             <tr>
-                                <th scope="row">Description</th>
-                                <td>${startup.description}</td>
+                                <th style="width: 25%" scope="row">Registration</th>
+                                <td>${startup.registrationDate}</td>
                             </tr>
                         </table>
                     </div>
@@ -84,27 +66,19 @@
                             </form>
                         </div>
                         <div class="d-lg-inline-block">
-                            <form action="${pageContext.request.contextPath}/startups/${startup.id}/delete" method="get">
+                            <form action="${pageContext.request.contextPath}/startups/${startup.id}/delete"
+                                  method="get">
                                 <input class="btn btn-danger ml-md-3 mb-md-0" type="submit" value="Delete">
                             </form>
                         </div>
                     </div>
                 </c:if>
             </div>
-
             <hr class="my-4">
-            <div>
-                <button class="btn btn-outline-secondary" onclick="goBack()">Go Back</button>
-                <script>
-                    function goBack() {
-                        window.history.back();
-                    }
-                </script>
-            </div>
+            <%@include file="back_btn.jsp"%>
         </div>
     </div>
     <%@include file="footer.jsp" %>
 </div>
-
 </body>
 </html>

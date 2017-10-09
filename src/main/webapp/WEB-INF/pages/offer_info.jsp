@@ -3,97 +3,75 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
-    <title>Offer ${offer.id}</title>
-    <style>
-        table, td, th {
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 50%;
-        }
-
-        th, td {
-            padding: 15px;
-        }
-    </style>
+    <title>Offer #${offer.id}</title>
+    <%@include file="header_config.jsp" %>
 </head>
 <body>
-<div align="center">
+<div class="wrapper">
+    <div class="content">
+        <%@include file="navbar.jsp" %>
+        <div class="container">
+            <c:set var="isOwner" value="${offer.user.id == current_user_id}"/>
+            <h2 class="text-center">Offer info</h2>
+            <div class="row">
+                <div class="col-md-6 padd05">
+                    <div class="btn-block">
+                        <table class="table table-hover">
 
-    <c:set var="isAdmin" value="false"/>
-    <c:set var="isOwner" value="false"/>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
-    <sec:authorize access="isAuthenticated()">
-        <c:set var="current_user_id">
-            <sec:authentication property="principal.id"/>
-        </c:set>
+                <tr>
+                    <th>Id</th>
+                    <td>${offer.id}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>${offer.description}</td>
+                </tr>
+                <tr>
+                    <th>User</th>
+                    <td>
+                        <div align="center">
+                            <form action="${pageContext.request.contextPath}/users/profile/${offer.user.id}"
+                                  method="get">
+                                <input type="submit" value="To user ${offer.user.id} profile page">
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Registration</th>
+                    <td>${offer.registrationDate}</td>
+                </tr>
+                <tr>
+                    <th>Industry</th>
+                    <td>${offer.industry.name}</td>
+                </tr>
+                <tr>
+                    <th>Country</th>
+                    <td>${offer.country.name}</td>
+                </tr>
 
-        <c:set var="isOwner" value="${offer.user.id == current_user_id}"/>
-
-        <sec:authorize access="hasRole('ADMIN')">
-            <c:set var="isAdmin" value="true"/>
-        </sec:authorize>
-    </sec:authorize>
-
-    <div align="center">
-        <table>
-            <caption><h1>Offer info</h1></caption>
-
-            <tr>
-                <th>Id</th>
-                <td>${offer.id}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>${offer.description}</td>
-            </tr>
-            <tr>
-                <th>User</th>
-                <td><div align="center">
-                    <form action="${pageContext.request.contextPath}/users/profile/${offer.user.id}" method="get">
-                        <input type="submit" value="To user ${offer.user.id} profile page">
+            <c:if test="${isOwner || isAdmin}">
+                <div align="center">
+                    <form action="${pageContext.request.contextPath}/offers/${offer.id}/edit" method="get">
+                        <input type="submit" value="Update">
                     </form>
-                </div></td>
-            </tr>
-            <tr>
-                <th>Registration</th>
-                <td>${offer.registrationDate}</td>
-            </tr>
-            <tr>
-                <th>Industry</th>
-                <td>${offer.industry.name}</td>
-            </tr>
-            <tr>
-                <th>Country</th>
-                <td>${offer.country.name}</td>
-            </tr>
-        </table>
+                </div>
 
-        <c:if test="${isOwner || isAdmin}">
-            <div align="center">
-                <form action="${pageContext.request.contextPath}/offers/${offer.id}/edit" method="get">
-                    <input type="submit" value="Update">
-                </form>
-            </div>
-
-            <div align="center">
-                <form action="${pageContext.request.contextPath}/offers/${offer.id}/delete" method="get">
-                    <input type="submit" value="Delete">
-                </form>
-            </div>
-        </c:if>
+                <div align="center">
+                    <form action="${pageContext.request.contextPath}/offers/${offer.id}/delete" method="get">
+                        <input type="submit" value="Delete">
+                    </form>
+                </div>
+            </c:if>
+            <%@include file="back_btn.jsp" %>
+        </div>
     </div>
-    <div align="center">
-        <button onclick="goBack()">Go Back</button>
-        <script>
-            function goBack() {
-                window.history.back();
-            }
-        </script>
-    </div>
+    <%@include file="footer.jsp" %>
 </div>
 </body>
 </html>

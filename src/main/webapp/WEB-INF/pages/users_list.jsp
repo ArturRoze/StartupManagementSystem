@@ -11,83 +11,79 @@
 <html>
 <head>
     <title>Users list</title>
-    <style>
-        table, td, th {
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 50%;
-        }
-
-        th, td {
-            padding: 15px;
-        }
-    </style>
+    <%@include file="header_config.jsp" %>
 </head>
 <body>
-<div align="center">
+<div class="wrapper">
+    <div class="content">
+        <%@include file="navbar.jsp" %>
+        <div class="container">
+            <div align="center">
 
-    <c:set var="current_user_id">
-        <sec:authentication property="principal.id"/>
-    </c:set>
+                <c:set var="current_user_id">
+                    <sec:authentication property="principal.id"/>
+                </c:set>
 
-    <div align="center">
-        <div align="center">
-            <form action="${pageContext.request.contextPath}/news" method="get">
-                <input type="submit" value="News">
-            </form>
-        </div>
-
-        <div align="center">
-            <form action="${pageContext.request.contextPath}/admins/profile/${current_user_id}" method="get">
-                <input type="submit" value="Admin profile">
-            </form>
-        </div>
-
-        <div align="center">
-            <form action="${pageContext.request.contextPath}/logout" method="post">
-                <input type="submit" value="Logout">
-            </form>
-        </div>
-    </div>
-    <div align="center">
-        <table>
-            <caption><h1>List of all users</h1></caption>
-            <tr>
-                <th>Id</th>
-                <th>Login</th>
-                <th>Email</th>
-                <th>First name</th>
-                <th>Last name</th>
-                <th>Registration</th>
-                <th>Description</th>
-                <th>Country</th>
-                <th>To profile</th>
-            </tr>
-            <c:forEach var="user" items="${users}">
-                <tr>
-                    <td>${user.id}</td>
-                    <td>${user.login}</td>
-                    <td>${user.email}</td>
-                    <td>${user.firstName}</td>
-                    <td>${user.lastName}</td>
-                    <td>${user.registrationDate}</td>
-                    <td>${user.description}</td>
-                    <td>${user.country.name}</td>
-
-                    <td>
-                        <form action="${pageContext.request.contextPath}/users/profile/${user.id}" method="get">
-                            <input type="submit" value="Show profile">
+                <div align="center">
+                    <div align="center">
+                        <form action="${pageContext.request.contextPath}/news" method="get">
+                            <input type="submit" value="News">
                         </form>
-                    </td>
+                    </div>
 
-                </tr>
-            </c:forEach>
-        </table>
+                    <div align="center">
+                        <form action="${pageContext.request.contextPath}/admins/profile/${current_user_id}"
+                              method="get">
+                            <input type="submit" value="Admin profile">
+                        </form>
+                    </div>
+
+                    <div align="center">
+                        <form action="${pageContext.request.contextPath}/logout" method="post">
+                            <input type="submit" value="Logout">
+                        </form>
+                    </div>
+                </div>
+                <div align="center">
+                    <table>
+                        <caption><h1>List of all users</h1></caption>
+                        <tr>
+                            <th>Id</th>
+                            <th>Login</th>
+                            <th>Email</th>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Registration</th>
+                            <th>Description</th>
+                            <th>Country</th>
+                            <th>To profile</th>
+                        </tr>
+                        <c:forEach var="user" items="${users}">
+                            <tr>
+                                <td>${user.id}</td>
+                                <td>${user.login}</td>
+                                <td>${user.email}</td>
+                                <td>${user.firstName}</td>
+                                <td>${user.lastName}</td>
+                                <td>${user.registrationDate}</td>
+                                <td>${user.description}</td>
+                                <td>${user.country.name}</td>
+
+                                <td>
+                                    <form action="${pageContext.request.contextPath}/users/profile/${user.id}"
+                                          method="get">
+                                        <input type="submit" value="Show profile">
+                                    </form>
+                                </td>
+
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
+    <%@include file="footer.jsp" %>
 </div>
 </body>
 </html>
