@@ -13,6 +13,14 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Service for managing {@link Offer} in repository
+ *
+ * @author Artur
+ * @see AbstractBasicServiceImpl
+ * @see OfferService
+ * @see OfferDao
+ */
 @Service
 public class OfferServiceImpl extends AbstractBasicServiceImpl<Offer> implements OfferService {
 
@@ -23,6 +31,11 @@ public class OfferServiceImpl extends AbstractBasicServiceImpl<Offer> implements
         super(dao);
     }
 
+    /**
+     * Method sorts list of offers by date of addition in decrease order
+     *
+     * @return list of offers sorted by registration date
+     */
     @Override
     @Transactional(readOnly = true)
     public List<Offer> getAllDesc() {
