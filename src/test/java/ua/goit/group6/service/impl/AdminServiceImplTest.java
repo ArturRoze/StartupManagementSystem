@@ -76,30 +76,41 @@ public class AdminServiceImplTest {
 
     @Test
     public void saveTest() throws Exception {
-
+        // arrange
         Admin admin = configureAdminDaoToGetLogin();
         doAnswer(invocation -> null).when(adminDao).create(admin);
+
+        // action
         adminService.save(admin);
+
+        //assert
         verify(adminDao, times(1)).create(admin);
     }
 
     @Test
     public void updateTest() throws Exception {
+        // arrange
         Admin admin = configureAdminDaoToGetLogin();
         doAnswer(invocation -> null).when(adminDao).update(admin);
+
+        // action
         adminService.update(admin);
+
+        //assert
         verify(adminDao, times(1)).update(admin);
     }
 
     @Test
     public void deleteTest() throws Exception {
-
+        // arrange
         Admin admin = configureAdminDaoToGetLogin();
-
         when(adminService.getAll()).thenReturn(Arrays.asList(admin, admin));
-
         doAnswer(i -> null).when(adminDao).delete(admin);
+
+        // action
         adminService.delete(admin);
+
+        //assert
         verify(adminDao, times(1)).delete(admin);
     }
 
