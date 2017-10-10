@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ua.goit.group6.model.Offer;
-import ua.goit.group6.model.Region;
 import ua.goit.group6.service.CountryService;
 import ua.goit.group6.service.IndustryService;
 import ua.goit.group6.service.OfferService;
@@ -132,7 +131,6 @@ public class OfferController {
      * @param idString the id of offer to update from url
      * @return a {@link ModelAndView} object holding the name of jsp represented by {@code String} and
      * offer to update, list of all {@link ua.goit.group6.model.Country} and {@link ua.goit.group6.model.Industry}
-     * and list of all {@link Region} from database
      */
     @GetMapping("/{id}/edit")
     public ModelAndView update(@PathVariable("id") String idString) {

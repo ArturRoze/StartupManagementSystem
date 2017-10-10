@@ -41,7 +41,6 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         LOGGER.info("Handle controllers");
         registry.addViewController("/login").setViewName("login_form");
         registry.addViewController("/error").setViewName("error");
-        registry.addViewController("/registration").setViewName("registration_form");
         registry.addViewController("/admins/new/admin").setViewName("admin_add_form");
     }
 

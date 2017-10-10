@@ -8,7 +8,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ua.goit.group6.model.Region;
 import ua.goit.group6.model.User;
 import ua.goit.group6.service.CountryService;
 import ua.goit.group6.service.UserService;

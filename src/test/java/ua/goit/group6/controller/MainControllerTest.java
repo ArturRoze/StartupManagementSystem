@@ -97,13 +97,6 @@ public class MainControllerTest {
     }
 
     @Test
-    public void guestRegistrationFormTest() throws Exception {
-        mvc.perform(get("/registration").with(anonymous()))
-                .andExpect(view().name("registration_form"))
-                .andExpect(status().isOk());
-    }
-
-    @Test
     public void guestRegistrationTest() throws Exception {
         mvc.perform(post("/register").with(anonymous())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
