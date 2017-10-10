@@ -67,6 +67,7 @@ public class DatabaseConfiguration {
 
         HikariDataSource dataSource = new HikariDataSource();
         dataSource.setDriverClassName(driver);
+        dataSource.setMaximumPoolSize(10);
         dataSource.setJdbcUrl(dbUrl);
         dataSource.setUsername(username);
         dataSource.setPassword(password);
