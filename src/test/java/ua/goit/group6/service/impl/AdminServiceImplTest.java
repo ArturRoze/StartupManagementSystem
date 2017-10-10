@@ -35,7 +35,7 @@ public class AdminServiceImplTest {
     private UserDao userDao;
 
     @Test
-    public void getByLogin_returns_admin_from_systemTest() {
+    public void getByLogin_returns_admin_from_systemTest() throws Exception {
         // arrange
         Admin expectedAdmin = configureAdminDaoToGetLogin();
         when(adminDao.getByLogin("login")).thenReturn(expectedAdmin);
@@ -49,7 +49,7 @@ public class AdminServiceImplTest {
     }
 
     @Test
-    public void getById() {
+    public void getById() throws Exception {
         // arrange
         Admin expectedAdmin = configureAdminDaoToGetLogin();
         when(adminDao.getById(expectedAdmin.getId())).thenReturn(expectedAdmin);
@@ -63,7 +63,7 @@ public class AdminServiceImplTest {
     }
 
     @Test
-    public void getByLogin_returns_null_if_such_login_does_not_existTest() {
+    public void getByLogin_returns_null_if_such_login_does_not_existTest() throws Exception {
         // arrange
         configureAdminDaoToGetLogin();
 
@@ -75,36 +75,47 @@ public class AdminServiceImplTest {
     }
 
     @Test
-    public void saveTest() {
-
+    public void saveTest() throws Exception {
+        // arrange
         Admin admin = configureAdminDaoToGetLogin();
         doAnswer(invocation -> null).when(adminDao).create(admin);
+
+        // action
         adminService.save(admin);
+
+        //assert
         verify(adminDao, times(1)).create(admin);
     }
 
     @Test
     public void updateTest() throws Exception {
+        // arrange
         Admin admin = configureAdminDaoToGetLogin();
         doAnswer(invocation -> null).when(adminDao).update(admin);
+
+        // action
         adminService.update(admin);
+
+        //assert
         verify(adminDao, times(1)).update(admin);
     }
 
     @Test
-    public void deleteTest() {
-
+    public void deleteTest() throws Exception {
+        // arrange
         Admin admin = configureAdminDaoToGetLogin();
-
         when(adminService.getAll()).thenReturn(Arrays.asList(admin, admin));
-
         doAnswer(i -> null).when(adminDao).delete(admin);
+
+        // action
         adminService.delete(admin);
+
+        //assert
         verify(adminDao, times(1)).delete(admin);
     }
 
     @Test
-    public void delete_empty_adminListTest() {
+    public void delete_empty_adminListTest() throws Exception {
 
         //arrange
         Admin admin = configureAdminDaoToGetLogin();
@@ -118,7 +129,7 @@ public class AdminServiceImplTest {
     }
 
     @Test
-    public void deleteByIdTest() {
+    public void deleteByIdTest() throws Exception {
 
         //arrange
         Admin admin = configureAdminDaoToGetLogin();
@@ -133,7 +144,7 @@ public class AdminServiceImplTest {
     }
 
     @Test
-    public void deleteById_empty_adminListTest() {
+    public void deleteById_empty_adminListTest() throws Exception {
 
         //arrange
         when(adminService.getAll()).thenReturn(Collections.emptyList());
