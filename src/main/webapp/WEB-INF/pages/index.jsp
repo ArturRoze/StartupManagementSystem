@@ -21,17 +21,24 @@
             </div>
             <hr class="mt-2 mb-4">
             <div class="btn-toolbar align-content-center">
-                <a class="btn btn-success btn-lg"
-                   href="${pageContext.request.contextPath}/startups/new/startup" role="button">
-                    Add startup
+                <a class="btn btn-success btn-lg btn-with-icon" role="button"
+                   href="${pageContext.request.contextPath}/startups/new/startup">
+                    <div>
+                        <i class="material-icons">add_circle</i>
+                    </div>
+                    <span>Add startup</span>
                 </a>
-                <a class="btn btn-primary btn-lg ml-3"
-                   href="${pageContext.request.contextPath}/offers/new/offer" role="button">
-                    Add offer
+                <a class="btn btn-primary btn-lg ml-3 btn-with-icon" role="button"
+                   href="${pageContext.request.contextPath}/offers/new/offer">
+                    <div>
+                        <i class="material-icons">add_circle</i>
+                    </div>
+                    <span>Add offer</span>
                 </a>
-                <a class="btn btn-dark btn-lg ml-auto"
+                <a class="btn btn-dark btn-lg ml-auto btn-with-icon"
                    href="${pageContext.request.contextPath}/startups" role="button">
-                    View All startups
+                    <div><i class="material-icons">view_list</i></div>
+                    <span>View All startups</span>
                 </a>
             </div>
         </div>

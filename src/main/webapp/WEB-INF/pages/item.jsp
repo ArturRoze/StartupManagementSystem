@@ -17,7 +17,13 @@
                         </div>
                     </div>
                     <hr class="my-2">
-                    <div class="float-right align-bottom text-success"><h5>${item.budget} &#8372;</h5></div>
+                    <div class="float-right text-success">
+                        <h5>${item.budget} &#8372;</h5>
+                    </div>
+                    <div class="text-left mb-2">
+                        <c:set var="dateOf" value="${item.registrationDate}"/>
+                        <%@include file="date.jsp"%>
+                    </div>
                 </div>
             </a>
         </c:when>

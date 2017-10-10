@@ -1,3 +1,5 @@
+<%@include file="login_modal.jsp"%>
+<%@include file="register_modal.jsp"%>
 <header class="navbar bd-navbar">
     <div class="container">
         <div>
@@ -14,42 +16,59 @@
             <c:set var="isOwner" value="false"/>
 
             <sec:authorize access="isAuthenticated()">
-                <c:set var="current_user_id">
-                    <sec:authentication property="principal.id"/>
-                </c:set>
+                <a class="btn btn-lg btn-outline-info d-lg-inline-block mb-md-0 btn-with-icon" role="button"
+                   href="${pageContext.request.contextPath}/news">
+                    <div><i class="material-icons">home</i></div>
+                    <span>NEWS</span>
+                </a>
 
-                <sec:authorize access="hasRole('ADMIN')">
-                    <c:set var="isAdmin" value="true"/>
-                </sec:authorize>
+                <div class="btn-group d-lg-inline-block" role="group" aria-label="Basic example">
+                    <c:set var="current_user_id">
+                        <sec:authentication property="principal.id"/>
+                    </c:set>
 
-                <a class="btn btn-outline-info d-lg-inline-block mb-md-0"
-                   href="${pageContext.request.contextPath}/" role="button">
-                    <i class="material-icons f18">home</i> Main page</a>
+                    <sec:authorize access="hasRole('ADMIN')">
+                        <c:set var="isAdmin" value="true"/>
+                    </sec:authorize>
 
-                <c:choose>
-                    <c:when test="${isAdmin}">
-                        <a class="btn btn-danger ml-md-3 d-lg-inline-block mb-md-0"
-                           href="${pageContext.request.contextPath}/admins/profile/${current_user_id}" role="button">
-                            <i class="material-icons f18">settings</i> My profile</a>
-                    </c:when>
-                    <c:otherwise>
-                        <a class="btn btn-success ml-md-3 d-lg-inline-block mb-md-0"
-                           href="${pageContext.request.contextPath}/users/profile/${current_user_id}" role="button">
-                            <i class="material-icons f18">settings</i> My profile</a>
-                    </c:otherwise>
-                </c:choose>
+                    <c:choose>
+                        <c:when test="${isAdmin}">
+                            <a class="btn btn-lg btn-danger ml-md-3 btn-with-icon"
+                               role="button"
+                               href="${pageContext.request.contextPath}/admins/profile/${current_user_id}">
+                                <div><i class="material-icons">settings</i></div>
+                                <span>My profile</span>
+                            </a>
+                        </c:when>
+                        <c:otherwise>
+                            <a class="btn btn-lg btn-success ml-md-3 d-lg-inline-block mb-md-0 btn-with-icon"
+                               role="button"
+                               href="${pageContext.request.contextPath}/users/profile/${current_user_id}">
+                                <div><i class="material-icons">settings</i></div>
+                                <span>My profile</span>
+                            </a>
+                        </c:otherwise>
+                    </c:choose>
 
-                <a class="btn btn-outline-secondary ml-md-1 d-lg-inline-block mb-md-0"
-                   href="${pageContext.request.contextPath}/logout" role="button">
-                    <i class="material-icons f18">exit_to_app</i></a>
+                    <a class="btn btn-lg btn-outline-secondary ml-md-1 d-lg-inline-block mb-md-0" role="button"
+                       href="${pageContext.request.contextPath}/logout">
+                        <i class="material-icons">exit_to_app</i></a>
+                </div>
             </sec:authorize>
             <sec:authorize access="isAnonymous()">
-                <a class="btn btn-outline-success ml-md-3 d-lg-inline-block mb-md-0"
-                   href="${pageContext.request.contextPath}/login" role="button"><i
-                        class="material-icons f18">fingerprint</i><span> Login</span></a>
-                <a class="btn btn-outline-secondary ml-md-3 d-lg-inline-block mb-md-0"
-                   href="${pageContext.request.contextPath}/registration" role="button">
-                    <i class="material-icons f18">touch_app</i><span> Sign in</span></a>
+                <a class="btn btn-lg btn-outline-success ml-md-3 d-lg-inline-block mb-md-0 btn-with-icon" role="button"
+                   <%--href="${pageContext.request.contextPath}/login">--%>
+                   href="#" data-toggle="modal" data-target="#loginModal">
+                    <div><i class="material-icons">fingerprint</i></div>
+                    <span>Login</span>
+                </a>
+                <a class="btn btn-lg btn-outline-secondary ml-md-3 d-lg-inline-block mb-md-0 btn-with-icon"
+                   role="button"
+                   <%--href="${pageContext.request.contextPath}/registration">--%>
+                   href="#" data-toggle="modal" data-target="#registerModal">
+                    <div><i class="material-icons">touch_app</i></div>
+                    <span>Join</span>
+                </a>
             </sec:authorize>
         </div>
     </div>
