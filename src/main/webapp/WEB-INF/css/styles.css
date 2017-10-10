@@ -49,7 +49,7 @@ span i {
     position: sticky;
     padding: 0.6rem 1rem;
     top: 0;
-    z-index: 1071;
+    /*z-index: 1071;*/
 }
 
 .padd0 {
@@ -61,8 +61,16 @@ span i {
     padding: 0.5rem;
 }
 
-.btn-w-0 {
-    min-width: 7.6rem;
+.btn-with-icon div {
+    padding-top: 0.15rem;
+    margin-top: 0.15rem;
+    margin-right: 0.5rem;
+    float: left;
+}
+
+.btn-with-icon span {
+    /*margin-top: 0.15rem;*/
+    /*margin-bottom: 0.15rem;*/
 }
 
 .btn-w-1 {

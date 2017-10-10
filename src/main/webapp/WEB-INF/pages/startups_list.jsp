@@ -12,8 +12,6 @@
     <div class="content">
         <%@include file="navbar.jsp" %>
         <div class="container">
-            <div align="center">
-
                 <table>
                     <caption><h1>List of all startups</h1></caption>
                     <tr>
@@ -46,13 +44,6 @@
                         </tr>
                     </c:forEach>
                 </table>
-
-                <div align="center">
-                    <form action="${pageContext.request.contextPath}/" method="get">
-                        <input type="submit" value="To main page">
-                    </form>
-                </div>
-            </div>
         </div>
     </div>
     <%@include file="footer.jsp" %>
