@@ -79,7 +79,7 @@ public class StartupControllerTest {
         when(startupService.getAll()).thenReturn(Collections.singletonList(startup));
 
         mvc.perform(get("/startups").with(user("user").roles("USER", "ADMIN")))
-                .andExpect(model().attribute("startups", equalTo(startupService.getAllByRegistration())))
+                .andExpect(model().attribute("startups", equalTo(startupService.getAllByDecreaseRegistration())))
                 .andExpect(view().name("startups_list"))
                 .andExpect(status().isOk());
     }

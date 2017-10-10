@@ -23,6 +23,9 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * @author Boiko Ivan
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class NewsServiceImplTest {
 
@@ -149,11 +152,11 @@ public class NewsServiceImplTest {
         int newsPerPage = 3;
         int pageNumber = 2;
 
-        Timestamp startupReqDate = mock(Timestamp.class);
-        Timestamp offerReqDate = mock(Timestamp.class);
+        Timestamp startupRegDate = mock(Timestamp.class);
+        Timestamp offerRegDate = mock(Timestamp.class);
 
-        when(startup.getRegistrationDate()).thenReturn(startupReqDate);
-        when(offer.getRegistrationDate()).thenReturn(offerReqDate);
+        when(startup.getRegistrationDate()).thenReturn(startupRegDate);
+        when(offer.getRegistrationDate()).thenReturn(offerRegDate);
 
         when(startupDao.readAll()).thenReturn(Arrays.asList(startup, startup));
         when(offerDao.readAll()).thenReturn(Arrays.asList(offer, offer));

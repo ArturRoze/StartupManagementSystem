@@ -31,6 +31,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+/**
+ * @author Boiko Ivan
+ */
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {
@@ -134,7 +137,7 @@ public class UserControllerTest {
     public void updateTest() throws Exception {
         when(userService.getById(id)).thenReturn(user);
 
-        mvc.perform(post("/users/profile/" + id + "/update").with(user("admin").roles("ADMIN"))
+        mvc.perform(post("/users/profile/" + id + "/update").with(user("admin").roles("USER", "ADMIN"))
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
                 .param("password", "pass")
                 .param("email", "email")

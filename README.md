@@ -7,7 +7,7 @@
 
 #### Final Project on JavaEE #6 course (GoIT) of group #6
 
-The Startup Management System provides users with convenient tools to found startups 
+The Startup Management System provides users with convenient tools to find startups 
 and find investors for user’s startups.
 
 The core of the Startup Management System is a Java application and a SQL (MySQL) database. 
@@ -20,6 +20,6 @@ The application has been built according to Model-View-Controller architecture p
  - ORM - Hibernate; 
  - Front-End - JSP, JSTL, BootStrap, CSS, JavaScript; 
  - Logger - Log4j; 
- - Testing - Junit, Mockito; 
+ - Testing - Junit, Mockito, Spring; 
  - Building - Apache Maven.
 

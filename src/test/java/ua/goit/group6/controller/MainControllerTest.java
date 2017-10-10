@@ -1,7 +1,6 @@
 package ua.goit.group6.controller;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,6 @@ import ua.goit.group6.service.NewsService;
 import ua.goit.group6.service.StartupService;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
@@ -79,7 +77,7 @@ public class MainControllerTest {
     public void guestIndexTest() throws Exception {
 
         mvc.perform(get("/").with(anonymous()))
-                .andExpect(model().attribute("startups", startupService.getLastNDesc(anyInt())))
+                .andExpect(model().attribute("startups", startupService.getLastN(anyInt())))
                 .andExpect(view().name("index"))
                 .andExpect(status().isOk());
     }
@@ -124,9 +122,16 @@ public class MainControllerTest {
     //Authenticated tests
 
     @Test
+    public void logoutTest() throws Exception {
+        mvc.perform(post("/logout").with(user("user").roles("ADMIN", "USER")))
+                .andExpect(redirectedUrl("/"))
+                .andExpect(status().isFound());
+    }
+
+    @Test
     public void authenticatedIndexTest() throws Exception {
         mvc.perform(get("/").with(user("user").roles("ADMIN", "USER")))
-                .andExpect(model().attribute("startups", equalTo(startupService.getLastNDesc(newsOnPage))))
+                .andExpect(model().attribute("startups", equalTo(startupService.getLastN(newsOnPage))))
                 .andExpect(view().name("index"))
                 .andExpect(status().isOk());
     }
@@ -138,15 +143,13 @@ public class MainControllerTest {
                 .andExpect(status().isFound());
     }
 
-    @Ignore //TODO complete test
     @Test
     public void authenticatedNewsTest_onePage() throws Exception {
 
         startup = mock(Startup.class);
         offer = mock(Offer.class);
 
-        pageNumber = 2;
-        newsOnPage = 2;
+        newsOnPage = 6;
 
         when(newsService.getAll()).thenReturn(Arrays.asList(startup, startup, offer));
 
@@ -154,13 +157,11 @@ public class MainControllerTest {
 
         int pagesCount = newsService.getCountOfPages(newsOnPage);
 
-        assertEquals(2, pagesCount);
-
         mvc.perform(get("/news").with(user("user").roles("ADMIN", "USER")))
-                .andExpect(model().attribute("current_page", pageNumber))
-//                .andExpect(model().attribute("pages_count", pagesCount))
-                .andExpect(model().attribute("news_list", equalTo(newsService.getNPageWithMNews(pageNumber, newsOnPage))))
                 .andExpect(view().name("news"))
+                .andExpect(model().attribute("current_page", 1))
+                .andExpect(model().attribute("pages_count", pagesCount))
+                .andExpect(model().attribute("news_list", equalTo(newsService.getNPageWithMNews(1, newsOnPage))))
                 .andExpect(status().isOk());
     }
 
