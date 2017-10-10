@@ -17,7 +17,6 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -69,14 +68,14 @@ public class StartupServiceImplTest {
     }
 
     @Test
-    public void getAllByDecreaseRegistration_notNull(){
+    public void getAllByDecreaseRegistration_notNull() {
         when(startupDao.readAll()).thenReturn(Collections.singletonList(startup_1));
 
         assertNotNull(startupService.getAllByDecreaseRegistration());
     }
 
     @Test
-    public void getAllByDecreaseRegistration_noStartups(){
+    public void getAllByDecreaseRegistration_noStartups() {
 
         List<Startup> expected = new ArrayList<>();
 
@@ -86,7 +85,7 @@ public class StartupServiceImplTest {
     }
 
     @Test
-    public void getAllByDecreaseRegistration_oneStartup(){
+    public void getAllByDecreaseRegistration_oneStartup() {
 
         List<Startup> expected = new ArrayList<>();
         expected.add(startup_1);
