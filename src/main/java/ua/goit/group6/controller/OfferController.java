@@ -113,10 +113,10 @@ public class OfferController {
         offer.setDescription(description);
         offer.setBudget(Integer.parseInt(budgetString));
 
-        if (countryIdString != null && !countryIdString.isEmpty())
+        if (countryIdString != null && !countryIdString.equals(""))
             offer.setCountry(countryService.getById(Integer.parseInt(countryIdString)));
 
-        if (industryIdString != null && !industryIdString.isEmpty())
+        if (industryIdString != null && !industryIdString.equals(""))
             offer.setIndustry(industryService.getById(Integer.parseInt(industryIdString)));
 
         offerService.save(offer);
@@ -164,10 +164,10 @@ public class OfferController {
         offer.setDescription(description);
         offer.setBudget(Integer.parseInt(budgetString));
 
-        if (countryIdString != null)
+        if (countryIdString != null && !countryIdString.equals(""))
             offer.setCountry(countryService.getById(Integer.parseInt(countryIdString)));
 
-        if (industryIdString != null)
+        if (industryIdString != null && !countryIdString.equals(""))
             offer.setIndustry(industryService.getById(Integer.parseInt(industryIdString)));
         offerService.update(offer);
 

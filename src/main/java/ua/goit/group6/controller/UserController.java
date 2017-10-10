@@ -138,7 +138,7 @@ public class UserController {
         user.setLastName(lastName);
         user.setDescription(description);
 
-        if (countryIdString != null && !countryIdString.isEmpty()) {
+        if (countryIdString != null && !countryIdString.equals("")) {
             user.setCountry(countryService.getById(Integer.parseInt(countryIdString)));
         }
 

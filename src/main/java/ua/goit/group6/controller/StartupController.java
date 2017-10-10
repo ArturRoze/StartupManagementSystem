@@ -137,10 +137,10 @@ public class StartupController {
         startup.setDescription(description);
         startup.setBudget(Integer.parseInt(budgetString));
 
-        if (countryIdString != null && !countryIdString.isEmpty())
+        if (countryIdString != null && !countryIdString.equals(""))
             startup.setCountry(countryService.getById(Integer.parseInt(countryIdString)));
 
-        if (industryIdString != null && !industryIdString.isEmpty())
+        if (industryIdString != null && !industryIdString.equals(""))
             startup.setIndustry(industryService.getById(Integer.parseInt(industryIdString)));
 
         startupService.save(startup);
@@ -190,10 +190,10 @@ public class StartupController {
         startup.setDescription(description);
         startup.setBudget(Integer.parseInt(budgetString));
 
-        if (countryIdString != null && !countryIdString.isEmpty())
+        if (countryIdString != null && !countryIdString.equals(""))
             startup.setCountry(countryService.getById(Integer.parseInt(countryIdString)));
 
-        if (industryIdString != null && !industryIdString.isEmpty())
+        if (industryIdString != null && !industryIdString.equals(""))
             startup.setIndustry(industryService.getById(Integer.parseInt(industryIdString)));
         startupService.update(startup);
 
