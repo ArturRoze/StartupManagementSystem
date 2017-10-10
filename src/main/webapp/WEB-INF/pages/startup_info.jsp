@@ -13,7 +13,7 @@
         <div class="container">
             <c:set var="isOwner" value="${startup.user.id == current_user_id}"/>
             <h2 class="text-center">Details about <c:if test="${isOwner}">your</c:if>
-                startup <span class="badge badge-light">${startup.id}</span></h2>
+                startup <span class="badge badge-light">#${startup.id}</span></h2>
             <div class="row">
                 <div class="col-md-6 padd05">
                     <div class="btn-block">
@@ -23,6 +23,12 @@
                                 <td>
                                     <h4>${startup.name}</h4>
                                 </td>
+                            </tr>
+                            <tr>
+                                <th>Owner</th>
+                                <td><a class="btn btn-light text-success border-success" role="button"
+                                       href="${pageContext.request.contextPath}/users/profile/${startup.user.id}">
+                                    ${startup.user.firstName} ${startup.user.lastName}</a></td>
                             </tr>
                             <tr>
                                 <th scope="row">Description</th>
@@ -54,12 +60,13 @@
                 </div>
             </div>
 
-            <div class="navbar padd0">
+            <div class="navbar navbar-expand-lg navbar-light bg-secondary rounded px-3 mb-4">
+                <%@include file="back_btn.jsp" %>
                 <c:choose>
                     <c:when test="${isOwner || isAdmin}">
                         <c:choose>
                             <c:when test="${isOwner}">
-                                <a class="btn btn-lg btn-success btn-with-icon" role="button"
+                                <a class="btn btn-lg btn-success btn-with-icon border border-light mr-auto" role="button"
                                    href="${pageContext.request.contextPath}/users/profile/${startup.user.id}">
                                     <div>
                                         <i class="material-icons">settings</i>
@@ -68,7 +75,7 @@
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a class="btn btn-lg btn-success btn-with-icon" role="button"
+                                <a class="btn btn-lg btn-success btn-with-icon border border-light mr-auto" role="button"
                                    href="${pageContext.request.contextPath}/users/profile/${startup.user.id}">
                                     <div>
                                         <i class="material-icons">settings</i>
@@ -77,21 +84,19 @@
                                 </a>
                             </c:otherwise>
                         </c:choose>
-                        <div>
-                            <a class="btn btn-lg btn-primary mb-md-0 d-lg-inline-block btn-with-icon" role="button"
-                               href="${pageContext.request.contextPath}/startups/${startup.id}/edit">
-                                <div><i class="material-icons">update</i></div>
-                                <span>Update</span>
-                            </a>
-                            <a class="btn btn-lg btn-danger ml-md-2 mb-md-0 d-lg-inline-block btn-with-icon" role="button"
-                               href="${pageContext.request.contextPath}/startups/${startup.id}/delete">
-                                <div><i class="material-icons">delete_forever</i></div>
-                                <span>Delete</span>
-                            </a>
-                        </div>
+                        <a class="btn btn-lg btn-primary ml-md-2 mb-md-0 d-lg-inline-block btn-with-icon border border-light"
+                           href="${pageContext.request.contextPath}/startups/${startup.id}/edit" role="button">
+                            <div><i class="material-icons">update</i></div>
+                            <span>Update</span>
+                        </a>
+                        <a class="btn btn-lg btn-danger ml-md-2 mb-md-0 d-lg-inline-block btn-with-icon border border-light"
+                           href="${pageContext.request.contextPath}/startups/${startup.id}/delete" role="button">
+                            <div><i class="material-icons">delete_forever</i></div>
+                            <span>Delete</span>
+                        </a>
                     </c:when>
                     <c:otherwise>
-                        <a class="btn btn-lg btn-success btn-with-icon" role="button"
+                        <a class="btn btn-lg btn-success btn-with-icon border border-light mr-auto" role="button"
                            href="${pageContext.request.contextPath}/users/profile/${startup.user.id}">
                             <div><i class="material-icons">info</i></div>
                             <span>Show <b>${startup.user.firstName} ${startup.user.lastName}</b> profile</span>
@@ -99,8 +104,6 @@
                     </c:otherwise>
                 </c:choose>
             </div>
-            <hr class="my-4">
-            <%@include file="back_btn.jsp" %>
         </div>
     </div>
     <%@include file="footer.jsp" %>

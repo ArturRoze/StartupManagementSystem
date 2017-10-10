@@ -49,12 +49,7 @@ span i {
     position: sticky;
     padding: 0.6rem 1rem;
     top: 0;
-    /*z-index: 1071;*/
-}
-
-.padd0 {
-    padding-left: 0;
-    padding-right: 0;
+    z-index: 1040;
 }
 
 .padd05 {

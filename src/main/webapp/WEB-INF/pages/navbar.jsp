@@ -1,6 +1,6 @@
 <%@include file="login_modal.jsp"%>
 <%@include file="register_modal.jsp"%>
-<header class="navbar bd-navbar">
+<div class="navbar bd-navbar">
     <div class="container">
         <div>
             <a class="nav-link" href="${pageContext.request.contextPath}/">
@@ -72,4 +72,4 @@
             </sec:authorize>
         </div>
     </div>
-</header>
+</div>
