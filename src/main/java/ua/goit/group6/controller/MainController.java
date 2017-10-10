@@ -81,17 +81,6 @@ public class MainController {
     }
 
     /**
-     * Mapping for url ":/logout"
-     *
-     * @return redirect link to logout
-     */
-    @PostMapping("/logout")
-    public String logout() {
-        LOGGER.info("Redirecting to login?logout");
-        return "redirect:/login?logout";
-    }
-
-    /**
      * Mapping for url ":/register?"
      * Method saves {@link User} to database
      *
