@@ -48,6 +48,7 @@ public class AdminDaoImplTest {
         when(query.list()).thenReturn(Collections.singletonList(admin));
 
         assertEquals(admin, adminDao.getByLogin("userLogin"));
+
         verify(session, times(1)).createQuery(anyString());
         verify(query, atLeast(1)).list();
     }
@@ -59,12 +60,32 @@ public class AdminDaoImplTest {
         when(query.list()).thenReturn(Collections.emptyList());
 
         assertEquals(null, adminDao.getByLogin("userLogin"));
+
         verify(session, times(1)).createQuery(anyString());
         verify(query, atLeast(1)).list();
     }
 
     @Test
     public void getById() throws Exception {
+        when(session.get(Admin.class, 1)).thenReturn(admin);
+        when(admin.getId()).thenReturn(1);
+
+        assertEquals(admin, adminDao.getById(1));
+        assertEquals(1, admin.getId());
+
+        verify(session, atLeast(1)).get(Admin.class, 1);
+        verify(admin, times(1)).getId();
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void getById_returned_null() throws Exception {
+        when(session.get(Admin.class, 1)).thenReturn(null);
+        when(admin.getId()).thenThrow(NullPointerException.class);
+
+        assertEquals(null, adminDao.getById(1));
+
+        verify(session, atMost(1)).get(Admin.class, 0);
+        admin.getId();
     }
 
     @Test
