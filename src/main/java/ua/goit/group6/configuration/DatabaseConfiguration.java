@@ -58,21 +58,19 @@ public class DatabaseConfiguration {
 
     // configured for HEROKU
     @Bean
-    public DataSource dataSource() throws URISyntaxException {
+    public BasicDataSource dataSource() throws URISyntaxException {
         URI dbUri = new URI(System.getenv("CLEARDB_DATABASE_URL"));
 
         String username = dbUri.getUserInfo().split(":")[0];
         String password = dbUri.getUserInfo().split(":")[1];
         String dbUrl = "jdbc:mysql://" + dbUri.getHost() + dbUri.getPath();
 
-        HikariDataSource dataSource = new HikariDataSource();
-        dataSource.setDriverClassName(driver);
-        dataSource.setMaximumPoolSize(10);
-        dataSource.setJdbcUrl(dbUrl);
-        dataSource.setUsername(username);
-        dataSource.setPassword(password);
+        BasicDataSource basicDataSource = new BasicDataSource();
+        basicDataSource.setUrl(dbUrl);
+        basicDataSource.setUsername(username);
+        basicDataSource.setPassword(password);
 
-        return dataSource;
+        return basicDataSource;
     }
 
     @Bean
