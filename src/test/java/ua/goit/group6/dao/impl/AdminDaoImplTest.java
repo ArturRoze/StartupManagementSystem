@@ -136,7 +136,7 @@ public class AdminDaoImplTest {
 
     @Test
     public void readAll() throws Exception {
-        //arreng
+        //arrange
         List<Admin> mockList = mock(List.class);
         when(mockList.get(0)).thenReturn(admin);
         when(mockList.get(1)).thenReturn(null);

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class TestConfiguration {
 
     @Bean
-    public SessionFactory sessionFactory(){
+    public SessionFactory sessionFactory() {
         return Mockito.mock(SessionFactory.class);
     }
 }
