@@ -107,15 +107,16 @@ public class AdminDaoImplTest {
         admin.getId();
     }
 
-    @Test //TODO
+    @Test
     public void create() throws Exception {
         //arrange
         when(admin.getLogin()).thenReturn("test");
-
         doAnswer(invocation -> null).when(session).save(admin);
 
+        //action
         adminDao.create(admin);
 
+        //assert
         verify(session, atLeastOnce()).save(admin);
     }
 
@@ -135,6 +136,7 @@ public class AdminDaoImplTest {
 
     @Test
     public void readAll() throws Exception {
+        //arreng
         List<Admin> mockList = mock(List.class);
         when(mockList.get(0)).thenReturn(admin);
         when(mockList.get(1)).thenReturn(null);
@@ -142,13 +144,17 @@ public class AdminDaoImplTest {
         when(session.createQuery(anyString())).thenReturn(query);
         when(query.list()).thenReturn(mockList);
 
+        //action
+        adminDao.readAll();
+
+        //assert
         assertEquals(mockList, adminDao.readAll());
         assertFalse(mockList.isEmpty());
         assertNull("must be null", mockList.get(1));
         assertNotNull("return admin", mockList.get(0));
         assertEquals(admin, mockList.get(0));
 
-        verify(query, times(1)).list();
+        verify(query, times(2)).list();
         verify(mockList, atLeast(2)).get(0);
     }
 
