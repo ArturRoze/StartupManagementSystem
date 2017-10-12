@@ -1,5 +1,6 @@
 package ua.goit.group6.controller;
 
+import org.hibernate.TransactionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,8 +56,13 @@ public class UserController {
     @GetMapping("/profile/{id}")
     public ModelAndView profile(@PathVariable("id") String idString) {
         ModelAndView profile = new ModelAndView("user_profile");
-        int id = Integer.parseInt(idString);
-        User user = userService.getById(id);
+        User user;
+        try {
+            int id = Integer.parseInt(idString);
+            user = userService.getById(id);
+        } catch (TransactionException | NumberFormatException e) {
+            return new ModelAndView("error");
+        }
         profile.addObject("user", user);
         LOGGER.info("Building profile page for " + user);
         return profile;
@@ -75,7 +81,7 @@ public class UserController {
                          @RequestParam(value = "isAdmin", required = false) boolean isAdmin) {
         try {
             userService.deleteById(Integer.parseInt(idString));
-        } catch (Exception e) {
+        } catch (TransactionException | NumberFormatException e) {
             return "redirect:/error";
         }
         if (isAdmin) {
@@ -97,11 +103,20 @@ public class UserController {
      */
     @GetMapping("/profile/{id}/edit")
     public ModelAndView updateForm(@PathVariable("id") String idString) {
+
         ModelAndView updateForm = new ModelAndView("user_update_form");
-        int id = Integer.parseInt(idString);
-        User user = userService.getById(id);
-        updateForm.addObject("user", user);
-        updateForm.addObject("countries", countryService.getAll());
+        User user;
+
+        try {
+            int id = Integer.parseInt(idString);
+            user = userService.getById(id);
+            updateForm.addObject("user", user);
+            updateForm.addObject("countries", countryService.getAll());
+
+        } catch (TransactionException | NumberFormatException e) {
+            return new ModelAndView("error");
+        }
+
         LOGGER.info("Building update page for " + user);
         return updateForm;
     }
@@ -127,21 +142,27 @@ public class UserController {
                          @RequestParam("description") String description,
                          @RequestParam(value = "country_id", required = false) String countryIdString) {
         LOGGER.info("Returning from user update form");
-        User user = userService.getById(Integer.parseInt(idString));
+        User user;
+        try {
+            user = userService.getById(Integer.parseInt(idString));
 
-        if (!password.isEmpty())
-            user.setPassword(passwordEncoder.encode(password));
+            user.setEmail(email);
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setDescription(description);
 
-        user.setEmail(email);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setDescription(description);
+            if (!password.isEmpty())
+                user.setPassword(passwordEncoder.encode(password));
 
-        if (countryIdString != null && !countryIdString.equals("")) {
-            user.setCountry(countryService.getById(Integer.parseInt(countryIdString)));
+            if (countryIdString != null && !countryIdString.equals("")) {
+                user.setCountry(countryService.getById(Integer.parseInt(countryIdString)));
+            }
+
+            userService.update(user);
+        } catch (TransactionException | NumberFormatException e) {
+            return "redirect:/error";
         }
 
-        userService.update(user);
         LOGGER.info("User " + user + " successfully updated");
         LOGGER.info("Redirecting to profile of user with id='" + idString + "'");
         return "redirect:/users/profile/" + idString;
@@ -157,7 +178,11 @@ public class UserController {
     @GetMapping("/list")
     public ModelAndView list() {
         ModelAndView users = new ModelAndView("users_list");
-        users.addObject("users", userService.getAll());
+        try {
+            users.addObject("users", userService.getAll());
+        } catch (TransactionException e) {
+            return new ModelAndView("error");
+        }
         LOGGER.info("Building page with all users");
         return users;
     }

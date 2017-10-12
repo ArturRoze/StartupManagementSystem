@@ -1,5 +1,6 @@
 package ua.goit.group6.controller;
 
+import org.hibernate.TransactionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,9 +48,13 @@ public class AdminController {
     public ModelAndView profile(@PathVariable("id") String idString) {
         LOGGER.info("Get profile of Admin with id '{}'", idString);
         ModelAndView profile = new ModelAndView("admin_profile");
-        int id = Integer.parseInt(idString);
-        Admin admin = adminService.getById(id);
-        profile.addObject("admin", admin);
+        try {
+            int id = Integer.parseInt(idString);
+            Admin admin = adminService.getById(id);
+            profile.addObject("admin", admin);
+        } catch (TransactionException | NumberFormatException e) {
+            return new ModelAndView("error");
+        }
         return profile;
     }
 
@@ -63,8 +68,12 @@ public class AdminController {
     @GetMapping("/profile/{id}/delete")
     public String delete(@PathVariable("id") String idString) {
         LOGGER.info("delete admin with id");
-        int id = Integer.parseInt(idString);
-        adminService.deleteById(id);
+        try {
+            int id = Integer.parseInt(idString);
+            adminService.deleteById(id);
+        } catch (TransactionException | NumberFormatException e) {
+            return "redirect:/error";
+        }
         return "redirect:/logout";
     }
 
@@ -72,9 +81,9 @@ public class AdminController {
      * Mapping for url "/admins/new/admin/"
      * Method create {@link Admin} in database with parameters which come from page form
      *
-     * @param login        the login of admin to create from url
-     * @param password        new password for admin from request
-     * @param email       new email for admin from request
+     * @param login    the login of admin to create from url
+     * @param password new password for admin from request
+     * @param email    new email for admin from request
      * @return redirect link to this admin's list
      */
     @PostMapping(value = "/new/admin/", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -85,11 +94,15 @@ public class AdminController {
         LOGGER.info("Received admin from admin_add_form");
 
         Admin admin = new Admin();
-        admin.setLogin(login);
-        admin.setPassword(passwordEncoder.encode(password));
-        admin.setEmail(email);
+        try {
+            admin.setLogin(login);
+            admin.setPassword(passwordEncoder.encode(password));
+            admin.setEmail(email);
 
-        adminService.save(admin);
+            adminService.save(admin);
+        } catch (TransactionException e) {
+            return "redirect:/error";
+        }
 
         LOGGER.info("Admin: '{}' created successfully", admin);
 
@@ -107,9 +120,15 @@ public class AdminController {
     public ModelAndView update(@PathVariable("id") String idString) {
         LOGGER.info("Update profile of Admin with id: '{}'", idString);
         ModelAndView updateForm = new ModelAndView("admin_update_form");
-        int id = Integer.parseInt(idString);
-        Admin admin = adminService.getById(id);
-        updateForm.addObject("admin", admin);
+        Admin admin;
+        try {
+            int id = Integer.parseInt(idString);
+            admin = adminService.getById(id);
+            updateForm.addObject("admin", admin);
+
+        } catch (TransactionException | NumberFormatException e) {
+            return new ModelAndView("error");
+        }
         LOGGER.info("Received admin from admin_add_form");
         return updateForm;
     }
@@ -118,9 +137,9 @@ public class AdminController {
      * Mapping for url "/admins/profile/{id}/update/"
      * Method updates {@link Admin} in database with parameters which come from page form
      *
-     * @param idString        the id of admin to update from url
-     * @param password        new password for admin from request
-     * @param email       new email for admin from request
+     * @param idString the id of admin to update from url
+     * @param password new password for admin from request
+     * @param email    new email for admin from request
      * @return redirect link to this admin profile
      */
     @PostMapping(value = "/profile/{id}/update/", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -129,11 +148,17 @@ public class AdminController {
                          @RequestParam("email") String email)
 
             throws IOException {
-        Admin admin = adminService.getById(Integer.parseInt(idString));
-        LOGGER.info("Received admin from form: '{}'", admin);
-        admin.setPassword(passwordEncoder.encode(password));
-        admin.setEmail(email);
-        adminService.update(admin);
+        Admin admin;
+        try {
+            admin = adminService.getById(Integer.parseInt(idString));
+            LOGGER.info("Received admin from form: '{}'", admin);
+            admin.setPassword(passwordEncoder.encode(password));
+            admin.setEmail(email);
+            adminService.update(admin);
+
+        } catch (TransactionException | NumberFormatException e) {
+            return "redirect:/error";
+        }
         LOGGER.info("Admin: '{}' created successfully", admin);
 
         return "redirect:/admins/profile/" + admin.getId();
@@ -149,7 +174,11 @@ public class AdminController {
     @GetMapping("/list")
     public ModelAndView listAdmins() {
         ModelAndView admins = new ModelAndView("admins_list");
-        admins.addObject("admins", adminService.getAll());
+        try {
+            admins.addObject("admins", adminService.getAll());
+        } catch (TransactionException e) {
+            return new ModelAndView("error");
+        }
         return admins;
     }
 }
