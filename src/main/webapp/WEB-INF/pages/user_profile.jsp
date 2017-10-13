@@ -153,21 +153,6 @@
                     </div>
                     <br>
 
-                    <div align="center">
-                        <div align="center">
-                            <form action="${pageContext.request.contextPath}/startups" method="get">
-                                <input type="submit" value="Show startups">
-                            </form>
-                        </div>
-
-                        <div align="center">
-                            <form action="${pageContext.request.contextPath}/offers" method="get">
-                                <input type="submit" value="Show offers">
-                            </form>
-                        </div>
-                    </div>
-                    <br>
-
                     <div>
                         <c:if test="${isOwner || isAdmin}">
                             <div align="center">
@@ -180,6 +165,7 @@
                             <div align="center">
                                 <form action="${pageContext.request.contextPath}/users/profile/${user.id}/delete"
                                       method="get">
+                                    <input type="text" value="${isAdmin}" hidden>
                                     <input type="submit" value="Delete">
                                 </form>
                             </div>
@@ -205,5 +191,7 @@
         </div>
         <%@include file="footer.jsp" %>
     </div>
+</div>
+
 </body>
 </html>
