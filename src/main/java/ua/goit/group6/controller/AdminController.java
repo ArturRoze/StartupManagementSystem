@@ -52,7 +52,7 @@ public class AdminController {
             int id = Integer.parseInt(idString);
             Admin admin = adminService.getById(id);
             profile.addObject("admin", admin);
-        } catch (TransactionException | NumberFormatException e) {
+        } catch (Exception e) {
             return new ModelAndView("error");
         }
         return profile;
@@ -71,7 +71,7 @@ public class AdminController {
         try {
             int id = Integer.parseInt(idString);
             adminService.deleteById(id);
-        } catch (TransactionException | NumberFormatException e) {
+        } catch (Exception e) {
             return "redirect:/error";
         }
         return "redirect:/logout";
@@ -100,7 +100,7 @@ public class AdminController {
             admin.setEmail(email);
 
             adminService.save(admin);
-        } catch (TransactionException e) {
+        } catch (Exception e) {
             return "redirect:/error";
         }
 
@@ -126,7 +126,7 @@ public class AdminController {
             admin = adminService.getById(id);
             updateForm.addObject("admin", admin);
 
-        } catch (TransactionException | NumberFormatException e) {
+        } catch (Exception e) {
             return new ModelAndView("error");
         }
         LOGGER.info("Received admin from admin_add_form");
@@ -156,7 +156,7 @@ public class AdminController {
             admin.setEmail(email);
             adminService.update(admin);
 
-        } catch (TransactionException | NumberFormatException e) {
+        } catch (Exception e) {
             return "redirect:/error";
         }
         LOGGER.info("Admin: '{}' created successfully", admin);
@@ -176,7 +176,7 @@ public class AdminController {
         ModelAndView admins = new ModelAndView("admins_list");
         try {
             admins.addObject("admins", adminService.getAll());
-        } catch (TransactionException e) {
+        } catch (Exception e) {
             return new ModelAndView("error");
         }
         return admins;

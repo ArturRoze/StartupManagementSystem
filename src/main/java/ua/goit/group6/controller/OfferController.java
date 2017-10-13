@@ -57,7 +57,7 @@ public class OfferController {
             int id = Integer.parseInt(idString);
             offer = offerService.getById(id);
             offerInfo.addObject("offer", offer);
-        } catch (TransactionException | NumberFormatException e) {
+        } catch (Exception e) {
             return new ModelAndView("error");
         }
         LOGGER.info("Building info page for " + offer);
@@ -75,7 +75,7 @@ public class OfferController {
     public String delete(@PathVariable("id") String idString) {
         try {
             offerService.deleteById(Integer.parseInt(idString));
-        } catch (TransactionException | NumberFormatException e) {
+        } catch (Exception e) {
             return "redirect:/error";
         }
         LOGGER.info("Redirecting to news page after deleting offer with id='{}'", idString);
@@ -94,7 +94,7 @@ public class OfferController {
         try {
             createForm.addObject("countries", countryService.getAll());
             createForm.addObject("industries", industryService.getAll());
-        } catch (TransactionException e) {
+        } catch (Exception e) {
             return new ModelAndView("error");
         }
         LOGGER.info("Building new offer form");
@@ -134,7 +134,7 @@ public class OfferController {
                 offer.setIndustry(industryService.getById(Integer.parseInt(industryIdString)));
 
             offerService.save(offer);
-        } catch (TransactionException | NumberFormatException e) {
+        } catch (Exception e) {
             return "redirect:/error";
         }
         LOGGER.info("Offer '{}' successfully created", offer);
@@ -157,7 +157,7 @@ public class OfferController {
             updateForm.addObject("offer", offerService.getById(Integer.parseInt(idString)));
             updateForm.addObject("countries", countryService.getAll());
             updateForm.addObject("industries", industryService.getAll());
-        } catch (TransactionException | NumberFormatException e) {
+        } catch (Exception e) {
             return new ModelAndView("error");
         }
         return updateForm;
@@ -192,7 +192,7 @@ public class OfferController {
             if (industryIdString != null && !industryIdString.equals(""))
                 offer.setIndustry(industryService.getById(Integer.parseInt(industryIdString)));
             offerService.update(offer);
-        } catch (TransactionException | NumberFormatException e) {
+        } catch (Exception e) {
             return "redirect:/error";
         }
 

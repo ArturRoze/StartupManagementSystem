@@ -60,7 +60,7 @@ public class UserController {
         try {
             int id = Integer.parseInt(idString);
             user = userService.getById(id);
-        } catch (TransactionException | NumberFormatException e) {
+        } catch (Exception e) {
             return new ModelAndView("error");
         }
         profile.addObject("user", user);
@@ -81,7 +81,7 @@ public class UserController {
                          @RequestParam(value = "isAdmin", required = false) boolean isAdmin) {
         try {
             userService.deleteById(Integer.parseInt(idString));
-        } catch (TransactionException | NumberFormatException e) {
+        } catch (Exception e) {
             return "redirect:/error";
         }
         if (isAdmin) {
@@ -113,7 +113,7 @@ public class UserController {
             updateForm.addObject("user", user);
             updateForm.addObject("countries", countryService.getAll());
 
-        } catch (TransactionException | NumberFormatException e) {
+        } catch (Exception e) {
             return new ModelAndView("error");
         }
 
@@ -159,7 +159,7 @@ public class UserController {
             }
 
             userService.update(user);
-        } catch (TransactionException | NumberFormatException e) {
+        } catch (Exception e) {
             return "redirect:/error";
         }
 
@@ -180,7 +180,7 @@ public class UserController {
         ModelAndView users = new ModelAndView("users_list");
         try {
             users.addObject("users", userService.getAll());
-        } catch (TransactionException e) {
+        } catch (Exception e) {
             return new ModelAndView("error");
         }
         LOGGER.info("Building page with all users");

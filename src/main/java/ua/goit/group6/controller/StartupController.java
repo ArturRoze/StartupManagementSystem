@@ -60,7 +60,7 @@ public class StartupController {
 
         try {
             startups.addObject("startups", startupService.getAllByDecreaseRegistration());
-        } catch (TransactionException e) {
+        } catch (Exception e) {
             return new ModelAndView("error");
         }
         LOGGER.info("Building page with all startups");
@@ -86,7 +86,7 @@ public class StartupController {
             startup = startupService.getById(id);
             startupInfo.addObject("startup", startup);
 
-        } catch (TransactionException | NumberFormatException e) {
+        } catch (Exception e) {
             return new ModelAndView("error");
         }
 
@@ -105,7 +105,7 @@ public class StartupController {
     public String delete(@PathVariable("id") String idString) {
         try {
             startupService.deleteById(Integer.parseInt(idString));
-        } catch (TransactionException | NumberFormatException e) {
+        } catch (Exception e) {
             return "redirect:/error";
         }
         LOGGER.info("Redirecting to news page after deleting startup with id='{}'", idString);
@@ -126,7 +126,7 @@ public class StartupController {
         try {
             createForm.addObject("countries", countryService.getAll());
             createForm.addObject("industries", industryService.getAll());
-        } catch (TransactionException e) {
+        } catch (Exception e) {
             return new ModelAndView("error");
         }
         LOGGER.info("Building new startup form");
@@ -168,7 +168,7 @@ public class StartupController {
                 startup.setIndustry(industryService.getById(Integer.parseInt(industryIdString)));
 
             startupService.save(startup);
-        } catch (TransactionException | NumberFormatException e) {
+        } catch (Exception e) {
             return "redirect:/error";
         }
 
@@ -192,7 +192,7 @@ public class StartupController {
             updateForm.addObject("startup", startupService.getById(Integer.parseInt(idString)));
             updateForm.addObject("countries", countryService.getAll());
             updateForm.addObject("industries", industryService.getAll());
-        } catch (TransactionException | NumberFormatException e) {
+        } catch (Exception e) {
             return new ModelAndView("error");
         }
         return updateForm;
@@ -231,7 +231,7 @@ public class StartupController {
                 startup.setIndustry(industryService.getById(Integer.parseInt(industryIdString)));
             startupService.update(startup);
 
-        } catch (TransactionException | NumberFormatException e) {
+        } catch (Exception e) {
             return "redirect:/error";
         }
 

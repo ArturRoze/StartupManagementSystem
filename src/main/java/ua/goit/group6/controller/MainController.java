@@ -78,7 +78,7 @@ public class MainController {
         ModelAndView main = new ModelAndView("index");
         try {
             main.addObject("startups", startupService.getLastN(6));
-        } catch (TransactionException e) {
+        } catch (Exception e) {
             return new ModelAndView("error");
         }
         LOGGER.info("Building index page");
@@ -100,7 +100,7 @@ public class MainController {
         user.setPassword(passwordEncoder.encode(password));
         try {
             userService.save(user);
-        } catch (TransactionException e){
+        } catch (Exception e){
             return "redirect:/error";
         }
         LOGGER.info("Redirecting to index page after registration");
@@ -142,7 +142,7 @@ public class MainController {
             news.addObject("pages_count", pagesCount);
             news.addObject("news_list", newsService.getNPageWithMNews(currentPage, 6));
 
-        } catch (TransactionException | NumberFormatException e) {
+        } catch (Exception e) {
             return new ModelAndView("error");
         }
 
@@ -193,7 +193,7 @@ public class MainController {
                 user.setPassword(passwordEncoder.encode("user"));
                 userService.save(user);
             }
-        } catch (TransactionException e){
+        } catch (Exception e){
             LOGGER.warn("Fail. It can't even initialize database");
         }
     }
