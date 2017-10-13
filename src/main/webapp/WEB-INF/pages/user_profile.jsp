@@ -165,7 +165,7 @@
                             <div align="center">
                                 <form action="${pageContext.request.contextPath}/users/profile/${user.id}/delete"
                                       method="get">
-                                    <input type="text" value="${isAdmin}" hidden>
+                                    <input type="text" name="isAdmin" value="${isAdmin}" hidden>
                                     <input type="submit" value="Delete">
                                 </form>
                             </div>
