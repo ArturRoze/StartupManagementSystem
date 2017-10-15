@@ -12,36 +12,50 @@
         <%@include file="navbar.jsp" %>
         <div class="container">
             <c:set var="isOwner" value="${startup.user.id == current_user_id}"/>
-            <h2 class="text-center">Details about <c:if test="${isOwner}">your</c:if>
+            <h2 class="text-center">Details about<c:if test="${isOwner}"> my</c:if>
                 startup <span class="badge badge-light">#${startup.id}</span></h2>
-            <div class="row">
-                <div class="col-md-6 padd05">
+            <div class="row border border-gr rounded mb-4">
+                <div class="col-md-6 p-2">
                     <div class="btn-block">
-                        <table class="table table-hover">
+                        <table class="table table-hover mb-0">
                             <tr>
-                                <th scope="row">Name</th>
+                                <th class="w-25" scope="row">Name</th>
                                 <td>
                                     <h4>${startup.name}</h4>
                                 </td>
                             </tr>
                             <tr>
-                                <th>Owner</th>
-                                <td><a class="btn btn-light text-success border-success" role="button"
-                                       href="${pageContext.request.contextPath}/users/profile/${startup.user.id}">
-                                    ${startup.user.firstName} ${startup.user.lastName}</a></td>
-                            </tr>
-                            <tr>
                                 <th scope="row">Description</th>
                                 <td>${startup.description}</td>
+                            </tr>
+                            <tr>
+                                <th>Owner</th>
+                                <td><a class="btn btn-light text-success border-success float-left" role="button"
+                                       href="${pageContext.request.contextPath}/users/profile/${startup.user.id}">
+                                    Go to
+                                    <c:choose>
+                                        <c:when test="${isOwner}">
+                                            my
+                                        </c:when>
+                                        <c:otherwise>
+                                            owner
+                                        </c:otherwise>
+                                    </c:choose>
+                                    profile</a>
+                                    <c:if test="${(startup.user.firstName != null || startup.user.lastName != null)
+                                    && !isOwner}">
+                                        <div class="ml-md-4 mt-2 float-left text-secondary">user id: #${startup.user.id}</div>
+                                    </c:if>
+                                </td>
                             </tr>
                         </table>
                     </div>
                 </div>
-                <div class="col-md-6 padd05">
+                <div class="col-md-6 p-2">
                     <div class="btn-block">
-                        <table class="table table-hover">
+                        <table class="table table-hover mb-0">
                             <tr>
-                                <th scope="row">Industry</th>
+                                <th class="w-25" scope="row">Industry</th>
                                 <td>${startup.industry.name}</td>
                             </tr>
                             <tr>
@@ -49,10 +63,10 @@
                                 <td>${startup.country.name}</td>
                             </tr>
                             <tr>
-                                <th style="width: 25%" scope="row">Registration</th>
+                                <th scope="row">Registration</th>
                                 <td>
                                     <c:set var="dateOf" value="${startup.registrationDate}"/>
-                                    <%@include file="date.jsp" %>
+                                    <%@include file="patterns/date_pattern.jsp" %>
                                 </td>
                             </tr>
                         </table>
@@ -60,49 +74,8 @@
                 </div>
             </div>
 
-            <div class="navbar navbar-expand-lg navbar-light bg-secondary rounded px-3 mb-4">
-                <%@include file="back_btn.jsp" %>
-                <c:choose>
-                    <c:when test="${isOwner || isAdmin}">
-                        <c:choose>
-                            <c:when test="${isOwner}">
-                                <a class="btn btn-lg btn-success btn-with-icon border border-light mr-auto" role="button"
-                                   href="${pageContext.request.contextPath}/users/profile/${startup.user.id}">
-                                    <div>
-                                        <i class="material-icons">settings</i>
-                                    </div>
-                                    <span>My profile</span></a>
-                                </a>
-                            </c:when>
-                            <c:otherwise>
-                                <a class="btn btn-lg btn-success btn-with-icon border border-light mr-auto" role="button"
-                                   href="${pageContext.request.contextPath}/users/profile/${startup.user.id}">
-                                    <div>
-                                        <i class="material-icons">settings</i>
-                                    </div>
-                                    <span>Go to <b>${startup.user.firstName} ${startup.user.lastName}</b> profile</span>
-                                </a>
-                            </c:otherwise>
-                        </c:choose>
-                        <a class="btn btn-lg btn-primary ml-md-2 mb-md-0 d-lg-inline-block btn-with-icon border border-light"
-                           href="${pageContext.request.contextPath}/startups/${startup.id}/edit" role="button">
-                            <div><i class="material-icons">update</i></div>
-                            <span>Update</span>
-                        </a>
-                        <a class="btn btn-lg btn-danger ml-md-2 mb-md-0 d-lg-inline-block btn-with-icon border border-light"
-                           href="${pageContext.request.contextPath}/startups/${startup.id}/delete" role="button">
-                            <div><i class="material-icons">delete_forever</i></div>
-                            <span>Delete</span>
-                        </a>
-                    </c:when>
-                    <c:otherwise>
-                        <a class="btn btn-lg btn-success btn-with-icon border border-light mr-auto" role="button"
-                           href="${pageContext.request.contextPath}/users/profile/${startup.user.id}">
-                            <div><i class="material-icons">info</i></div>
-                            <span>Show <b>${startup.user.firstName} ${startup.user.lastName}</b> profile</span>
-                        </a>
-                    </c:otherwise>
-                </c:choose>
+            <div class="navbar bg-bar rounded px-3 mb-4">
+                <%@include file="buttons/back_button.jsp" %>
             </div>
         </div>
     </div>

@@ -1,4 +1,4 @@
-<div class="col-md-4 padd05">
+<div class="col-lg-4 p-2">
     <c:choose>
         <c:when test="${item['class'].simpleName eq 'Startup'}">
             <a class="btn btn-light btn-block border-success text-success item-hight pb-0"
@@ -22,7 +22,7 @@
                     </div>
                     <div class="text-left mb-2">
                         <c:set var="dateOf" value="${item.registrationDate}"/>
-                        <%@include file="date.jsp"%>
+                        <%@include file="patterns/date_pattern.jsp"%>
                     </div>
                 </div>
             </a>

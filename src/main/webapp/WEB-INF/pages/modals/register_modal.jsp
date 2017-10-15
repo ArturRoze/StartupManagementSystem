@@ -17,7 +17,7 @@
                                placeholder="username" aria-label="Username" aria-describedby="reg-addon1">
                     </div>
                     <label for="reg-password">Choose your password:</label>
-                    <div class="input-group input-group-lg">
+                    <div class="input-group input-group-lg">vb
                         <span class="input-group-addon" id="reg-addon2"><i class="material-icons">star_border</i></span>
                         <input type="password" required class="form-control" name="password" id="reg-password"
                                placeholder="password" aria-label="Username" aria-describedby="reg-addon2">

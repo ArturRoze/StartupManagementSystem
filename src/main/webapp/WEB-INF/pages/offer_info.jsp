@@ -14,7 +14,7 @@
             <c:set var="isOwner" value="${offer.user.id == current_user_id}"/>
             <h2 class="text-center">Offer info</h2>
             <div class="row">
-                <div class="col-md-6 padd05">
+                <div class="col-md-6 p-2">
                     <div class="btn-block">
                         <table class="table table-hover">
 
@@ -68,7 +68,7 @@
                     </form>
                 </div>
             </c:if>
-            <%@include file="back_btn.jsp" %>
+            <%@include file="buttons/back_button.jsp" %>
         </div>
     </div>
     <%@include file="footer.jsp" %>
