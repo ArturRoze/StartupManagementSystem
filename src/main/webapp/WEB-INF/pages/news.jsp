@@ -12,14 +12,14 @@
         <%@include file="navbar.jsp" %>
         <div class="container">
             <h1 class="text-center mt-4">News</h1>
-            <hr>
+            <hr class="row">
             <div align="center">
                 <div class="row">
                         <c:forEach var="item" items="${news_list}">
                             <%@include file="item.jsp" %>
                         </c:forEach>
                 </div>
-                <hr>
+                <hr class="row">
                 <%@include file="pagination.jsp" %>
             </div>
         </div>

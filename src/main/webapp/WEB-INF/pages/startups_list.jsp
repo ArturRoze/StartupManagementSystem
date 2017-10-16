@@ -8,18 +8,20 @@
 </head>
 <body>
 <div class="wrapper">
-    <div class="content">
+    <div class="content mb-5">
         <%@include file="navbar.jsp" %>
         <div class="container">
-            <h2 class="text-center mt-2">List of all startups</h2>
-            <hr class="my-2">
+            <h2 class="text-center mt-4">List of all startups</h2>
+            <hr class="row my-2">
             <div class="row">
                 <c:forEach var="item" items="${startups}">
                     <%@include file="item.jsp" %>
                 </c:forEach>
             </div>
-            <hr class="my-4">
-            <%@include file="back_btn.jsp" %>
+            <%--<hr class="my-4">--%>
+            <div class="row navbar bg-bar rounded px-3 mt-3 mb-5">
+                <%@include file="buttons/back_button.jsp" %>
+            </div>
         </div>
     </div>
     <%@include file="footer.jsp" %>

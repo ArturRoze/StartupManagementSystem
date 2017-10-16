@@ -29,7 +29,7 @@ h2 {
     font-weight: 300;
 }
 
-a {
+a, button {
     cursor: pointer
 }
 
@@ -52,18 +52,27 @@ span i {
     z-index: 1040;
 }
 
-.padd05 {
-    padding: 0.5rem;
+.border-gr {
+    border-color: #cfd2d6;
+}
+
+.text-gr {
+    color: #cfd2d6;
+}
+
+.bg-bar {
+    background-color: #cfd2d6;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 0 0.4rem inset;
 }
 
 .btn-with-icon div {
-    padding-top: 0.15rem;
+    padding-top: 0.1rem;
     margin-top: 0.15rem;
-    margin-right: 0.5rem;
     float: left;
 }
 
 .btn-with-icon span {
+    margin-left: 0.5rem;
     /*margin-top: 0.15rem;*/
     /*margin-bottom: 0.15rem;*/
 }
@@ -109,14 +118,6 @@ span i {
     font-size: 2em;
     float: left;
     margin-left: 1rem;
-}
-
-.menu {
-    -webkit-margin-before: 1em;
-    -webkit-margin-after: 1em;
-    -webkit-margin-start: 0;
-    -webkit-margin-end: 0;
-    -webkit-padding-start: 40px;
 }
 
 .logo {

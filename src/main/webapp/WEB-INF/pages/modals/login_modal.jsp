@@ -3,7 +3,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="loginModalLabel">Please enter your data</h5>
+                <h5 class="modal-title" id="loginModalLabel">Please enter your login data below:</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -13,14 +13,16 @@
                     <label for="login-username">Enter your username:</label>
                     <div class="input-group input-group-lg">
                         <span class="input-group-addon" id="login-addon1"><i class="material-icons">fingerprint</i></span>
-                        <input type="text" required class="form-control" name="username" id="login-username"
-                               placeholder="username" aria-label="Username" aria-describedby="login-addon1" autofocus>
+                        <input type="text" class="form-control" name="username" id="login-username"
+                               placeholder="username" aria-label="Username" aria-describedby="login-addon1"
+                               required pattern="[A-Za-z0-9]{3,}">
                     </div>
                     <label for="login-password">Enter your password:</label>
                     <div class="input-group input-group-lg">
                         <span class="input-group-addon" id="login-addon2"><i class="material-icons">star_border</i></span>
-                        <input type="password" required class="form-control" name="password" id="login-password"
-                               placeholder="password" aria-label="Username" aria-describedby="login-addon2">
+                        <input type="password" class="form-control" name="password" id="login-password"
+                               placeholder="password" aria-label="Username" aria-describedby="login-addon2"
+                               required>
                     </div>
                 </div>
                 <div class="modal-footer">
