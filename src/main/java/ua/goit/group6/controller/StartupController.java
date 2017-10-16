@@ -1,5 +1,6 @@
 package ua.goit.group6.controller;
 
+import org.hibernate.TransactionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +57,12 @@ public class StartupController {
     @GetMapping
     public ModelAndView list() {
         ModelAndView startups = new ModelAndView("startups_list");
-        startups.addObject("startups", startupService.getAllByDecreaseRegistration());
+
+        try {
+            startups.addObject("startups", startupService.getAllByDecreaseRegistration());
+        } catch (Exception e) {
+            return new ModelAndView("error");
+        }
         LOGGER.info("Building page with all startups");
         return startups;
     }
@@ -71,10 +77,19 @@ public class StartupController {
      */
     @GetMapping("/{id}")
     public ModelAndView info(@PathVariable("id") String idString) {
+
         ModelAndView startupInfo = new ModelAndView("startup_info");
-        int id = Integer.parseInt(idString);
-        Startup startup = startupService.getById(id);
-        startupInfo.addObject("startup", startup);
+        Startup startup;
+
+        try {
+            int id = Integer.parseInt(idString);
+            startup = startupService.getById(id);
+            startupInfo.addObject("startup", startup);
+
+        } catch (Exception e) {
+            return new ModelAndView("error");
+        }
+
         LOGGER.info("Building info page for " + startup);
         return startupInfo;
     }
@@ -88,7 +103,11 @@ public class StartupController {
      */
     @PostMapping("{id}/delete")
     public String delete(@PathVariable("id") String idString) {
-        startupService.deleteById(Integer.parseInt(idString));
+        try {
+            startupService.deleteById(Integer.parseInt(idString));
+        } catch (Exception e) {
+            return "redirect:/error";
+        }
         LOGGER.info("Redirecting to news page after deleting startup with id='{}'", idString);
         return "redirect:/news";
     }
@@ -104,8 +123,12 @@ public class StartupController {
     @GetMapping("/new/startup")
     public ModelAndView newStartup() {
         ModelAndView createForm = new ModelAndView("startup_add_form");
-        createForm.addObject("countries", countryService.getAll());
-        createForm.addObject("industries", industryService.getAll());
+        try {
+            createForm.addObject("countries", countryService.getAll());
+            createForm.addObject("industries", industryService.getAll());
+        } catch (Exception e) {
+            return new ModelAndView("error");
+        }
         LOGGER.info("Building new startup form");
         return createForm;
     }
@@ -114,11 +137,11 @@ public class StartupController {
      * Mapping for url ":/startups/new/startup/?"
      * Method creates {@link Startup} with parameters from page form and saves it to database
      *
-     * @param userIdString id of user who creates startup
-     * @param name name of startup
-     * @param budgetString budget of startup
-     * @param description description of startup
-     * @param countryIdString id of startup country
+     * @param userIdString     id of user who creates startup
+     * @param name             name of startup
+     * @param budgetString     budget of startup
+     * @param description      description of startup
+     * @param countryIdString  id of startup country
      * @param industryIdString id of startup industry
      * @return redirect link to news page
      */
@@ -132,18 +155,23 @@ public class StartupController {
         LOGGER.info("Returning from startup create form");
 
         Startup startup = new Startup();
-        startup.setUser(userService.getById(Integer.parseInt(userIdString)));
-        startup.setName(name);
-        startup.setDescription(description);
-        startup.setBudget(Integer.parseInt(budgetString));
+        try {
+            startup.setUser(userService.getById(Integer.parseInt(userIdString)));
+            startup.setName(name);
+            startup.setDescription(description);
+            startup.setBudget(Integer.parseInt(budgetString));
 
-        if (countryIdString != null && !countryIdString.equals(""))
-            startup.setCountry(countryService.getById(Integer.parseInt(countryIdString)));
+            if (countryIdString != null && !countryIdString.equals(""))
+                startup.setCountry(countryService.getById(Integer.parseInt(countryIdString)));
 
-        if (industryIdString != null && !industryIdString.equals(""))
-            startup.setIndustry(industryService.getById(Integer.parseInt(industryIdString)));
+            if (industryIdString != null && !industryIdString.equals(""))
+                startup.setIndustry(industryService.getById(Integer.parseInt(industryIdString)));
 
-        startupService.save(startup);
+            startupService.save(startup);
+        } catch (Exception e) {
+            return "redirect:/error";
+        }
+
         LOGGER.info("Startup '{}' successfully created", startup);
         LOGGER.info("Redirecting to news page");
         return "redirect:/news";
@@ -160,9 +188,13 @@ public class StartupController {
     @GetMapping("/{id}/edit")
     public ModelAndView update(@PathVariable("id") String idString) {
         ModelAndView updateForm = new ModelAndView("startup_update_form");
-        updateForm.addObject("startup", startupService.getById(Integer.parseInt(idString)));
-        updateForm.addObject("countries", countryService.getAll());
-        updateForm.addObject("industries", industryService.getAll());
+        try {
+            updateForm.addObject("startup", startupService.getById(Integer.parseInt(idString)));
+            updateForm.addObject("countries", countryService.getAll());
+            updateForm.addObject("industries", industryService.getAll());
+        } catch (Exception e) {
+            return new ModelAndView("error");
+        }
         return updateForm;
     }
 
@@ -170,11 +202,11 @@ public class StartupController {
      * Mapping for url ":/srartups/{id}/update?"
      * Method updates {@link Startup} in database with parameters from page form
      *
-     * @param idString id of startup to update
-     * @param name new name of startup
-     * @param budgetString new budget
-     * @param description new description
-     * @param countryIdString new country
+     * @param idString         id of startup to update
+     * @param name             new name of startup
+     * @param budgetString     new budget
+     * @param description      new description
+     * @param countryIdString  new country
      * @param industryIdString new industry
      * @return redirect link to news pagew
      */
@@ -185,17 +217,23 @@ public class StartupController {
                          @RequestParam("description") String description,
                          @RequestParam(value = "country_id", required = false) String countryIdString,
                          @RequestParam(value = "industry_id", required = false) String industryIdString) {
-        Startup startup = startupService.getById(Integer.parseInt(idString));
-        startup.setName(name);
-        startup.setDescription(description);
-        startup.setBudget(Integer.parseInt(budgetString));
+        Startup startup;
+        try {
+            startup = startupService.getById(Integer.parseInt(idString));
+            startup.setName(name);
+            startup.setDescription(description);
+            startup.setBudget(Integer.parseInt(budgetString));
 
-        if (countryIdString != null && !countryIdString.equals(""))
-            startup.setCountry(countryService.getById(Integer.parseInt(countryIdString)));
+            if (countryIdString != null && !countryIdString.equals(""))
+                startup.setCountry(countryService.getById(Integer.parseInt(countryIdString)));
 
-        if (industryIdString != null && !industryIdString.equals(""))
-            startup.setIndustry(industryService.getById(Integer.parseInt(industryIdString)));
-        startupService.update(startup);
+            if (industryIdString != null && !industryIdString.equals(""))
+                startup.setIndustry(industryService.getById(Integer.parseInt(industryIdString)));
+            startupService.update(startup);
+
+        } catch (Exception e) {
+            return "redirect:/error";
+        }
 
         return "redirect:/news";
     }

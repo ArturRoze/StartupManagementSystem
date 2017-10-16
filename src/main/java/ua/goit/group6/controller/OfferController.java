@@ -1,5 +1,6 @@
 package ua.goit.group6.controller;
 
+import org.hibernate.TransactionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +52,14 @@ public class OfferController {
     @GetMapping("/{id}")
     public ModelAndView info(@PathVariable("id") String idString) {
         ModelAndView offerInfo = new ModelAndView("offer_info");
-        int id = Integer.parseInt(idString);
-        Offer offer = offerService.getById(id);
-        offerInfo.addObject("offer", offer);
+        Offer offer;
+        try {
+            int id = Integer.parseInt(idString);
+            offer = offerService.getById(id);
+            offerInfo.addObject("offer", offer);
+        } catch (Exception e) {
+            return new ModelAndView("error");
+        }
         LOGGER.info("Building info page for " + offer);
         return offerInfo;
     }
@@ -67,7 +73,11 @@ public class OfferController {
      */
     @PostMapping("{id}/delete")
     public String delete(@PathVariable("id") String idString) {
-        offerService.deleteById(Integer.parseInt(idString));
+        try {
+            offerService.deleteById(Integer.parseInt(idString));
+        } catch (Exception e) {
+            return "redirect:/error";
+        }
         LOGGER.info("Redirecting to news page after deleting offer with id='{}'", idString);
         return "redirect:/news";
     }
@@ -81,8 +91,12 @@ public class OfferController {
     @GetMapping("/new/offer")
     public ModelAndView newOffer() {
         ModelAndView createForm = new ModelAndView("offer_add_form");
-        createForm.addObject("countries", countryService.getAll());
-        createForm.addObject("industries", industryService.getAll());
+        try {
+            createForm.addObject("countries", countryService.getAll());
+            createForm.addObject("industries", industryService.getAll());
+        } catch (Exception e) {
+            return new ModelAndView("error");
+        }
         LOGGER.info("Building new offer form");
         return createForm;
     }
@@ -108,17 +122,21 @@ public class OfferController {
         LOGGER.info("Returning from offer create form");
 
         Offer offer = new Offer();
-        offer.setUser(userService.getById(Integer.parseInt(userIdString)));
-        offer.setDescription(description);
-        offer.setBudget(Integer.parseInt(budgetString));
+        try {
+            offer.setUser(userService.getById(Integer.parseInt(userIdString)));
+            offer.setDescription(description);
+            offer.setBudget(Integer.parseInt(budgetString));
 
-        if (countryIdString != null && !countryIdString.equals(""))
-            offer.setCountry(countryService.getById(Integer.parseInt(countryIdString)));
+            if (countryIdString != null && !countryIdString.equals(""))
+                offer.setCountry(countryService.getById(Integer.parseInt(countryIdString)));
 
-        if (industryIdString != null && !industryIdString.equals(""))
-            offer.setIndustry(industryService.getById(Integer.parseInt(industryIdString)));
+            if (industryIdString != null && !industryIdString.equals(""))
+                offer.setIndustry(industryService.getById(Integer.parseInt(industryIdString)));
 
-        offerService.save(offer);
+            offerService.save(offer);
+        } catch (Exception e) {
+            return "redirect:/error";
+        }
         LOGGER.info("Offer '{}' successfully created", offer);
         LOGGER.info("Redirecting to news page");
         return "redirect:/news";
@@ -135,9 +153,13 @@ public class OfferController {
     @GetMapping("/{id}/edit")
     public ModelAndView update(@PathVariable("id") String idString) {
         ModelAndView updateForm = new ModelAndView("offer_update_form");
-        updateForm.addObject("offer", offerService.getById(Integer.parseInt(idString)));
-        updateForm.addObject("countries", countryService.getAll());
-        updateForm.addObject("industries", industryService.getAll());
+        try {
+            updateForm.addObject("offer", offerService.getById(Integer.parseInt(idString)));
+            updateForm.addObject("countries", countryService.getAll());
+            updateForm.addObject("industries", industryService.getAll());
+        } catch (Exception e) {
+            return new ModelAndView("error");
+        }
         return updateForm;
     }
 
@@ -158,16 +180,21 @@ public class OfferController {
                          @RequestParam("description") String description,
                          @RequestParam(value = "country_id", required = false) String countryIdString,
                          @RequestParam(value = "industry_id", required = false) String industryIdString) {
-        Offer offer = offerService.getById(Integer.parseInt(idString));
-        offer.setDescription(description);
-        offer.setBudget(Integer.parseInt(budgetString));
+        Offer offer;
+        try {
+            offer = offerService.getById(Integer.parseInt(idString));
+            offer.setDescription(description);
+            offer.setBudget(Integer.parseInt(budgetString));
 
-        if (countryIdString != null && !countryIdString.equals(""))
-            offer.setCountry(countryService.getById(Integer.parseInt(countryIdString)));
+            if (countryIdString != null && !countryIdString.equals(""))
+                offer.setCountry(countryService.getById(Integer.parseInt(countryIdString)));
 
-        if (industryIdString != null && !countryIdString.equals(""))
-            offer.setIndustry(industryService.getById(Integer.parseInt(industryIdString)));
-        offerService.update(offer);
+            if (industryIdString != null && !industryIdString.equals(""))
+                offer.setIndustry(industryService.getById(Integer.parseInt(industryIdString)));
+            offerService.update(offer);
+        } catch (Exception e) {
+            return "redirect:/error";
+        }
 
         return "redirect:/news";
     }

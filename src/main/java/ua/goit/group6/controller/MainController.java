@@ -1,5 +1,6 @@
 package ua.goit.group6.controller;
 
+import org.hibernate.TransactionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,20 +76,13 @@ public class MainController {
     @GetMapping
     public ModelAndView index() {
         ModelAndView main = new ModelAndView("index");
-        main.addObject("startups", startupService.getLastN(6));
+        try {
+            main.addObject("startups", startupService.getLastN(6));
+        } catch (Exception e) {
+            return new ModelAndView("error");
+        }
         LOGGER.info("Building index page");
         return main;
-    }
-
-    /**
-     * Mapping for url ":/logout"
-     *
-     * @return redirect link to logout
-     */
-    @PostMapping("/logout")
-    public String logout() {
-        LOGGER.info("Redirecting to login?logout");
-        return "redirect:/login?logout";
     }
 
     /**
@@ -104,7 +98,11 @@ public class MainController {
         User user = new User();
         user.setLogin(login);
         user.setPassword(passwordEncoder.encode(password));
-        userService.save(user);
+        try {
+            userService.save(user);
+        } catch (Exception e){
+            return "redirect:/error";
+        }
         LOGGER.info("Redirecting to index page after registration");
         return "redirect:/login";
     }
@@ -118,28 +116,36 @@ public class MainController {
      */
     @GetMapping("news")
     public ModelAndView news(@RequestParam(value = "page", required = false) String page) {
-        int currentPage = 1;
-        int pagesCount = newsService.getCountOfPages(6);
-
-        if (page != null) {
-
-            try {
-                currentPage = Integer.parseInt(page);
-            } catch (NumberFormatException e) {
-                return new ModelAndView("error");
-            }
-
-            if (currentPage < 1) {
-                currentPage = 1;
-            } else if (currentPage > pagesCount) {
-                currentPage = pagesCount;
-            }
-        }
 
         ModelAndView news = new ModelAndView("news");
-        news.addObject("current_page", currentPage);
-        news.addObject("pages_count", pagesCount);
-        news.addObject("news_list", newsService.getNPageWithMNews(currentPage, 6));
+        int currentPage = 1;
+
+        try {
+            int pagesCount = newsService.getCountOfPages(6);
+
+            if (page != null) {
+
+                try {
+                    currentPage = Integer.parseInt(page);
+                } catch (NumberFormatException e) {
+                    return new ModelAndView("error");
+                }
+
+                if (currentPage < 1) {
+                    currentPage = 1;
+                } else if (currentPage > pagesCount) {
+                    currentPage = pagesCount;
+                }
+            }
+
+            news.addObject("current_page", currentPage);
+            news.addObject("pages_count", pagesCount);
+            news.addObject("news_list", newsService.getNPageWithMNews(currentPage, 6));
+
+        } catch (Exception e) {
+            return new ModelAndView("error");
+        }
+
         LOGGER.info("Building news page");
         return news;
     }
@@ -152,40 +158,43 @@ public class MainController {
     @PostConstruct
     public void initDefaultDatabase() {
 
-        if (countryService.getAll().isEmpty()) {
-            Country country = new Country();
-            country.setName("Ukraine");
-            countryService.save(country);
-            country.setName("USA");
-            countryService.save(country);
+        try{
+            if (countryService.getAll().isEmpty()) {
+                Country country = new Country();
+                country.setName("Ukraine");
+                countryService.save(country);
+                country.setName("USA");
+                countryService.save(country);
+            }
+
+            if (industryService.getAll().isEmpty()) {
+                Industry industry = new Industry();
+                industry.setName("IT");
+                industryService.save(industry);
+                industry.setName("Finance");
+                industryService.save(industry);
+                industry.setName("Food");
+                industryService.save(industry);
+            }
+
+            if (adminService.getByLogin("admin") == null) {
+
+                LOGGER.info("Initialising default admin with login = 'admin', and password = 'admin' ");
+                Admin admin = new Admin();
+                admin.setLogin("admin");
+                admin.setPassword(passwordEncoder.encode("admin"));
+                adminService.save(admin);
+            }
+
+            if (userService.getByLogin("user") == null) {
+                LOGGER.info("Initialising default user with login = 'user', and password = 'user' ");
+                User user = new User();
+                user.setLogin("user");
+                user.setPassword(passwordEncoder.encode("user"));
+                userService.save(user);
+            }
+        } catch (Exception e){
+            LOGGER.warn("Fail. It can't even initialize database");
         }
-
-        if (industryService.getAll().isEmpty()) {
-            Industry industry = new Industry();
-            industry.setName("IT");
-            industryService.save(industry);
-            industry.setName("Finance");
-            industryService.save(industry);
-            industry.setName("Food");
-            industryService.save(industry);
-        }
-
-        if (adminService.getByLogin("admin") == null) {
-
-            LOGGER.info("Initialising default admin with login = 'admin', and password = 'admin' ");
-            Admin admin = new Admin();
-            admin.setLogin("admin");
-            admin.setPassword(passwordEncoder.encode("admin"));
-            adminService.save(admin);
-        }
-
-        if (userService.getByLogin("user") == null) {
-            LOGGER.info("Initialising default user with login = 'user', and password = 'user' ");
-            User user = new User();
-            user.setLogin("user");
-            user.setPassword(passwordEncoder.encode("user"));
-            userService.save(user);
-        }
-
     }
 }
