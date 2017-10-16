@@ -15,7 +15,7 @@
                         <span class="input-group-addon" id="login-addon1"><i class="material-icons">fingerprint</i></span>
                         <input type="text" class="form-control" name="username" id="login-username"
                                placeholder="username" aria-label="Username" aria-describedby="login-addon1"
-                               required pattern="[A-Za-z0-9]{3,}">
+                               autofocus required>
                     </div>
                     <label for="login-password">Enter your password:</label>
                     <div class="input-group input-group-lg">

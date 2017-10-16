@@ -1,4 +1,4 @@
-<a class="btn btn-light btn-with-icon" onclick="goBack()" role="button">
+<a class="btn btn-light btn-with-icon-lg" onclick="goBack()" role="button">
     <div>
         <i class="material-icons f18">arrow_back</i>
     </div>

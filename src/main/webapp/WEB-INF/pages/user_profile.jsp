@@ -18,7 +18,8 @@
                     <c:set var="isAdmin" value="true"/>
                 </sec:authorize>
 
-                <h2 class="text-center"><c:choose><c:when test="${isOwner}">My</c:when><c:otherwise>User</c:otherwise></c:choose> profile</h2>
+                <h2 class="text-center"><c:choose><c:when
+                        test="${isOwner}">My</c:when><c:otherwise>User</c:otherwise></c:choose> profile</h2>
                 <div class="row border border-gr rounded">
                     <%-- Left part of user's data --%>
                     <div class="col-md-6 p-2">
@@ -37,7 +38,7 @@
                                             <div class="text-gr mt-1 float-left"><em>[hidden]</em></div>
                                             <a class="btn btn-sm btn-light ml-4 text-danger float-left"
                                                role="button" data-toggle="tooltip" data-placement="top" data-html="true"
-                                               title="<em>Currently unavailable</em>" disabled>
+                                               title="<em>Currently unavailable.</em><br>Please go to 'Edit profile' to change your password." disabled>
                                                 change password</a>
                                         </td>
                                     </tr>
@@ -92,47 +93,6 @@
                         </div>
                     </div>
                 </div>
-                <%--<table>
-                    <c:if test="${isOwner || isAdmin}">
-                        <tr>
-                            <th>Id</th>
-                            <td>${user.id}</td>
-                        </tr>
-                        <tr>
-                            <th>login</th>
-                            <td>${user.login}</td>
-                        </tr>
-                        <tr>
-                            <th>password</th>
-                            <td>${user.password}</td>
-                        </tr>
-                    </c:if>
-
-                    <tr>
-                        <th>Email</th>
-                        <td>${user.email}</td>
-                    </tr>
-                    <tr>
-                        <th>Registration</th>
-                        <td>${user.registrationDate}</td>
-                    </tr>
-                    <tr>
-                        <th>First name</th>
-                        <td>${user.firstName}</td>
-                    </tr>
-                    <tr>
-                        <th>Last name</th>
-                        <td>${user.lastName}</td>
-                    </tr>
-                    <tr>
-                        <th>Description</th>
-                        <td>${user.description}</td>
-                    </tr>
-                    <tr>
-                        <th>Country</th>
-                        <td>${user.country.name}</td>
-                    </tr>
-                </table>--%>
 
                 <%-- Toolbar to hanle user --%>
                 <div class="navbar bg-bar rounded px-4 mt-3 mb-4 row">
@@ -160,11 +120,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="offers-tab" data-toggle="tab" href="#offers"
-                           aria-controls="offers" role="tab">
-                            List of all
+                           aria-controls="offers" role="tab">List of all
                             <c:choose><c:when test="${isOwner}">my</c:when>
-                                <c:otherwise>user's</c:otherwise></c:choose>
-                            offers</a>
+                                <c:otherwise>user's</c:otherwise></c:choose> offers</a>
                     </li>
                     <li class="nav-item mr-auto">&nbsp;</li>
                 </ul>
@@ -172,40 +130,40 @@
                 <div class="tab-content" id="myTabContent">
                     <%-- Block with startups (active on start) --%>
                     <div class="tab-pane fade show active" id="startups" aria-labelledby="startup-tab" role="tabpanel">
-                        <h2 class="text-center">List of all
-                            <c:choose>
-                                <c:when test="${isOwner}">
-                                    my
-                                </c:when>
-                                <c:otherwise>
-                                    user's
-                                </c:otherwise>
-                            </c:choose>
-                            startups</h2>
-                        <div class="row mb-5">
-                            <c:forEach var="item" items="${user.startups}">
-                                <%@include file="item.jsp" %>
-                            </c:forEach>
-                        </div>
+                        <c:choose>
+                            <c:when test="${user.startups.size() > 0}">
+                                <h2 class="text-center">List of all
+                                    <c:choose><c:when test="${isOwner}">my</c:when>
+                                        <c:otherwise>user's</c:otherwise></c:choose> startups</h2>
+                                <div class="row mb-5">
+                                    <c:forEach var="item" items="${user.startups}">
+                                        <%@include file="item.jsp" %>
+                                    </c:forEach>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <h1 class="text-gr text-center mt-5"><em>No one startups.</em></h1>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
 
                     <%-- Block with offers (hidden on start) --%>
-                    <div class="tab-pane fade" id="offers" role="tabpanel" aria-labelledby="offers-tab">
-                        <h2 class="text-center">List of all
-                            <c:choose>
-                                <c:when test="${isOwner}">
-                                    my
-                                </c:when>
-                                <c:otherwise>
-                                    user's
-                                </c:otherwise>
-                            </c:choose>
-                            offers</h2>
-                        <div class="row mb-5">
-                            <c:forEach var="item" items="${user.offers}">
-                                <%@include file="item.jsp" %>
-                            </c:forEach>
-                        </div>
+                    <div class="tab-pane fade" id="offers" aria-labelledby="offers-tab" role="tabpanel">
+                        <c:choose>
+                            <c:when test="${user.offers.size() > 0}">
+                                <h2 class="text-center">List of all
+                                    <c:choose><c:when test="${isOwner}">my</c:when>
+                                        <c:otherwise>user's</c:otherwise></c:choose> offers</h2>
+                                <div class="row mb-5">
+                                    <c:forEach var="item" items="${user.offers}">
+                                        <%@include file="item.jsp" %>
+                                    </c:forEach>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <h1 class="text-gr text-center mt-5"><em>No one offers.</em></h1>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
             </div>
