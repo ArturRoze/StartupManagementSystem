@@ -29,6 +29,10 @@
                                 <td>${startup.description}</td>
                             </tr>
                             <tr>
+                                <th scope="row">Budget</th>
+                                <td>${startup.budget}</td>
+                            </tr>
+                            <tr>
                                 <th>Owner</th>
                                 <td><a class="btn btn-light text-success border-success float-left" role="button"
                                        href="${pageContext.request.contextPath}/users/profile/${startup.user.id}">
@@ -44,7 +48,8 @@
                                     profile</a>
                                     <c:if test="${(startup.user.firstName != null || startup.user.lastName != null)
                                     && !isOwner}">
-                                        <div class="ml-md-4 mt-2 float-left text-secondary">user id: #${startup.user.id}</div>
+                                        <div class="ml-md-4 mt-2 float-left text-secondary">user id:
+                                            #${startup.user.id}</div>
                                     </c:if>
                                 </td>
                             </tr>
@@ -67,6 +72,23 @@
                                 <td>
                                     <c:set var="dateOf" value="${startup.registrationDate}"/>
                                     <%@include file="patterns/date_pattern.jsp" %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <%-- TODO buttons for startup : Update and Delete --%>
+                                <td>
+                                    <div class="navbar row btn-block">
+                                        <a href="${pageContext.request.contextPath}/startups/${startup.id}/edit"
+                                           class="btn btn-sm btn-info mx-1 float-left" role="button">Update startup</a>
+
+                                        <form action="${pageContext.request.contextPath}/startups/${startup.id}/delete"
+                                              class="my-auto" method="post">
+                                            <input type="number" name="current_user_id" value="${current_user_id}" hidden>
+                                            <button class="btn btn-sm btn-danger mx-1 float-right" type="submit" value="Delete">
+                                                <div><i class="material-icons">delete_sweep</i></div>
+                                                <span>delete startup</span></button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         </table>

@@ -65,7 +65,7 @@ public class OfferController {
      * @param idString the id of offer to delete from url
      * @return redirect link to page news
      */
-    @GetMapping("{id}/delete")
+    @PostMapping("{id}/delete")
     public String delete(@PathVariable("id") String idString) {
         offerService.deleteById(Integer.parseInt(idString));
         LOGGER.info("Redirecting to news page after deleting offer with id='{}'", idString);

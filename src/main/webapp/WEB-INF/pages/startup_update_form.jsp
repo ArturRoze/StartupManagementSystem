@@ -39,7 +39,7 @@
                         <form action="${pageContext.request.contextPath}/startups/${startup.id}/update" method="post">
 
                             <table>
-                                <caption><h1>Startup update</h1></caption>
+                                <h1>Startup update</h1>
                                 <tr>
                                     <th></th>
                                     <th>Old startup data</th>

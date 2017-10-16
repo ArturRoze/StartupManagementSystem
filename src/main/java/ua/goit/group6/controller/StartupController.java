@@ -86,7 +86,7 @@ public class StartupController {
      * @param idString id of startup to delete
      * @return redirect link to news page
      */
-    @GetMapping("{id}/delete")
+    @PostMapping("{id}/delete")
     public String delete(@PathVariable("id") String idString) {
         startupService.deleteById(Integer.parseInt(idString));
         LOGGER.info("Redirecting to news page after deleting startup with id='{}'", idString);

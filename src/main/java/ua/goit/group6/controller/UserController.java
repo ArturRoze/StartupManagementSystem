@@ -70,7 +70,7 @@ public class UserController {
      * @param isAdmin  check who delete user
      * @return redirect link to logout if owner deletes himself, or to news page if admin deletes user
      */
-    @GetMapping("/profile/{id}/delete")
+    @PostMapping("/profile/{id}/delete")
     public String delete(@PathVariable("id") String idString,
                          @RequestParam(value = "isAdmin", required = false) boolean isAdmin) {
         try {

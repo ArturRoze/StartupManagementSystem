@@ -40,7 +40,7 @@
                         <form action="${pageContext.request.contextPath}/offers/${offer.id}/update" method="post">
 
                             <table>
-                                <caption><h1>Offer update</h1></caption>
+                                <h1>Offer update</h1>
                                 <tr>
                                     <th></th>
                                     <th>Old offer data</th>

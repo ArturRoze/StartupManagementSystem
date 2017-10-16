@@ -46,7 +46,7 @@
                 </div>
                 <div align="center">
                     <table>
-                        <caption><h1>List of all users</h1></caption>
+                        <h1>List of all users</h1>
                         <tr>
                             <th>Id</th>
                             <th>Login</th>
