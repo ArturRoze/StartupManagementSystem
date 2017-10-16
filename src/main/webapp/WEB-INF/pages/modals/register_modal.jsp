@@ -14,7 +14,7 @@
                     <div class="input-group input-group-lg">
                         <span class="input-group-addon" id="reg-addon1"><i class="material-icons">fingerprint</i></span>
                         <input type="text" required class="form-control" name="login" id="reg-login"
-                               placeholder="username" aria-label="Username" aria-describedby="reg-addon1">
+                               placeholder="username" aria-label="Username" aria-describedby="reg-addon1" autofocus>
                     </div>
                     <label for="reg-password">Choose your password:</label>
                     <div class="input-group input-group-lg">vb

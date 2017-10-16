@@ -11,6 +11,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.servlet.ModelAndView;
 import ua.goit.group6.configuration.MvcConfiguration;
 import ua.goit.group6.configuration.SecurityConfiguration;
 import ua.goit.group6.controller.configuration.TestControllersConfiguration;
@@ -52,6 +53,8 @@ public class MainControllerTest {
     private StartupService startupService;
     @Autowired
     private NewsService newsService;
+    @Autowired
+    private MainController mainController;
 
     @Autowired
     private WebApplicationContext context;
@@ -158,4 +161,30 @@ public class MainControllerTest {
                 .andExpect(status().isOk());
     }
 
+    @Test
+    public void newsCurrentPageNull() throws Exception{
+        when(newsService.getCountOfPages(newsOnPage)).thenReturn(2);
+
+        ModelAndView aaaa = mainController.news("aaaa");
+
+        assertEquals("error", aaaa.getViewName());
+    }
+
+    @Test
+    public void currentPageEqualOne() throws Exception {
+        when(newsService.getCountOfPages(newsOnPage)).thenReturn(2);
+
+        ModelAndView aaaa = mainController.news("0");
+
+        assertEquals(1, aaaa.getModel().get("current_page"));
+    }
+
+    @Test
+    public void currentPageEqualsPageCount() throws Exception {
+        when(newsService.getCountOfPages(6)).thenReturn(2);
+
+        ModelAndView aaaa = mainController.news("3");
+
+        assertEquals(2, aaaa.getModel().get("current_page"));
+    }
 }
