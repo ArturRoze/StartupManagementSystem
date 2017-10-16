@@ -96,7 +96,7 @@ public class StartupControllerTest {
 
     @Test
     public void deleteStartupByIdTest() throws Exception {
-        mvc.perform(get("/startups/" + id + "/delete").with(user("user").roles("USER", "ADMIN")))
+        mvc.perform(post("/startups/" + id + "/delete").with(user("user").roles("USER", "ADMIN")))
                 .andExpect(redirectedUrl("/news"))
                 .andExpect(status().isFound());
     }

@@ -70,7 +70,7 @@ public class AdminControllerTest {
 
     @Test
     public void deleteAdminTest() throws Exception {
-        mvc.perform(get("/admins/profile/" + id + "/delete").with(user("admin").roles("ADMIN")))
+        mvc.perform(post("/admins/profile/" + id + "/delete").with(user("admin").roles("ADMIN")))
                 .andExpect(redirectedUrl("/logout"))
                 .andExpect(status().isFound());
     }

@@ -84,7 +84,7 @@ public class OfferControllerTest {
 
     @Test
     public void deleteOfferTest() throws Exception {
-        mvc.perform(get("/offers/" + id + "/delete").with(user("user").roles("USER", "ADMIN")))
+        mvc.perform(post("/offers/" + id + "/delete").with(user("user").roles("USER", "ADMIN")))
                 .andExpect(redirectedUrl("/news"))
                 .andExpect(status().isFound());
     }

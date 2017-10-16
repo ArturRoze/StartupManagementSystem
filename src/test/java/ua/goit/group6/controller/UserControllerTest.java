@@ -80,7 +80,7 @@ public class UserControllerTest {
 
     @Test
     public void guestUserDeleteTest() throws Exception {
-        mvc.perform(get("/users/profile/{}/delete", id).with(anonymous()))
+        mvc.perform(post("/users/profile/{}/delete", id).with(anonymous()))
                 .andExpect(status().isFound());
     }
 
@@ -116,7 +116,7 @@ public class UserControllerTest {
 
     @Test
     public void deleteTest() throws Exception {
-        mvc.perform(get("/users/profile/" + id + "/delete").with(user("user").roles("USER", "ADMIN")))
+        mvc.perform(post("/users/profile/" + id + "/delete").with(user("user").roles("USER", "ADMIN")))
                 .andExpect(redirectedUrl("/logout"))
                 .andExpect(status().isFound());
     }
