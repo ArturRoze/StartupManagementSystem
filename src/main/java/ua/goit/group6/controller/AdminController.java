@@ -65,7 +65,7 @@ public class AdminController {
      * @param idString the id of user to delete from url
      * @return redirect link to logout if owner deletes himself, or to news page if admin deletes user
      */
-    @GetMapping("/profile/{id}/delete")
+    @PostMapping("/profile/{id}/delete")
     public String delete(@PathVariable("id") String idString) {
         LOGGER.info("delete admin with id");
         try {

@@ -41,7 +41,7 @@
                         <form action="${pageContext.request.contextPath}/users/profile/${user.id}/update" method="post">
 
                             <table>
-                                <caption><h1>User update</h1></caption>
+                                <h1>User update</h1>
                                 <tr>
                                     <th></th>
                                     <th>Old profile</th>

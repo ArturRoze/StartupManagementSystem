@@ -63,7 +63,7 @@
                 </div>
 
                 <div align="center">
-                    <form action="${pageContext.request.contextPath}/offers/${offer.id}/delete" method="get">
+                    <form action="${pageContext.request.contextPath}/offers/${offer.id}/delete" method="post">
                         <input type="submit" value="Delete">
                     </form>
                 </div>

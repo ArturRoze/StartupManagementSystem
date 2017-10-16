@@ -16,35 +16,38 @@
             <%--</c:set>--%>
 
             <div align="center">
-
-                <table>
-                    <caption>
-                        <h3>Show all admins</h3>
-                    </caption>
-
-                    <tr>
-                        <th>Id</th>
-                        <th>Login</th>
-                        <th>Password</th>
-                        <th>Email</th>
-                    </tr>
-
-                    <c:forEach var="admin" items="${admins}">
-                        <tr>
-                            <td>${admin.id}</td>
-                            <td>${admin.login}</td>
-                            <td>${admin.password}</td>
-                            <td>${admin.email}</td>
-                        </tr>
-                    </c:forEach>
-                </table>
-
-                <div align="center">
-                    <form action="${pageContext.request.contextPath}/admins/profile/${current_user_id}" method="get">
-                        <input type="submit" value="To admin profile">
-                    </form>
+                <h2 class="text-center">
+                    List of all admins
+                    <a href="${pageContext.request.contextPath}/admins/new/admin"
+                       class="btn btn-outline-success ml-1" role="button">
+                        <i class="material-icons">add_circle_outline</i>
+                        <span>Create admin</span>
+                    </a>
+                </h2>
+                <div class="row mb-5 justify-content-md-center">
+                    <div class="col-8">
+                        <table class="table">
+                            <thead class="thead-default">
+                            <tr>
+                                <th class="w-25">ID</th>
+                                <th>Login</th>
+                                <th>E-mail</th>
+                            </tr>
+                            </thead>
+                            <c:forEach var="admin" items="${admins}">
+                                <tr>
+                                    <td>${admin.id}</td>
+                                    <td>${admin.login}</td>
+                                    <td>${admin.email}</td>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </div>
                 </div>
 
+                <div class="navbar bg-bar rounded px-3 mb-4 row">
+                    <%@include file="buttons/back_button.jsp" %>
+                </div>
             </div>
         </div>
     </div>

@@ -11,25 +11,11 @@
     <div class="content">
         <%@include file="navbar.jsp" %>
         <div class="container">
-            <div align="center">
-                <div align="center">
-                    <div align="center">
-                        <form action="${pageContext.request.contextPath}/news" method="get">
-                            <input type="submit" value="News">
-                        </form>
-                    </div>
-                    <div align="center">
-                        <form action="${pageContext.request.contextPath}/logout" method="post">
-                            <input type="submit" value="Logout">
-                        </form>
-                    </div>
-                </div>
-            </div>
 
             <div>
                 <form action="${pageContext.request.contextPath}/admins/profile/${admin.id}/update/" method="post">
                     <table>
-                        <caption><h3>Admin edit</h3></caption>
+                        <h3>Update admin data</h3>
                         <tr>
                             <th></th>
                             <th>Old admin</th>
