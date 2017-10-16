@@ -13,7 +13,7 @@
         <div class="container">
             <c:set var="isOwner" value="${startup.user.id == current_user_id}"/>
             <h2 class="text-center">Details about<c:if test="${isOwner}"> my</c:if>
-                startup <span class="badge badge-light">#${startup.id}</span></h2>
+                startup <span class="badge badge-light text-secondary">id:${startup.id}</span></h2>
             <div class="row border border-gr rounded mb-4">
                 <div class="col-md-6 p-2">
                     <div class="btn-block">
@@ -74,7 +74,7 @@
                 </div>
             </div>
 
-            <div class="navbar bg-bar rounded px-3 mb-4">
+            <div class="navbar bg-bar rounded px-3 mb-4 row">
                 <%@include file="buttons/back_button.jsp" %>
             </div>
         </div>

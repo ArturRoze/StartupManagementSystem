@@ -1,6 +1,7 @@
 <div class="col-lg-4 p-2">
     <c:choose>
         <c:when test="${item['class'].simpleName eq 'Startup'}">
+            <%-- Will show the startup block --%>
             <a class="btn btn-light btn-block border-success text-success item-hight pb-0"
                href="${pageContext.request.contextPath}/startups/${item.id}" role="button">
                 <div class="btn-block item-hight text-dark">
@@ -28,6 +29,7 @@
             </a>
         </c:when>
         <c:when test="${item['class'].simpleName eq 'Offer'}">
+            <%-- Will show the offer block --%>
             <a class="btn btn-light btn-block border-primary text-primary item-hight pb-0"
                href="${pageContext.request.contextPath}/offers/${item.id}" role="button">
                 <div class="btn-block item-hight text-dark">

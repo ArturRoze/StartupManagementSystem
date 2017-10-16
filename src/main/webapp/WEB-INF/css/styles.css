@@ -56,6 +56,10 @@ span i {
     border-color: #cfd2d6;
 }
 
+.text-gr {
+    color: #cfd2d6;
+}
+
 .bg-bar {
     background-color: #cfd2d6;
     box-shadow: rgba(0, 0, 0, 0.2) 0 0 0.4rem inset;

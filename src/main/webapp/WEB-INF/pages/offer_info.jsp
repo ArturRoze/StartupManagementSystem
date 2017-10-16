@@ -3,7 +3,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
-    <title>Offer #${offer.id}</title>
+    <title>Offer: ${offer.id}</title>
     <%@include file="header_config.jsp" %>
 </head>
 <body>
