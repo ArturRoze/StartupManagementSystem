@@ -3,7 +3,8 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
-    <title>Startup update</title>
+    <title>Update startup: "${startup.name}"</title>
+    <%@include file="header_config.jsp" %>
 </head>
 <body>
 <div class="wrapper">

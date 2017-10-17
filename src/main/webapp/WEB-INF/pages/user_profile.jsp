@@ -96,8 +96,8 @@
             </div>
 
             <%-- Toolbar to hanle user --%>
-            <div class="navbar bg-bar rounded px-4 mt-3 mb-4 row">
-                <%@include file="buttons/all_startups_button.jsp" %>
+            <div class="navbar bg-bar px-4 mt-3 mb-4 row">
+                <%--<%@include file="buttons/all_startups_button.jsp" %>--%>
                 <div class="mx-auto"></div>
                 <c:if test="${isOwner && !isAdmin}">
                     <%@include file="buttons/add_startup_button.jsp" %>

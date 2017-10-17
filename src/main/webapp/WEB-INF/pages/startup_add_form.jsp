@@ -12,7 +12,7 @@
         <%@include file="navbar.jsp" %>
         <div class="container">
             <h2 class="text-center mt-4">Please enter data for a new startup</h2>
-            <form action="${pageContext.request.contextPath}/startups/new/startup/" method="post">
+            <form action="${pageContext.request.contextPath}/startups/new/startup/" method="post" novalidate>
                 <input type="number" name="user_id" value="${current_user_id}" hidden>
                 <div class="row border border-gr rounded mb-4">
                     <div class="col-md-6 p-2">
@@ -21,20 +21,20 @@
                                 <tr>
                                     <th class="w-25" scope="row">Enter name<br>for startup</th>
                                     <td>
-                                        <input type="text" class="form-control is-valid" name="name"
+                                        <input type="text" class="form-control" name="name"
                                                autofocus required>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Enter description</th>
                                     <td>
-                                        <input type="text" class="form-control is-valid" name="description" required>
+                                        <input type="text" class="form-control" name="description" required>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Enter budget</th>
                                     <td>
-                                        <input type="number" class="form-control is-valid" name="budget" value="0" required>
+                                        <input type="number" class="form-control" name="budget" value="0" required>
                                     </td>
                                 </tr>
                             </table>
@@ -68,7 +68,7 @@
                     </div>
                 </div>
                 <div class="justify-content-md-center">
-                    <div class="navbar bg-bar rounded px-3 mt-3 mb-5">
+                    <div class="navbar bg-bar px-3 mt-3 mb-5">
                         <%@include file="buttons/back_button.jsp" %>
                         <button class="btn btn-lg btn-success btn-with-icon-lg" type="submit">
                             <div><i class="material-icons">done</i></div>

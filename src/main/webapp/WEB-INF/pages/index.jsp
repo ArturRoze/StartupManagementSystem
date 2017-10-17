@@ -19,7 +19,7 @@
                     <%@include file="item.jsp" %>
                 </c:forEach>
             </div>
-            <div class="row navbar bg-bar rounded px-4 mt-3 mb-4">
+            <div class="row navbar bg-bar px-4 mt-3 mb-4">
                 <%@include file="buttons/add_startup_button.jsp" %>
                 <%@include file="buttons/add_offer_button.jsp" %>
                 <div class="mx-auto"></div>

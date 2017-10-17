@@ -53,7 +53,7 @@
                 </div>
             </div>
 
-
+            <%--
             <ul class="nav nav-pills mt-5 row" id="myTab" role="tablist">
                 <li class="nav-item mr-auto active">&nbsp;</li>
                 <li class="nav-item">
@@ -112,8 +112,16 @@
                         </c:otherwise>
                     </c:choose>
                 </div>
-            </div>--%>
+            </div>
+            --%>
 
+            <div class="navbar mt-4 mb-5 row">
+                <div class="col-md-5 bg-bar mx-auto p-3 text-center">
+                    <%@include file="buttons/all_admins_button.jsp" %>
+                    <%@include file="buttons/all_users_button.jsp" %>
+                </div>
+            </div>
+            <%--
             <div>
                 <div>
                     <form action="${pageContext.request.contextPath}/admins/list" method="get">
@@ -126,6 +134,7 @@
                     <input type="submit" value="show all users">
                 </form>
             </div>
+            --%>
         </div>
     </div>
     <%@include file="footer.jsp" %>

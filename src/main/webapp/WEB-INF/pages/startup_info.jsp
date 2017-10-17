@@ -74,29 +74,34 @@
                                     <%@include file="patterns/date_pattern.jsp" %>
                                 </td>
                             </tr>
-                            <tr>
-                                <%-- TODO buttons for startup : Update and Delete --%>
-                                <td>
-                                    <div class="navbar row btn-block">
-                                        <a href="${pageContext.request.contextPath}/startups/${startup.id}/edit"
-                                           class="btn btn-sm btn-info mx-1 float-left" role="button">Update startup</a>
-
-                                        <form action="${pageContext.request.contextPath}/startups/${startup.id}/delete"
-                                              class="my-auto" method="post">
-                                            <input type="number" name="current_user_id" value="${current_user_id}" hidden>
-                                            <button class="btn btn-sm btn-danger mx-1 float-right" type="submit" value="Delete">
-                                                <div><i class="material-icons">delete_sweep</i></div>
-                                                <span>delete startup</span></button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
+                            <c:if test="${isOwner || isAdmin}">
+                                <tr>
+                                    <th></th>
+                                    <td>
+                                        <div class="btn-block d-inline-flex mt-4">
+                                            <a href="${pageContext.request.contextPath}/startups/${startup.id}/edit"
+                                               class="btn btn-info mx-2 btn-with-icon float-left" role="button">
+                                                <div><i class="material-icons">create</i></div>
+                                                <span>Update startup</span></a>
+                                            <form action="${pageContext.request.contextPath}/startups/${startup.id}/delete"
+                                                  class="my-auto" method="post">
+                                                <input type="number" name="current_user_id"
+                                                       value="${current_user_id}" hidden>
+                                                <button class="btn btn-danger mx-2 btn-with-icon float-right"
+                                                        type="submit" value="Delete">
+                                                    <div><i class="material-icons">delete_sweep</i></div>
+                                                    <span>delete startup</span></button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </c:if>
                         </table>
                     </div>
                 </div>
             </div>
 
-            <div class="navbar bg-bar rounded px-3 mb-4 row">
+            <div class="navbar bg-bar px-3 mb-4 row">
                 <%@include file="buttons/back_button.jsp" %>
             </div>
         </div>

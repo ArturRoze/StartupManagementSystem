@@ -3,7 +3,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
-    <title>Show admins</title>
+    <title>All admins list</title>
     <%@include file="header_config.jsp" %>
 </head>
 <body>
@@ -11,42 +11,36 @@
     <div class="content">
         <%@include file="navbar.jsp" %>
         <div class="container">
-            <%--<c:set var="current_user_id">--%>
-            <%--<sec:authentication property="principal.id"/>--%>
-            <%--</c:set>--%>
 
-            <div align="center">
-                <h2 class="text-center">
-                    List of all admins
-                    <a href="${pageContext.request.contextPath}/admins/new/admin"
-                       class="btn btn-outline-success ml-1" role="button">
-                        <i class="material-icons">add_circle_outline</i>
-                        <span>Create admin</span>
-                    </a>
-                </h2>
-                <div class="row mb-5 justify-content-md-center">
-                    <div class="col-8">
-                        <table class="table">
-                            <thead class="thead-default">
+            <h2 class="text-center">List of all admins</h2>
+            <div class="row mb-5 justify-content-md-center">
+                <div class="col-8">
+                    <table class="table">
+                        <thead class="thead-default">
+                        <tr>
+                            <th class="w-15 text-center">ID</th>
+                            <th>Login</th>
+                            <th>E-mail</th>
+                        </tr>
+                        </thead>
+                        <c:forEach var="admin" items="${admins}">
                             <tr>
-                                <th class="w-25">ID</th>
-                                <th>Login</th>
-                                <th>E-mail</th>
+                                <th class="bg-light text-center">${admin.id}</th>
+                                <td>${admin.login}</td>
+                                <td>
+                                    <c:set var="check" value="${admin.email}"/>
+                                    <%@include file="patterns/is_empty_pattern.jsp" %>
+                                </td>
                             </tr>
-                            </thead>
-                            <c:forEach var="admin" items="${admins}">
-                                <tr>
-                                    <td>${admin.id}</td>
-                                    <td>${admin.login}</td>
-                                    <td>${admin.email}</td>
-                                </tr>
-                            </c:forEach>
-                        </table>
-                    </div>
+                        </c:forEach>
+                    </table>
                 </div>
+            </div>
 
-                <div class="navbar bg-bar rounded px-3 mb-4 row">
+            <div class="px-4 mb-4 row">
+                <div class="navbar col-md-8 bg-bar mx-auto p-3">
                     <%@include file="buttons/back_button.jsp" %>
+                    <%@include file="buttons/add_admin_button.jsp" %>
                 </div>
             </div>
         </div>
