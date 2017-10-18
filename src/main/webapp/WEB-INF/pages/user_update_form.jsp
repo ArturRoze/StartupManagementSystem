@@ -11,115 +11,120 @@
     <div class="content">
         <%@include file="navbar.jsp" %>
         <div class="container">
-            <div class="container">
-                <h1 class="text-center">Update user profile</h1>
+            <c:set var="isOwner" value="${user.id == current_user_id && !isAdmin}"/>
 
-                <c:set var="current_user_id">
-                    <sec:authentication property="principal.id"/>
-                </c:set>
-                <c:set var="isOwner" value="${user.id == current_user_id}"/>
-                <c:set var="isAdmin" value="false"/>
-                <sec:authorize access="hasRole('ADMIN')">
-                    <c:set var="isAdmin" value="true"/>
-                </sec:authorize>
+            <c:choose>
+                <c:when test="${isOwner || isAdmin}">
+                    <h2 class="text-center">Update user profile <small>[id: ${user.id}]</small>
+                    </h2>
+                    <div class="row justify-content-center">
+                        <div class="col-8 border border-gr rounded p-3">
+                            <form action="${pageContext.request.contextPath}/users/profile/${user.id}/update"
+                                  class="mb-0" method="post">
+                                <table class="table mb-0">
+                                    <tr>
+                                        <th width="20%"></th>
+                                        <th width="40%">Old data</th>
+                                        <th width="40%">New data</th>
+                                    </tr>
 
-                <div align="center">
-                    <form action="${pageContext.request.contextPath}/" method="get">
-                        <input type="submit" value="To main page">
-                    </form>
-                </div>
+                                    <tr class="bg-light">
+                                        <th>login</th>
+                                        <td><h4 class="font-weight-bold text-success">${user.login}</h4></td>
+                                        <td></td>
+                                    </tr>
 
-                <div align="center">
-                    <form action="${pageContext.request.contextPath}/users/profile/${current_user_id}" method="get">
-                        <input type="submit" value="To profile page">
-                    </form>
-                </div>
+                                    <tr>
+                                        <th class="bg-light">Password</th>
+                                        <td class="text-muted"><em>
+                                            <small>Enter your new password here
+                                                <br>or leave empty to keep it
+                                            </small>
+                                        </em></td>
+                                        <td><input type="text" class="form-control" name="password"
+                                                   placeholder="Enter new password"></td>
+                                    </tr>
 
-                <c:choose>
-                    <c:when test="${isOwner || isAdmin}">
+                                    <tr>
+                                        <th class="bg-light">E-mail</th>
+                                        <td>
+                                            <c:set var="check" value="${user.email}"/>
+                                            <%@include file="patterns/is_empty_pattern.jsp" %>
+                                        </td>
+                                        <td><input type="email" class="form-control" name="email" value="${user.email}">
+                                        </td>
+                                    </tr>
 
-                        <form action="${pageContext.request.contextPath}/users/profile/${user.id}/update" method="post">
+                                    <tr>
+                                        <th class="bg-light">First name</th>
+                                        <td>
+                                            <c:set var="check" value="${user.firstName}"/>
+                                            <%@include file="patterns/is_empty_pattern.jsp" %>
+                                        </td>
+                                        <td><input type="text" class="form-control" name="first_name"
+                                                   value="${user.firstName}"></td>
+                                    </tr>
 
-                            <table>
-                                <h1>User update</h1>
-                                <tr>
-                                    <th></th>
-                                    <th>Old profile</th>
-                                    <th>New profile</th>
-                                </tr>
+                                    <tr>
+                                        <th class="bg-light">Last name</th>
+                                        <td>
+                                            <c:set var="check" value="${user.lastName}"/>
+                                            <%@include file="patterns/is_empty_pattern.jsp" %>
+                                        </td>
+                                        <td><input type="text" class="form-control" name="last_name"
+                                                   value="${user.lastName}"></td>
+                                    </tr>
 
-                                <tr>
-                                    <td>Password</td>
-                                    <td>Enter new password</td>
-                                    <td><input type="text" name="password" placeholder="Enter new password"></td>
-                                </tr>
+                                    <tr>
+                                        <th class="bg-light">Description</th>
+                                        <td>
+                                            <c:set var="check" value="${user.description}"/>
+                                            <%@include file="patterns/is_empty_pattern.jsp" %>
+                                        </td>
+                                        <td><input type="text" class="form-control" name="description"
+                                                   value="${user.description}"></td>
+                                    </tr>
 
-                                <tr>
-                                    <td>Email</td>
-                                    <td>${user.email}</td>
-                                    <td><input type="email" name="email" value="${user.email}"></td>
-                                </tr>
-
-                                <tr>
-                                    <td>First name</td>
-                                    <td>${user.firstName}</td>
-                                    <td><input type="text" name="first_name" value="${user.firstName}"></td>
-                                </tr>
-
-                                <tr>
-                                    <td>Last name</td>
-                                    <td>${user.lastName}</td>
-                                    <td><input type="text" name="last_name" value="${user.lastName}"></td>
-                                </tr>
-
-                                <tr>
-                                    <td>Description</td>
-                                    <td>${user.description}</td>
-                                    <td><input type="text" name="description" value="${user.description}"></td>
-                                </tr>
-
-                                <tr>
-                                    <td>Country</td>
-                                    <td>${user.country.name}</td>
-                                    <td>
-                                        <select name="country_id">
-
-                                            <option value="${user.country.id}" selected>${user.country.name}</option>
-
-                                            <c:forEach var="country" items="${countries}">
-                                                <option value="${country.id}">${country.name}</option>
-                                            </c:forEach>
-
-                                        </select>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th>
-                                        <div align="center">
-                                            <button onclick="goBack()">Go Back</button>
-                                            <script>
-                                                function goBack() {
-                                                    window.history.back();
-                                                }
-                                            </script>
-                                        </div>
-                                    </th>
-                                    <th><input type="submit" value="Update"></th>
-                                    <th><input type="reset" value="Reset"></th>
-                                </tr>
-                            </table>
-
-                        </form>
-                    </c:when>
-
-                    <c:otherwise>
-                        <h1>This is not your profile</h1>
-                    </c:otherwise>
-                </c:choose>
-            </div>
+                                    <tr>
+                                        <th class="bg-light">Country</th>
+                                        <td>${user.country.name}</td>
+                                        <td>
+                                            <select class="custom-select" name="country_id">
+                                                <c:forEach var="country" items="${countries}">
+                                                    <c:choose>
+                                                        <c:when test="${country.id == user.country.id}">
+                                                            <option value="${country.id}"
+                                                                    selected>${country.name}</option>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <option value="${country.id}">${country.name}</option>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </c:forEach>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div class="navbar bg-bar mt-3">
+                                    <div>
+                                        <%@include file="buttons/back_button.jsp" %>
+                                    </div>
+                                    <div>
+                                        <%@include file="buttons/reset_button_lg.jsp" %>
+                                        <%@include file="buttons/update_button_lg.jsp" %>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <%@include file="no_permission.jsp" %>
+                </c:otherwise>
+            </c:choose>
         </div>
-        <%@include file="footer.jsp" %>
     </div>
+    <%@include file="footer.jsp" %>
+</div>
 </body>
 </html>

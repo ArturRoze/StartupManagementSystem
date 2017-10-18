@@ -11,45 +11,57 @@
     <div class="content">
         <%@include file="navbar.jsp" %>
         <div class="container">
+            <c:set var="isOwner" value="${admin.id == current_user_id}"/>
 
-            <div>
-                <form action="${pageContext.request.contextPath}/admins/profile/${admin.id}/update/" method="post">
-                    <table>
-                        <h3>Update admin data</h3>
-                        <tr>
-                            <th></th>
-                            <th>Old admin</th>
-                            <th>New admin</th>
-                        </tr>
-                        <tr>
-                            <td>login</td>
-                            <td>${admin.login}</td>
-                            <td>not edit</td>
-                        </tr>
-                        <tr>
-                            <td>email</td>
-                            <td>${admin.email}</td>
-                            <td>
-                                <input type="email" name="email" value="${admin.email}">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                <div align="center">
-                                    <button onclick="goBack()">Go Back</button>
-                                    <script>
-                                        function goBack() {
-                                            window.history.back();
-                                        }
-                                    </script>
+            <c:choose>
+                <c:when test="${isOwner || isAdmin}">
+                    <h2 class="text-center">Update user profile
+                        <small>[id: ${admin.id}]</small>
+                    </h2>
+                    <div class="row justify-content-center">
+                        <div class="col-8 border border-gr rounded p-3">
+                            <form action="${pageContext.request.contextPath}/admins/profile/${admin.id}/update/"
+                                  method="post">
+                                <table class="table mb-0">
+                                    <tr>
+                                        <th width="20%"></th>
+                                        <th width="40%">Old data</th>
+                                        <th width="40%">New data</th>
+                                    </tr>
+
+                                    <tr class="bg-light">
+                                        <th>Login</th>
+                                        <td><h4 class="font-weight-bold text-danger">${admin.login}</h4></td>
+                                        <td></td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="bg-light">E-mail</th>
+                                        <td>
+                                            <c:set var="check" value="${admin.email}"/>
+                                            <%@include file="patterns/is_empty_pattern.jsp" %>
+                                        </td>
+                                        <td><input type="email" class="form-control" name="email" value="${admin.email}">
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div class="navbar bg-bar mt-3">
+                                    <div>
+                                        <%@include file="buttons/back_button.jsp" %>
+                                    </div>
+                                    <div>
+                                        <input class="btn btn-lg btn-secondary mr-1" type="reset" value="Reset">
+                                        <input class="btn btn-lg btn-primary" type="submit" value="Update">
+                                    </div>
                                 </div>
-                            </th>
-                            <th><input type="submit" value="Update"></th>
-                            <th><input type="reset" value="Reset"></th>
-                        </tr>
-                    </table>
-                </form>
-            </div>
+                            </form>
+                        </div>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <%@include file="no_permission.jsp" %>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
     <%@include file="footer.jsp" %>

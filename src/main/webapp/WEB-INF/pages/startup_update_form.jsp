@@ -3,125 +3,113 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
-    <title>Startup update</title>
+    <title>Update startup: "${startup.name}"</title>
+    <%@include file="header_config.jsp" %>
 </head>
 <body>
 <div class="wrapper">
     <div class="content">
         <%@include file="navbar.jsp" %>
         <div class="container">
-            <h1 align="center">Startup update form</h1>
+            <c:set var="isOwner" value="${startup.user.id == current_user_id && !isAdmin}"/>
+            <h2 class="text-center">
+                Startup update form <span class="badge badge-light text-secondary">id:${startup.id}]</span></h2>
 
-            <c:set var="current_user_id">
-                <sec:authentication property="principal.id"/>
-            </c:set>
-            <c:set var="isOwner" value="${startup.user.id == current_user_id}"/>
-            <c:set var="isAdmin" value="false"/>
-            <sec:authorize access="hasRole('ADMIN')">
-                <c:set var="isAdmin" value="true"/>
-            </sec:authorize>
+            <c:choose>
+                <c:when test="${isOwner || isAdmin}">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8 border border-gr rounded p-3 mb-4">
+                            <div class="btn-block">
+                                <form action="${pageContext.request.contextPath}/startups/${startup.id}/update"
+                                      method="post">
 
-            <div align="center">
-                <form action="${pageContext.request.contextPath}/" method="get">
-                    <input type="submit" value="To main page">
-                </form>
-            </div>
+                                    <table class="table table-hover mb-0">
+                                        <tr class="bg-light">
+                                            <th width="20%"></th>
+                                            <th width="40%">Old startup data</th>
+                                            <th width="40%">New startup data</th>
+                                        </tr>
 
-            <div align="center">
-                <form action="${pageContext.request.contextPath}/users/profile/${current_user_id}" method="get">
-                    <input type="submit" value="To profile page">
-                </form>
-            </div>
-            <div align="center">
-                <c:choose>
-                    <c:when test="${isOwner || isAdmin}">
+                                        <tr>
+                                            <th class="bg-light">Startup name</th>
+                                            <td>${startup.name}</td>
+                                            <td><input class="form-control" type="text" name="name" value="${startup.name}"></td>
+                                        </tr>
 
-                        <form action="${pageContext.request.contextPath}/startups/${startup.id}/update" method="post">
+                                        <tr>
+                                            <th class="bg-light">Description</th>
+                                            <td>${startup.description}</td>
+                                            <td><textarea rows="4" class="form-control" name="description" maxlength="255"
+                                                          placeholder="Enter description for your startup..."
+                                                          required>${startup.description}</textarea>
+                                            </td>
+                                        </tr>
 
-                            <table>
-                                <h1>Startup update</h1>
-                                <tr>
-                                    <th></th>
-                                    <th>Old startup data</th>
-                                    <th>New startup data</th>
-                                </tr>
+                                        <tr>
+                                            <th class="bg-light">Budget</th>
+                                            <td>${startup.budget}</td>
+                                            <td><input class="form-control" type="number" min="1" name="budget" value="${startup.budget}">
+                                            </td>
+                                        </tr>
 
-                                <tr>
-                                    <td>Startup name</td>
-                                    <td>${startup.name}</td>
-                                    <td><input type="text" name="name" value="${startup.name}"></td>
-                                </tr>
+                                        <tr>
+                                            <th class="bg-light">Industry</th>
+                                            <td>${startup.industry.name}</td>
+                                            <td>
+                                                <select class="custom-select btn-block" name="industry_id">
+                                                    <c:forEach var="industry" items="${industries}">
+                                                        <c:choose>
+                                                            <c:when test="${industry.id == startup.industry.id}">
+                                                                <option value="${industry.id}"
+                                                                        selected>${industry.name}</option>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <option value="${industry.id}">${industry.name}</option>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:forEach>
+                                                </select>
+                                            </td>
+                                        </tr>
 
-                                <tr>
-                                    <td>Description</td>
-                                    <td>${startup.description}</td>
-                                    <td><input type="text" name="description" value="${startup.description}"></td>
-                                </tr>
-
-                                <tr>
-                                    <td>Budget</td>
-                                    <td>${startup.budget}</td>
-                                    <td><input type="number" name="budget" value="${startup.budget}"></td>
-                                </tr>
-
-                                <tr>
-                                    <td>Industry</td>
-                                    <td>${startup.industry.name}</td>
-                                    <td>
-                                        <select name="industry_id">
-
-                                            <option value="${startup.industry.id}"
-                                                    selected>${startup.industry.name}</option>
-
-                                            <c:forEach var="industry" items="${industries}">
-                                                <option value="${industry.id}">${industry.name}</option>
-                                            </c:forEach>
-
-                                        </select>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>Country</td>
-                                    <td>${startup.country.name}</td>
-                                    <td>
-                                        <select name="country_id">
-
-                                            <option value="${startup.country.id}"
-                                                    selected>${startup.country.name}</option>
-
-                                            <c:forEach var="country" items="${countries}">
-                                                <option value="${country.id}">${country.name}</option>
-                                            </c:forEach>
-
-                                        </select>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th>
-                                        <div align="center">
-                                            <button onclick="goBack()">Go Back</button>
-                                            <script>
-                                                function goBack() {
-                                                    window.history.back();
-                                                }
-                                            </script>
+                                        <tr>
+                                            <th class="bg-light">Country</th>
+                                            <td>${startup.country.name}</td>
+                                            <td>
+                                                <select class="custom-select btn-block" name="country_id">
+                                                    <c:forEach var="country" items="${countries}">
+                                                        <c:choose>
+                                                            <c:when test="${country.id == startup.country.id}">
+                                                                <option value="${country.id}"
+                                                                        selected>${country.name}</option>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <option value="${country.id}">${country.name}</option>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:forEach>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div class="navbar bg-bar mt-3">
+                                        <div>
+                                            <%@include file="buttons/back_button.jsp" %>
                                         </div>
-                                    </th>
-                                    <th><input type="submit" value="Update"></th>
-                                    <th><input type="reset" value="Reset"></th>
-                                </tr>
-                            </table>
-
-                        </form>
-                    </c:when>
-
-                    <c:otherwise>
-                        <h1>This is not your startup</h1>
-                    </c:otherwise>
-                </c:choose>
-            </div>
+                                        <div>
+                                            <%@include file="buttons/reset_button.jsp" %>
+                                            <%@include file="buttons/update_button.jsp" %>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <%@include file="no_permission.jsp" %>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
     <%@include file="footer.jsp" %>

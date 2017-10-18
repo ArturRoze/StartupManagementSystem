@@ -16,7 +16,7 @@
             <c:set var="isOwner" value="false"/>
 
             <sec:authorize access="isAuthenticated()">
-                <%@include file="buttons/news_button.jsp" %>
+                <%@include file="buttons/news_button_lg.jsp" %>
 
                 <div class="btn-group ml-md-3" role="group" aria-label="User's buttons">
                     <c:set var="current_user_id">
@@ -28,13 +28,13 @@
 
                     <c:choose>
                         <c:when test="${isAdmin}">
-                            <a class="btn btn-lg btn-danger btn-with-icon-lg" role="button"
+                            <a class="btn btn-lg btn-danger btn-with-icon" role="button"
                                href="${pageContext.request.contextPath}/admins/profile/${current_user_id}">
                                 <div><i class="material-icons">account_box</i></div>
                                 <span>My profile</span></a>
                         </c:when>
                         <c:otherwise>
-                            <a class="btn btn-lg btn-success btn-with-icon-lg" role="button"
+                            <a class="btn btn-lg btn-success btn-with-icon" role="button"
                                href="${pageContext.request.contextPath}/users/profile/${current_user_id}">
                                 <div><i class="material-icons">account_box</i></div>
                                 <span>My profile</span></a>
@@ -47,11 +47,11 @@
                 </div>
             </sec:authorize>
             <sec:authorize access="isAnonymous()">
-                <a class="btn btn-lg btn-outline-success text-success ml-md-3 d-lg-inline-block mb-md-0 btn-with-icon-lg" role="button"
+                <a class="btn btn-lg btn-outline-success text-success ml-md-3 d-lg-inline-block mb-md-0 btn-with-icon" role="button"
                    data-toggle="modal" data-target="#loginModal">
                     <div><i class="material-icons">fingerprint</i></div>
                     <span>Login</span></a>
-                <a class="btn btn-lg btn-outline-secondary text-secondary ml-md-3 d-lg-inline-block mb-md-0 btn-with-icon-lg"
+                <a class="btn btn-lg btn-outline-secondary text-secondary ml-md-3 d-lg-inline-block mb-md-0 btn-with-icon"
                    role="button"
                    data-toggle="modal" data-target="#registerModal">
                     <div><i class="material-icons">touch_app</i></div>

@@ -1,7 +1,7 @@
 <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
     <c:set var="current_is_1st" value="${current_page > 1}"/>
     <c:set var="current_is_last" value="${current_page == pages_count}"/>
-    <c:set var="maxViewPages" value="3"/>
+    <c:set var="maxViewPages" value="5"/>
 
     <c:choose>
         <%-- Only for pagination with more then maxViewPages pages (showing 'prev' and 'next' buttons) --%>

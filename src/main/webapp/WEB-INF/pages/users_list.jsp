@@ -1,16 +1,9 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: root
-  Date: 20.09.2017
-  Time: 18:28
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
-    <title>Users list</title>
+    <title>All users list</title>
     <%@include file="header_config.jsp" %>
 </head>
 <body>
@@ -18,37 +11,14 @@
     <div class="content">
         <%@include file="navbar.jsp" %>
         <div class="container">
-            <div align="center">
 
-                <c:set var="current_user_id">
-                    <sec:authentication property="principal.id"/>
-                </c:set>
-
-                <div align="center">
-                    <div align="center">
-                        <form action="${pageContext.request.contextPath}/news" method="get">
-                            <input type="submit" value="News">
-                        </form>
-                    </div>
-
-                    <div align="center">
-                        <form action="${pageContext.request.contextPath}/admins/profile/${current_user_id}"
-                              method="get">
-                            <input type="submit" value="Admin profile">
-                        </form>
-                    </div>
-
-                    <div align="center">
-                        <form action="${pageContext.request.contextPath}/logout" method="post">
-                            <input type="submit" value="Logout">
-                        </form>
-                    </div>
-                </div>
-                <div align="center">
-                    <table>
-                        <h1>List of all users</h1>
+            <h2 class="text-center">List of all users</h2>
+            <div class="row mb-5 justify-content-md-center">
+                <div class="col">
+                    <table class="table">
+                        <thead class="thead-default">
                         <tr>
-                            <th>Id</th>
+                            <th class="w-10 text-center">ID</th>
                             <th>Login</th>
                             <th>Email</th>
                             <th>First name</th>
@@ -58,27 +28,44 @@
                             <th>Country</th>
                             <th>To profile</th>
                         </tr>
+                        </thead>
                         <c:forEach var="user" items="${users}">
                             <tr>
-                                <td>${user.id}</td>
+                                <th class="bg-light text-center">${user.id}</th>
                                 <td>${user.login}</td>
-                                <td>${user.email}</td>
-                                <td>${user.firstName}</td>
-                                <td>${user.lastName}</td>
-                                <td>${user.registrationDate}</td>
-                                <td>${user.description}</td>
-                                <td>${user.country.name}</td>
-
                                 <td>
-                                    <form action="${pageContext.request.contextPath}/users/profile/${user.id}"
-                                          method="get">
-                                        <input type="submit" value="Show profile">
-                                    </form>
+                                    <c:set var="check" value="${user.email}"/>
+                                    <%@include file="patterns/is_empty_pattern.jsp" %>
+                                </td>
+                                <td>
+                                    <c:set var="check" value="${user.firstName}"/>
+                                    <%@include file="patterns/is_empty_pattern.jsp" %>
+                                </td>
+                                <td>
+                                    <c:set var="check" value="${user.lastName}"/>
+                                    <%@include file="patterns/is_empty_pattern.jsp" %>
+                                </td>
+                                <td><c:set var="dateOf" value="${user.registrationDate}"/>
+                                    <%@include file="patterns/date_pattern.jsp"%>
+                                </td>
+                                <td>
+                                    <c:set var="check" value="${user.description}"/>
+                                    <%@include file="patterns/is_empty_pattern.jsp" %>
+                                </td>
+                                <td>${user.country.name}</td>
+                                <td>
+                                    <%@include file="buttons/show_user_manage_button.jsp" %>
                                 </td>
 
                             </tr>
                         </c:forEach>
                     </table>
+                </div>
+            </div>
+
+            <div class="px-4 mb-4 row">
+                <div class="navbar col bg-bar mx-auto p-3">
+                    <%@include file="buttons/back_button.jsp" %>
                 </div>
             </div>
         </div>

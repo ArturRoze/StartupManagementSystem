@@ -19,7 +19,7 @@
                 </c:forEach>
             </div>
             <%--<hr class="my-4">--%>
-            <div class="row navbar bg-bar rounded px-3 mt-3 mb-5">
+            <div class="row navbar bg-bar px-3 mt-3 mb-5">
                 <%@include file="buttons/back_button.jsp" %>
             </div>
         </div>

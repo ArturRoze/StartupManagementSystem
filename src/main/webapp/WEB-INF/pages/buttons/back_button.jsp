@@ -1,6 +1,3 @@
-<a class="btn btn-light btn-with-icon-lg" onclick="goBack()" role="button">
-    <div>
-        <i class="material-icons f18">arrow_back</i>
-    </div>
-    <p class="mt-2 mb-1 ml-4 pl-3"><b>Go Back</b></p>
-</a>
+<a class="btn btn-light btn-with-icon" onclick="goBack()" role="button">
+    <div><i class="material-icons">arrow_back</i></div>
+    <span><b>Go Back</b></span></a>
