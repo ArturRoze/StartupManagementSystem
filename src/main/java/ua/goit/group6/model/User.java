@@ -3,6 +3,7 @@ package ua.goit.group6.model;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Entity
 @Table(name = "user")
@@ -23,11 +24,11 @@ public class User extends BasicUser {
 
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    private Set<Startup> startups;
+    private Set<Startup> startups = new TreeSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    private Set<Offer> offers;
+    private Set<Offer> offers = new TreeSet<>();
 
     public String getFirstName() {
         return firstName;

@@ -31,10 +31,10 @@ public abstract class Model implements Serializable {
         return getId() == model.getId();
     }
 
-//    @Override
-//    public int hashCode() {
-//        return getId();
-//    }
+    @Override
+    public int hashCode() {
+        return getId();
+    }
 
     @Override
     public String toString() {
