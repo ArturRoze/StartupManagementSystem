@@ -12,7 +12,8 @@
         <%@include file="navbar.jsp" %>
         <div class="container">
             <c:set var="isOwner" value="${offer.user.id == current_user_id && !isAdmin}"/>
-            <h2 class="text-center">Offer update form <small>[id: ${offer.id}]</small></h2>
+            <h2 class="text-center">Offer update form
+                <span class="badge badge-light text-secondary">id:${offer.id}</span></h2>
 
             <c:choose>
                 <c:when test="${isOwner || isAdmin}">
@@ -50,7 +51,7 @@
                                             <th class="bg-light">Industry</th>
                                             <td>${offer.industry.name}</td>
                                             <td class="btn-block">
-                                                <select class="custom-select" name="industry_id">
+                                                <select class="custom-select btn-block" name="industry_id">
                                                     <c:forEach var="industry" items="${industries}">
                                                         <c:choose>
                                                             <c:when test="${industry.id == offer.industry.id}">
@@ -71,7 +72,7 @@
                                             <th class="bg-light">Country</th>
                                             <td>${offer.country.name}</td>
                                             <td class="btn-block">
-                                                <select class="custom-select" name="country_id">
+                                                <select class="custom-select btn-block" name="country_id">
                                                     <c:forEach var="country" items="${countries}">
                                                         <c:choose>
                                                             <c:when test="${country.id == offer.country.id}">

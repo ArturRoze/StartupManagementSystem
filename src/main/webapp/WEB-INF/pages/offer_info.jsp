@@ -12,7 +12,7 @@
         <%@include file="navbar.jsp" %>
         <div class="container">
             <c:set var="isOwner" value="${offer.user.id == current_user_id && !isAdmin}"/>
-            <h2 class="text-center">Offer info <small>[id: ${offer.id}]</small></h2>
+            <h2 class="text-center">Offer info <span class="badge badge-light text-secondary">id:${offer.id}</span></h2>
             <div class="row justify-content-center">
                 <div class="col-md-7 border border-gr rounded p-3 mb-4">
                     <div class="btn-block">
