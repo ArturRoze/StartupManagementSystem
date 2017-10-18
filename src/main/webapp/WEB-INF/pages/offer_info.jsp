@@ -65,19 +65,8 @@
                     <%@include file="buttons/back_button.jsp" %>
                     <c:if test="${isOwner || isAdmin}">
                         <div class="d-inline-flex">
-                            <a href="${pageContext.request.contextPath}/offers/${offer.id}/edit"
-                               class="btn btn-info mx-2 btn-with-icon float-left" role="button">
-                                <div><i class="material-icons">create</i></div>
-                                <span class="">Edit offer</span></a>
-                            <form action="${pageContext.request.contextPath}/offers/${offer.id}/delete"
-                                  class="my-auto" method="post">
-                                <input type="number" name="current_user_id" value="${current_user_id}" hidden>
-                                <input type="text" name="is_admin" value="${isAdmin}" hidden>
-                                <button class="btn btn-danger ml-2 btn-with-icon float-right"
-                                        type="submit" value="Delete">
-                                    <div><i class="material-icons">delete_sweep</i></div>
-                                    <span>Delete offer</span></button>
-                            </form>
+                            <%@include file="buttons/edit_offer_button.jsp" %>
+                            <%@include file="buttons/delete_startup_button.jsp" %>
                         </div>
                     </c:if>
                 </div>

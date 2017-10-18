@@ -30,16 +30,29 @@
                 <div class="col-md-5 p-2 border border-gr rounded">
                     <div class="btn-block">
                         <table class="table table-hover mb-0">
-                            <th class="bg-light w-25" scope="row">Login</th>
-                            <td>
-                                <h4 class="text-danger">${admin.login}</h4>
-                            </td>
+                            <tr>
+                                <th class="bg-light w-25" scope="row">Login</th>
+                                <td>
+                                    <h4 class="text-danger">${admin.login}</h4>
+                                </td>
                             </tr>
-                            <th class="bg-light w-25" scope="row">E-mail</th>
-                            <td>
-                                <c:set var="check" value="${admin.email}"/>
-                                <%@include file="patterns/is_empty_pattern.jsp" %>
-                            </td>
+                            <tr>
+                                <th class="bg-light w-25" scope="row">Password</th>
+                                <td>
+                                    <div class="text-gr mt-1 float-left"><em>[hidden]</em></div>
+                                    <a class="btn btn-sm btn-light ml-4 text-danger float-left"
+                                       role="button" data-toggle="tooltip" data-placement="top" data-html="true"
+                                       title="<em>Currently unavailable.</em><br>Please go to 'Edit profile' to change password."
+                                       disabled>
+                                        change password</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light w-25" scope="row">E-mail</th>
+                                <td>
+                                    <c:set var="check" value="${admin.email}"/>
+                                    <%@include file="patterns/is_empty_pattern.jsp" %>
+                                </td>
                             </tr>
                         </table>
                         <c:if test="${isOwner}">
