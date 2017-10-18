@@ -11,14 +11,10 @@
     <div class="content">
         <%@include file="navbar.jsp" %>
         <div class="container">
-            <h1 class="text-center">OOPS SOMETHING WENT WRONG</h1>
-            <div align="center">
-                <button class="btn btn-outline-secondary" onclick="goBack()">Go Back</button>
-                <script>
-                    function goBack() {
-                        window.history.back();
-                    }
-                </script>
+            <h2 class="display-4 text-center mt-5 mb-4">Oops! Something went wrong...</h2>
+            <hr class="w-50">
+            <div class="text-center">
+                <%@include file="buttons/back_button.jsp" %>
             </div>
         </div>
     </div>

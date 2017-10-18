@@ -11,43 +11,44 @@
     <div class="content">
         <%@include file="navbar.jsp" %>
         <div class="container">
-            <form action="${pageContext.request.contextPath}/admins/new/admin/" method="post">
-                <table align="center">
-                    <tr>
-                        <th>Enter login</th>
-                        <td>
-                            <input autofocus type="text" required name="login" placeholder="login">
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Enter password</th>
-                        <td>
-                            <input autofocus type="text" required name="password" placeholder="password">
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Enter email</th>
-                        <td>
-                            <input autofocus type="email" name="email" placeholder="email">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div align="center">
-                                <button onclick="goBack()">Go Back</button>
-                                <script>
-                                    function goBack() {
-                                        window.history.back();
-                                    }
-                                </script>
+            <h2 class="text-center">Create new admin</h2>
+            <div class="row justify-content-center">
+                <div class="col-6 border border-gr rounded p-3">
+                    <form action="${pageContext.request.contextPath}/admins/new/admin/"
+                          class="mb-0" method="post">
+                        <table class="table mb-0">
+                            <tr>
+                                <th class="bg-light">Login</th>
+                                <td>
+                                    <input type="text" class="form-control" name="login"
+                                           placeholder="login" autofocus required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Password</th>
+                                <td>
+                                    <input type="password" class="form-control" name="password"
+                                           placeholder="password" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">E-mail</th>
+                                <td>
+                                    <input type="email" class="form-control" name="email" placeholder="E-mail">
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="navbar bg-bar mt-3">
+                            <div>
+                                <%@include file="buttons/back_button.jsp" %>
                             </div>
-                        </td>
-                        <td align="center">
-                            <button type="submit">Enter</button>
-                        </td>
-                    </tr>
-                </table>
-            </form>
+                            <div>
+                                <%@include file="buttons/create_button_lg.jsp" %>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <%@include file="footer.jsp" %>
