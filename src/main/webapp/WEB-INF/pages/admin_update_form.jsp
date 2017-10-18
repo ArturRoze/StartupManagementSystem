@@ -35,6 +35,17 @@
                                         <td></td>
                                     </tr>
 
+                                    <tr class="bg-light">
+                                        <th>Password</th>
+                                        <td class="text-muted"><em>
+                                            <small>Enter your new password here
+                                                <br>or leave empty to keep it
+                                            </small>
+                                        </em></td>
+                                        <td><input type="password" class="form-control" name="password"
+                                                   placeholder="Enter new password"></td>
+                                    </tr>
+
                                     <tr>
                                         <th class="bg-light">E-mail</th>
                                         <td>
@@ -50,8 +61,8 @@
                                         <%@include file="buttons/back_button.jsp" %>
                                     </div>
                                     <div>
-                                        <input class="btn btn-lg btn-secondary mr-1" type="reset" value="Reset">
-                                        <input class="btn btn-lg btn-primary" type="submit" value="Update">
+                                        <%@include file="buttons/reset_button_lg.jsp" %>
+                                        <%@include file="buttons/update_button_lg.jsp" %>
                                     </div>
                                 </div>
                             </form>

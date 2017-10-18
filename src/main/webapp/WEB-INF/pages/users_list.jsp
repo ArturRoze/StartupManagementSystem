@@ -26,7 +26,7 @@
                             <th>Registration</th>
                             <th>Description</th>
                             <th>Country</th>
-                            <th>To profile</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <c:forEach var="user" items="${users}">
@@ -54,7 +54,7 @@
                                 </td>
                                 <td>${user.country.name}</td>
                                 <td>
-                                    <%@include file="buttons/show_user_manage_button.jsp" %>
+                                    <%@include file="buttons/user_manage_buttons.jsp" %>
                                 </td>
 
                             </tr>

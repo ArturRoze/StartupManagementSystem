@@ -11,7 +11,6 @@
     <div class="content">
         <%@include file="navbar.jsp" %>
         <div class="container">
-
             <h2 class="text-center">List of all admins</h2>
             <div class="row mb-5 justify-content-md-center">
                 <div class="col-8">
@@ -26,7 +25,7 @@
                         <c:forEach var="admin" items="${admins}">
                             <tr>
                                 <th class="bg-light text-center">${admin.id}</th>
-                                <td>${admin.login}</td>
+                                <td><h4>${admin.login}</h4></td>
                                 <td>
                                     <c:set var="check" value="${admin.email}"/>
                                     <%@include file="patterns/is_empty_pattern.jsp" %>
@@ -36,7 +35,6 @@
                     </table>
                 </div>
             </div>
-
             <div class="px-4 mb-4 row">
                 <div class="navbar col-md-8 bg-bar mx-auto p-3">
                     <%@include file="buttons/back_button.jsp" %>
