@@ -11,7 +11,7 @@
     <div class="content">
         <%@include file="navbar.jsp" %>
         <div class="container">
-            <c:set var="isOwner" value="${offer.user.id == current_user_id}"/>
+            <c:set var="isOwner" value="${offer.user.id == current_user_id && !isAdmin}"/>
             <h2 align="center">Offer update form</h2>
 
             <div align="center">

@@ -70,7 +70,7 @@
                 <div class="justify-content-md-center">
                     <div class="navbar bg-bar px-3 mt-3 mb-5">
                         <%@include file="buttons/back_button.jsp" %>
-                        <button class="btn btn-lg btn-success btn-with-icon-lg" type="submit">
+                        <button class="btn btn-lg btn-success btn-with-icon" type="submit">
                             <div><i class="material-icons">done</i></div>
                             <span>Create</span></button>
                     </div>

@@ -43,7 +43,6 @@ span i {
     vertical-align: middle;
 }
 
-.material-icons.f18 { font-size: 1.8rem; }
 .material-icons.f24 { font-size: 2.4rem; }
 
 .text-success50 { color: rgba(40, 167, 69, 0.3)}
@@ -83,24 +82,23 @@ span i {
     /*box-shadow: rgba(0, 0, 0, 0.2) 0 0 0.4rem inset;*/
 }
 
-.btn-with-icon-lg div {
+.btn-with-icon div {
+    float: left;
+    /*font-size: 80%;*/
+}
+
+.btn-with-icon span {
+    vertical-align: text-bottom;
+    margin-left: 0.5rem;
+}
+
+.btn-lg.btn-with-icon div {
     padding-top: 0.1rem;
     margin-top: 0.15rem;
     float: left;
 }
 
-.btn-with-icon-lg span {
-    margin-left: 0.5rem;
-    /*margin-top: 0.15rem;*/
-    /*margin-bottom: 0.15rem;*/
-}
-
-.btn-with-icon div {
-    float: left;
-}
-
-.btn-with-icon span {
-    vertical-align: text-bottom;
+.btn-lg.btn-with-icon span {
     margin-left: 0.5rem;
 }
 
