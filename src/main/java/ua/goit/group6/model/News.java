@@ -86,9 +86,9 @@ public abstract class News extends Model implements Comparable<News> {
         if (getBudget() != news.getBudget()) return false;
         if (getDescription() != null ? !getDescription().equals(news.getDescription()) : news.getDescription() != null)
             return false;
-        if (getUser() != null ? !getUser().equals(news.getUser()) : news.getUser() != null) return false;
-        if (getCountry() != null ? !getCountry().equals(news.getCountry()) : news.getCountry() != null) return false;
-        if (getIndustry() != null ? !getIndustry().equals(news.getIndustry()) : news.getIndustry() != null)
+        if (getUser() != null ? !getUser().getLogin().equals(news.getUser().getLogin()) : news.getUser() != null) return false;
+        if (getCountry() != null ? !getCountry().getName().equals(news.getCountry().getName()) : news.getCountry().getName() != null) return false;
+        if (getIndustry() != null ? !getIndustry().getName().equals(news.getIndustry().getName()) : news.getIndustry().getName() != null)
             return false;
         return getRegistrationDate() != null ? getRegistrationDate().equals(news.getRegistrationDate()) : news.getRegistrationDate() == null;
     }
@@ -98,9 +98,9 @@ public abstract class News extends Model implements Comparable<News> {
         int result = super.hashCode();
         result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
         result = 31 * result + getBudget();
-        result = 31 * result + (getUser() != null ? getUser().hashCode() : 0);
-        result = 31 * result + (getCountry() != null ? getCountry().hashCode() : 0);
-        result = 31 * result + (getIndustry() != null ? getIndustry().hashCode() : 0);
+        result = 31 * result + (getUser() != null ? getUser().getLogin().hashCode() : 0);
+        result = 31 * result + (getCountry() != null ? getCountry().getName().hashCode() : 0);
+        result = 31 * result + (getIndustry() != null ? getIndustry().getName().hashCode() : 0);
         result = 31 * result + (getRegistrationDate() != null ? getRegistrationDate().hashCode() : 0);
         return result;
     }
@@ -119,6 +119,6 @@ public abstract class News extends Model implements Comparable<News> {
 
     @Override
     public int compareTo(News news) {
-        return - getRegistrationDate().compareTo(news.getRegistrationDate());
+        return getRegistrationDate().compareTo(news.getRegistrationDate());
     }
 }

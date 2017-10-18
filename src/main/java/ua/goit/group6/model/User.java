@@ -92,10 +92,10 @@ public class User extends BasicUser {
             return false;
         if (getDescription() != null ? !getDescription().equals(user.getDescription()) : user.getDescription() != null)
             return false;
-        if (getCountry() != null ? !getCountry().equals(user.getCountry()) : user.getCountry() != null) return false;
-        if (getStartups() != null ? !getStartups().equals(user.getStartups()) : user.getStartups() != null)
+        if (getCountry() != null ? !getCountry().getName().equals(user.getCountry().getName()) : user.getCountry().getName() != null) return false;
+        if (getStartups() != null ? (getStartups().size() != user.getStartups().size()) : user.getStartups() != null)
             return false;
-        return getOffers() != null ? getOffers().equals(user.getOffers()) : user.getOffers() == null;
+        return getOffers() != null ? getOffers().size() == user.getOffers().size() : user.getOffers() == null;
     }
 
     @Override
@@ -104,9 +104,9 @@ public class User extends BasicUser {
         result = 31 * result + (getFirstName() != null ? getFirstName().hashCode() : 0);
         result = 31 * result + (getLastName() != null ? getLastName().hashCode() : 0);
         result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
-        result = 31 * result + (getCountry() != null ? getCountry().hashCode() : 0);
-        result = 31 * result + (getStartups() != null ? getStartups().hashCode() : 0);
-        result = 31 * result + (getOffers() != null ? getOffers().hashCode() : 0);
+        result = 31 * result + (getCountry() != null ? getCountry().getName().hashCode() : 0);
+        result = 31 * result + (getStartups() != null ? getStartups().size() : 0);
+        result = 31 * result + (getOffers() != null ? getOffers().size() : 0);
         return result;
     }
 
