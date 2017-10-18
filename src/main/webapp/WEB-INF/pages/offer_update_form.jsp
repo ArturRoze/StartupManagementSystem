@@ -11,22 +11,8 @@
     <div class="content">
         <%@include file="navbar.jsp" %>
         <div class="container">
-            <h1 align="center">Offer update form</h1>
-
-            <c:set var="current_user_id">
-                <sec:authentication property="principal.id"/>
-            </c:set>
             <c:set var="isOwner" value="${offer.user.id == current_user_id}"/>
-            <c:set var="isAdmin" value="false"/>
-            <sec:authorize access="hasRole('ADMIN')">
-                <c:set var="isAdmin" value="true"/>
-            </sec:authorize>
-
-            <div align="center">
-                <form action="${pageContext.request.contextPath}/" method="get">
-                    <input type="submit" value="To main page">
-                </form>
-            </div>
+            <h2 align="center">Offer update form</h2>
 
             <div align="center">
                 <form action="${pageContext.request.contextPath}/users/profile/${current_user_id}" method="get">

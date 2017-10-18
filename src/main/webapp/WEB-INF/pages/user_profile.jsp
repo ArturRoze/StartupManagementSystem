@@ -24,10 +24,10 @@
                 <%-- Left part of user's data --%>
                 <div class="col-md-6 p-2">
                     <div class="btn-block">
-                        <table class="table table-hover mb-0">
+                        <table class="table mb-0">
                             <tr>
                                 <th class="bg-light w-25" scope="row">Login</th>
-                                <td>
+                                <td class="bg-light">
                                     <h4 class="text-success">${user.login}</h4>
                                 </td>
                             </tr>
