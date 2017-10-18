@@ -11,22 +11,12 @@
     <div class="content">
         <%@include file="navbar.jsp" %>
         <div class="container">
-            <h1 align="center">Startup update form</h1>
+            <c:set var="isOwner" value="${startup.user.id == current_user_id && !isAdmin}"/>
 
-            <c:set var="current_user_id">
-                <sec:authentication property="principal.id"/>
-            </c:set>
-            <c:set var="isOwner" value="${startup.user.id == current_user_id}"/>
-            <c:set var="isAdmin" value="false"/>
-            <sec:authorize access="hasRole('ADMIN')">
-                <c:set var="isAdmin" value="true"/>
-            </sec:authorize>
-
-            <div align="center">
-                <form action="${pageContext.request.contextPath}/" method="get">
-                    <input type="submit" value="To main page">
-                </form>
-            </div>
+            <h2 class="text-center"><c:choose>
+                <c:when test="${isOwner}">My</c:when><c:otherwise>User</c:otherwise></c:choose> startup update form
+                <small>[id: ${startup.id}]</small>
+                </h2>
 
             <div align="center">
                 <form action="${pageContext.request.contextPath}/users/profile/${current_user_id}" method="get">
@@ -62,7 +52,7 @@
                                 <tr>
                                     <td>Budget</td>
                                     <td>${startup.budget}</td>
-                                    <td><input type="number" name="budget" value="${startup.budget}"></td>
+                                    <td><input type="number" min="1" name="budget" value="${startup.budget}"></td>
                                 </tr>
 
                                 <tr>
@@ -119,7 +109,7 @@
                     </c:when>
 
                     <c:otherwise>
-                        <h1>This is not your startup</h1>
+                        <%@include file="no_permission.jsp" %>
                     </c:otherwise>
                 </c:choose>
             </div>

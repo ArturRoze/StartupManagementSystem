@@ -16,7 +16,7 @@
             <c:set var="isOwner" value="false"/>
 
             <sec:authorize access="isAuthenticated()">
-                <%@include file="buttons/news_button.jsp" %>
+                <%@include file="buttons/news_button_lg.jsp" %>
 
                 <div class="btn-group ml-md-3" role="group" aria-label="User's buttons">
                     <c:set var="current_user_id">

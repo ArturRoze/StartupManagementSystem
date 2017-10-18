@@ -11,12 +11,11 @@
     <div class="content">
         <%@include file="navbar.jsp" %>
         <div class="container">
-            <c:set var="isOwner" value="${user.id == current_user_id}"/>
+            <c:set var="isOwner" value="${user.id == current_user_id && !isAdmin}"/>
 
             <c:choose>
                 <c:when test="${isOwner || isAdmin}">
-                    <h2 class="text-center">Update user profile
-                        <small>[id: ${user.id}]</small>
+                    <h2 class="text-center">Update user profile <small>[id: ${user.id}]</small>
                     </h2>
                     <div class="row justify-content-center">
                         <div class="col-8 border border-gr rounded p-3">
@@ -111,8 +110,8 @@
                                         <%@include file="buttons/back_button.jsp" %>
                                     </div>
                                     <div>
-                                        <input class="btn btn-lg btn-secondary mr-1" type="reset" value="Reset">
-                                        <input class="btn btn-lg btn-primary" type="submit" value="Update">
+                                        <%@include file="buttons/reset_button_lg.jsp" %>
+                                        <%@include file="buttons/update_button_lg.jsp" %>
                                     </div>
                                 </div>
                             </form>

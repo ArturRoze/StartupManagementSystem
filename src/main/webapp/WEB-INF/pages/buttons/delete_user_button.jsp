@@ -3,5 +3,5 @@
     <input type="number" name="current_user_id" value="${current_user_id}" hidden>
     <button class="btn btn-lg btn-danger mx-1 btn-with-icon" type="submit" value="Delete">
         <div><i class="material-icons">delete_sweep</i></div>
-        <span>delete this account</span></button>
+        <span>Delete this account</span></button>
 </form>

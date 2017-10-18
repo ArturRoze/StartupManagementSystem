@@ -12,41 +12,46 @@
         <%@include file="navbar.jsp" %>
         <div class="container">
             <h2 class="text-center mt-4">Please enter data for a new startup</h2>
-            <form action="${pageContext.request.contextPath}/startups/new/startup/" method="post" novalidate>
+            <form action="${pageContext.request.contextPath}/startups/new/startup/" method="post">
                 <input type="number" name="user_id" value="${current_user_id}" hidden>
                 <div class="row border border-gr rounded mb-4">
-                    <div class="col-md-6 p-2">
+                    <%-- Left part of startups' data --%>
+                    <div class="col-md-6 p-3">
                         <div class="btn-block">
                             <table class="table table-hover mb-0">
                                 <tr>
-                                    <th class="w-25" scope="row">Enter name<br>for startup</th>
+                                    <th class="w-25 bg-light" scope="row">Name</th>
                                     <td>
                                         <input type="text" class="form-control" name="name"
-                                               autofocus required>
+                                               placeholder="Enter the name for your startup..." autofocus required>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Enter description</th>
+                                    <th class="bg-light" scope="row">Description</th>
                                     <td>
-                                        <input type="text" class="form-control" name="description" required>
+                                        <textarea rows="4" class="form-control" name="description" maxlength="255"
+                                                  placeholder="Enter description for your startup..."
+                                                  required></textarea>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Enter budget</th>
+                                    <th class="bg-light" scope="row">Budget</th>
                                     <td>
-                                        <input type="number" class="form-control" name="budget" value="0" required>
+                                        <input type="number" min="1" class="form-control" name="budget" value="1"
+                                               required>
                                     </td>
                                 </tr>
                             </table>
                         </div>
                     </div>
-                    <div class="col-md-6 p-2">
+                    <%-- Right part of startups' data --%>
+                    <div class="col-md-6 p-3">
                         <div class="btn-block">
                             <table class="table table-hover mb-0">
                                 <tr>
-                                    <th class="w-25" scope="row">Industry</th>
+                                    <th class="w-25 bg-light" scope="row">Industry</th>
                                     <td>
-                                        <select class="custom-select mb-2 mr-sm-2 mb-sm-0" name="industry_id" required>
+                                        <select class="custom-select mb-2 mr-sm-2 mb-sm-0 btn-block" name="industry_id" required>
                                             <c:forEach var="industry" items="${industries}">
                                                 <option value="${industry.id}">${industry.name}</option>
                                             </c:forEach>
@@ -54,9 +59,10 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Country</th>
+                                    <th class="bg-light" scope="row">Country</th>
                                     <td>
-                                        <select class="custom-select mb-2 mr-sm-2 mb-sm-0 btn-block" name="country_id" required>
+                                        <select class="custom-select mb-2 mr-sm-2 mb-sm-0 btn-block" name="country_id"
+                                                required>
                                             <c:forEach var="country" items="${countries}">
                                                 <option value="${country.id}">${country.name}</option>
                                             </c:forEach>
@@ -69,10 +75,13 @@
                 </div>
                 <div class="justify-content-md-center">
                     <div class="navbar bg-bar px-3 mt-3 mb-5">
-                        <%@include file="buttons/back_button.jsp" %>
-                        <button class="btn btn-lg btn-success btn-with-icon" type="submit">
-                            <div><i class="material-icons">done</i></div>
-                            <span>Create</span></button>
+                        <div>
+                            <%@include file="buttons/back_button.jsp" %>
+                        </div>
+                        <div>
+                            <%@include file="buttons/reset_button_lg.jsp" %>
+                            <%@include file="buttons/create_button_lg.jsp" %>
+                        </div>
                     </div>
                 </div>
             </form>

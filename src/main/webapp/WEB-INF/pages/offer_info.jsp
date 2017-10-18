@@ -12,13 +12,13 @@
         <%@include file="navbar.jsp" %>
         <div class="container">
             <c:set var="isOwner" value="${offer.user.id == current_user_id && !isAdmin}"/>
-            <h2 class="text-center">Offer info</h2>
+            <h2 class="text-center">Offer info <small>[id: ${offer.id}]</small></h2>
             <div class="row justify-content-center">
                 <div class="col-md-7 border border-gr rounded p-3 mb-4">
                     <div class="btn-block">
                         <table class="table table-hover mb-0">
                             <tr>
-                                <th class="w-25 bg-light" scope="row">Id</th>
+                                <th class="w-25 bg-light" scope="row">Offer ID</th>
                                 <td>${offer.id}</td>
                             </tr>
                             <tr>
@@ -27,7 +27,9 @@
                             </tr>
                             <tr>
                                 <th class="bg-light" scope="row">Registration</th>
-                                <td>${offer.registrationDate}</td>
+                                <td><c:set var="dateOf" value="${offer.registrationDate}"/>
+                                    <%@include file="patterns/date_pattern.jsp" %>
+                                </td>
                             </tr>
                             <tr>
                                 <th class="bg-light" scope="row">Industry</th>
@@ -38,7 +40,7 @@
                                 <td>${offer.country.name}</td>
                             </tr>
                             <tr>
-                                <th class="bg-light" scope="row">User</th>
+                                <th class="bg-light" scope="row">Owner</th>
                                 <td>
                                     <div>
                                         <a class="btn btn-light text-success border-success float-left" role="button"
@@ -66,7 +68,7 @@
                             <a href="${pageContext.request.contextPath}/offers/${offer.id}/edit"
                                class="btn btn-info mx-2 btn-with-icon float-left" role="button">
                                 <div><i class="material-icons">create</i></div>
-                                <span class="">Update startup</span></a>
+                                <span class="">Edit offer</span></a>
                             <form action="${pageContext.request.contextPath}/offers/${offer.id}/delete"
                                   class="my-auto" method="post">
                                 <input type="number" name="current_user_id" value="${current_user_id}" hidden>
@@ -74,7 +76,7 @@
                                 <button class="btn btn-danger ml-2 btn-with-icon float-right"
                                         type="submit" value="Delete">
                                     <div><i class="material-icons">delete_sweep</i></div>
-                                    <span>delete startup</span></button>
+                                    <span>Delete offer</span></button>
                             </form>
                         </div>
                     </c:if>

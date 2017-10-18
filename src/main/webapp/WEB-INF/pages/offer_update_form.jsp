@@ -12,99 +12,104 @@
         <%@include file="navbar.jsp" %>
         <div class="container">
             <c:set var="isOwner" value="${offer.user.id == current_user_id && !isAdmin}"/>
-            <h2 align="center">Offer update form</h2>
+            <h2 class="text-center">Offer update form <small>[id: ${offer.id}]</small></h2>
 
-            <div align="center">
-                <form action="${pageContext.request.contextPath}/users/profile/${current_user_id}" method="get">
-                    <input type="submit" value="To profile page">
-                </form>
-            </div>
-            <div align="center">
-                <c:choose>
-                    <c:when test="${isOwner || isAdmin}">
+            <c:choose>
+                <c:when test="${isOwner || isAdmin}">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8 border border-gr rounded p-3 mb-4">
+                            <div class="btn-block">
+                                <form action="${pageContext.request.contextPath}/offers/${offer.id}/update"
+                                      method="post">
 
-                        <form action="${pageContext.request.contextPath}/offers/${offer.id}/update" method="post">
+                                    <table class="table table-hover mb-0">
+                                        <tr class="bg-light">
+                                            <th width="20%"></th>
+                                            <th width="40%">Old offer data</th>
+                                            <th width="40%">New offer data</th>
+                                        </tr>
 
-                            <table>
-                                <h1>Offer update</h1>
-                                <tr>
-                                    <th></th>
-                                    <th>Old offer data</th>
-                                    <th>New offer data</th>
-                                </tr>
+                                        <tr>
+                                            <th class="bg-light">Description</th>
+                                            <td>${offer.description}</td>
+                                            <td>
+                                                <textarea rows="4" class="form-control" name="description" maxlength="255"
+                                                          placeholder="Enter description for your startup..."
+                                                          required>${offer.description}</textarea>
+                                            </td>
+                                        </tr>
 
-                                <tr>
-                                    <td>Description</td>
-                                    <td>${offer.description}</td>
-                                    <td><input type="text" name="description" value="${offer.description}"></td>
-                                </tr>
+                                        <tr>
+                                            <th class="bg-light">Budget</th>
+                                            <td>${offer.budget}</td>
+                                            <td><input class="form-control" type="number" min="1" name="budget"
+                                                       value="${offer.budget}"></td>
+                                        </tr>
 
-                                <tr>
-                                    <td>Budget</td>
-                                    <td>${offer.budget}</td>
-                                    <td><input type="number" name="budget" value="${offer.budget}"></td>
-                                </tr>
+                                        <tr>
+                                            <th class="bg-light">Industry</th>
+                                            <td>${offer.industry.name}</td>
+                                            <td class="btn-block">
+                                                <select class="custom-select" name="industry_id">
+                                                    <c:forEach var="industry" items="${industries}">
+                                                        <c:choose>
+                                                            <c:when test="${industry.id == offer.industry.id}">
+                                                                <option value="${industry.id}"
+                                                                        selected>${industry.name}</option>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <option value="${industry.id}">${industry.name}</option>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:forEach>
 
-                                <tr>
-                                    <td>Industry</td>
-                                    <td>${offer.industry.name}</td>
-                                    <td>
-                                        <select name="industry_id">
+                                                </select>
+                                            </td>
+                                        </tr>
 
-                                            <option value="${offer.industry.id}"
-                                                    selected>${offer.industry.name}</option>
-
-                                            <c:forEach var="industry" items="${industries}">
-                                                <option value="${industry.id}">${industry.name}</option>
-                                            </c:forEach>
-
-                                        </select>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>Country</td>
-                                    <td>${offer.country.name}</td>
-                                    <td>
-                                        <select name="country_id">
-
-                                            <option value="${offer.country.id}" selected>${offer.country.name}</option>
-
-                                            <c:forEach var="country" items="${countries}">
-                                                <option value="${country.id}">${country.name}</option>
-                                            </c:forEach>
-
-                                        </select>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th>
-                                        <div align="center">
-                                            <button onclick="goBack()">Go Back</button>
-                                            <script>
-                                                function goBack() {
-                                                    window.history.back();
-                                                }
-                                            </script>
+                                        <tr>
+                                            <th class="bg-light">Country</th>
+                                            <td>${offer.country.name}</td>
+                                            <td class="btn-block">
+                                                <select class="custom-select" name="country_id">
+                                                    <c:forEach var="country" items="${countries}">
+                                                        <c:choose>
+                                                            <c:when test="${country.id == offer.country.id}">
+                                                                <option value="${country.id}"
+                                                                        selected>${country.name}</option>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <option value="${country.id}">${country.name}</option>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:forEach>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div class="navbar bg-bar mt-3">
+                                        <div>
+                                            <%@include file="buttons/back_button.jsp" %>
                                         </div>
-                                    </th>
-                                    <th><input type="submit" value="Update"></th>
-                                    <th><input type="reset" value="Reset"></th>
-                                </tr>
-                            </table>
+                                        <div>
+                                            <%@include file="buttons/reset_button.jsp" %>
+                                            <%@include file="buttons/update_button.jsp" %>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </c:when>
 
-                        </form>
-                    </c:when>
-
-                    <c:otherwise>
-                        <h1>This is not your offer</h1>
-                    </c:otherwise>
-                </c:choose>
-            </div>
+                <c:otherwise>
+                    <%@include file="no_permission.jsp" %>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
-    <%@include file="footer.jsp" %>
+</div>
+<%@include file="footer.jsp" %>
 </div>
 </body>
 </html>

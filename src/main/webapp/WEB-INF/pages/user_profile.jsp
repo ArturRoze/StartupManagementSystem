@@ -11,11 +11,7 @@
     <div class="content">
         <%@include file="navbar.jsp" %>
         <div class="container">
-
-            <c:set var="isOwner" value="${user.id == current_user_id}"/>
-            <sec:authorize access="hasRole('ADMIN')">
-                <c:set var="isAdmin" value="true"/>
-            </sec:authorize>
+            <c:set var="isOwner" value="${user.id == current_user_id && !isAdmin}"/>
 
             <h2 class="text-center"><c:choose>
                 <c:when test="${isOwner}">My</c:when><c:otherwise>User</c:otherwise></c:choose> profile <small>[id: ${user.id}]</small>
@@ -104,7 +100,7 @@
                     <%@include file="buttons/add_offer_button.jsp" %>
                 </c:if>
                 <c:if test="${isOwner || isAdmin}">
-                    <%@include file="buttons/update_user_profile_button.jsp" %>
+                    <%@include file="buttons/edit_user_profile_button.jsp" %>
                     <%@include file="buttons/delete_user_button.jsp" %>
                 </c:if>
             </div>

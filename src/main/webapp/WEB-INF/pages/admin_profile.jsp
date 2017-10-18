@@ -53,6 +53,7 @@
                 </div>
             </div>
 
+            <%-- Buttons to show all users and admins --%>
             <div class="navbar mt-4 mb-5 row">
                 <div class="col-md-5 bg-bar mx-auto p-3 text-center">
                     <%@include file="buttons/all_admins_button.jsp" %>
