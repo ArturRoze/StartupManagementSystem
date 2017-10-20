@@ -161,7 +161,7 @@ public class MainControllerTest {
                 .andExpect(status().isOk());
     }
 
-    @Test
+    @Test(expected = RuntimeException.class)
     public void newsCurrentPageNull() throws Exception{
         when(newsService.getCountOfPages(newsOnPage)).thenReturn(2);
 

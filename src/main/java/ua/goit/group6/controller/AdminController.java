@@ -52,8 +52,10 @@ public class AdminController {
             int id = Integer.parseInt(idString);
             Admin admin = adminService.getById(id);
             profile.addObject("admin", admin);
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Not correct id.");
         } catch (Exception e) {
-            return new ModelAndView("error");
+            throw new RuntimeException("Database malfunction. Please reload page.");
         }
         return profile;
     }
@@ -71,8 +73,10 @@ public class AdminController {
         try {
             int id = Integer.parseInt(idString);
             adminService.deleteById(id);
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Not correct id.");
         } catch (Exception e) {
-            return "redirect:/error";
+            throw new RuntimeException("Database malfunction. Please reload page.");
         }
         return "redirect:/logout";
     }
@@ -101,7 +105,7 @@ public class AdminController {
 
             adminService.save(admin);
         } catch (Exception e) {
-            return "redirect:/error";
+            throw new RuntimeException("Fail to create new admin");
         }
 
         LOGGER.info("Admin: '{}' created successfully", admin);
@@ -126,8 +130,10 @@ public class AdminController {
             admin = adminService.getById(id);
             updateForm.addObject("admin", admin);
 
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Not correct id.");
         } catch (Exception e) {
-            return new ModelAndView("error");
+            throw new RuntimeException("Database malfunction. Please reload page.");
         }
         LOGGER.info("Received admin from admin_add_form");
         return updateForm;
@@ -156,8 +162,10 @@ public class AdminController {
             admin.setEmail(email);
             adminService.update(admin);
 
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Not correct id.");
         } catch (Exception e) {
-            return "redirect:/error";
+            throw new RuntimeException("Database malfunction. Please reload page.");
         }
         LOGGER.info("Admin: '{}' created successfully", admin);
 
@@ -177,8 +185,16 @@ public class AdminController {
         try {
             admins.addObject("admins", adminService.getAll());
         } catch (Exception e) {
-            return new ModelAndView("error");
+            throw new RuntimeException("Database malfunction. Please reload page.");
         }
         return admins;
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ModelAndView handleException(Exception e) {
+        ModelAndView view = new ModelAndView("error");
+        view.addObject("message", e.getMessage());
+        LOGGER.warn("Build new error page with message: " + e.getMessage());
+        return view;
     }
 }

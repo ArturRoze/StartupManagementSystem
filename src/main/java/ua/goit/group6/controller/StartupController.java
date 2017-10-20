@@ -61,7 +61,7 @@ public class StartupController {
         try {
             startups.addObject("startups", startupService.getAllByDecreaseRegistration());
         } catch (Exception e) {
-            return new ModelAndView("error");
+            throw new RuntimeException("Database malfunction. Please reload page.");
         }
         LOGGER.info("Building page with all startups");
         return startups;
@@ -86,8 +86,10 @@ public class StartupController {
             startup = startupService.getById(id);
             startupInfo.addObject("startup", startup);
 
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Not correct id.");
         } catch (Exception e) {
-            return new ModelAndView("error");
+            throw new RuntimeException("Database malfunction. Please reload page.");
         }
 
         LOGGER.info("Building info page for " + startup);
@@ -105,8 +107,10 @@ public class StartupController {
     public String delete(@PathVariable("id") String idString) {
         try {
             startupService.deleteById(Integer.parseInt(idString));
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Not correct id.");
         } catch (Exception e) {
-            return "redirect:/error";
+            throw new RuntimeException("Database malfunction. Please reload page.");
         }
         LOGGER.info("Redirecting to news page after deleting startup with id='{}'", idString);
         return "redirect:/news";
@@ -127,7 +131,7 @@ public class StartupController {
             createForm.addObject("countries", countryService.getAll());
             createForm.addObject("industries", industryService.getAll());
         } catch (Exception e) {
-            return new ModelAndView("error");
+            throw new RuntimeException("Database malfunction. Please reload page.");
         }
         LOGGER.info("Building new startup form");
         return createForm;
@@ -168,8 +172,10 @@ public class StartupController {
                 startup.setIndustry(industryService.getById(Integer.parseInt(industryIdString)));
 
             startupService.save(startup);
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Not correct id.");
         } catch (Exception e) {
-            return "redirect:/error";
+            throw new RuntimeException("Database malfunction. Please reload page.");
         }
 
         LOGGER.info("Startup '{}' successfully created", startup);
@@ -192,8 +198,10 @@ public class StartupController {
             updateForm.addObject("startup", startupService.getById(Integer.parseInt(idString)));
             updateForm.addObject("countries", countryService.getAll());
             updateForm.addObject("industries", industryService.getAll());
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Not correct id.");
         } catch (Exception e) {
-            return new ModelAndView("error");
+            throw new RuntimeException("Database malfunction. Please reload page.");
         }
         return updateForm;
     }
@@ -231,11 +239,19 @@ public class StartupController {
                 startup.setIndustry(industryService.getById(Integer.parseInt(industryIdString)));
             startupService.update(startup);
 
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Not correct id.");
         } catch (Exception e) {
-            return "redirect:/error";
+            throw new RuntimeException("Database malfunction. Please reload page.");
         }
-
         return "redirect:/news";
     }
 
+    @ExceptionHandler(Exception.class)
+    public ModelAndView handleException(Exception e) {
+        ModelAndView view = new ModelAndView("error");
+        view.addObject("message", e.getMessage());
+        LOGGER.warn("Build new error page with message: " + e.getMessage());
+        return view;
+    }
 }
