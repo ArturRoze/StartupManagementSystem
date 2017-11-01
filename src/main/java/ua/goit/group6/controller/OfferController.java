@@ -57,8 +57,10 @@ public class OfferController {
             int id = Integer.parseInt(idString);
             offer = offerService.getById(id);
             offerInfo.addObject("offer", offer);
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Not correct id.");
         } catch (Exception e) {
-            return new ModelAndView("error");
+            throw new RuntimeException("Database malfunction. Please reload page.");
         }
         LOGGER.info("Building info page for " + offer);
         return offerInfo;
@@ -75,8 +77,10 @@ public class OfferController {
     public String delete(@PathVariable("id") String idString) {
         try {
             offerService.deleteById(Integer.parseInt(idString));
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Not correct id.");
         } catch (Exception e) {
-            return "redirect:/error";
+            throw new RuntimeException("Database malfunction. Please reload page.");
         }
         LOGGER.info("Redirecting to news page after deleting offer with id='{}'", idString);
         return "redirect:/news";
@@ -95,7 +99,7 @@ public class OfferController {
             createForm.addObject("countries", countryService.getAll());
             createForm.addObject("industries", industryService.getAll());
         } catch (Exception e) {
-            return new ModelAndView("error");
+            throw new RuntimeException("Database malfunction. Please reload page.");
         }
         LOGGER.info("Building new offer form");
         return createForm;
@@ -134,8 +138,10 @@ public class OfferController {
                 offer.setIndustry(industryService.getById(Integer.parseInt(industryIdString)));
 
             offerService.save(offer);
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Not correct id.");
         } catch (Exception e) {
-            return "redirect:/error";
+            throw new RuntimeException("Database malfunction. Please reload page.");
         }
         LOGGER.info("Offer '{}' successfully created", offer);
         LOGGER.info("Redirecting to news page");
@@ -157,8 +163,10 @@ public class OfferController {
             updateForm.addObject("offer", offerService.getById(Integer.parseInt(idString)));
             updateForm.addObject("countries", countryService.getAll());
             updateForm.addObject("industries", industryService.getAll());
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Not correct id.");
         } catch (Exception e) {
-            return new ModelAndView("error");
+            throw new RuntimeException("Database malfunction. Please reload page.");
         }
         return updateForm;
     }
@@ -192,10 +200,20 @@ public class OfferController {
             if (industryIdString != null && !industryIdString.equals(""))
                 offer.setIndustry(industryService.getById(Integer.parseInt(industryIdString)));
             offerService.update(offer);
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Not correct id.");
         } catch (Exception e) {
-            return "redirect:/error";
+            throw new RuntimeException("Database malfunction. Please reload page.");
         }
 
         return "redirect:/news";
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ModelAndView handleException(Exception e) {
+        ModelAndView view = new ModelAndView("error");
+        view.addObject("message", e.getMessage());
+        LOGGER.warn("Build new error page with message: " + e.getMessage());
+        return view;
     }
 }

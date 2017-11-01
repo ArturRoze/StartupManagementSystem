@@ -60,8 +60,10 @@ public class UserController {
         try {
             int id = Integer.parseInt(idString);
             user = userService.getById(id);
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Not correct id.");
         } catch (Exception e) {
-            return new ModelAndView("error");
+            throw new RuntimeException("Database malfunction. Please reload page.");
         }
         profile.addObject("user", user);
         LOGGER.info("Building profile page for " + user);
@@ -81,8 +83,10 @@ public class UserController {
                          @RequestParam(value = "isAdmin", required = false) boolean isAdmin) {
         try {
             userService.deleteById(Integer.parseInt(idString));
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Not correct id.");
         } catch (Exception e) {
-            return "redirect:/error";
+            throw new RuntimeException("Database malfunction. Please reload page.");
         }
         if (isAdmin) {
             LOGGER.info("Redirecting to user list after deleting user with id='" + idString + "'");
@@ -113,8 +117,10 @@ public class UserController {
             updateForm.addObject("user", user);
             updateForm.addObject("countries", countryService.getAll());
 
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Not correct id.");
         } catch (Exception e) {
-            return new ModelAndView("error");
+            throw new RuntimeException("Database malfunction. Please reload page.");
         }
 
         LOGGER.info("Building update page for " + user);
@@ -142,7 +148,7 @@ public class UserController {
                          @RequestParam("description") String description,
                          @RequestParam(value = "country_id", required = false) String countryIdString) {
         LOGGER.info("Returning from user update form");
-        User user;
+        User user = null;
         try {
             user = userService.getById(Integer.parseInt(idString));
 
@@ -159,8 +165,10 @@ public class UserController {
             }
 
             userService.update(user);
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Not correct id.");
         } catch (Exception e) {
-            return "redirect:/error";
+            throw new RuntimeException("Database malfunction. Please reload page.");
         }
 
         LOGGER.info("User " + user + " successfully updated");
@@ -181,9 +189,17 @@ public class UserController {
         try {
             users.addObject("users", userService.getAll());
         } catch (Exception e) {
-            return new ModelAndView("error");
+            throw new RuntimeException("Database malfunction. Please reload page.");
         }
         LOGGER.info("Building page with all users");
         return users;
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ModelAndView handleException(Exception e) {
+        ModelAndView view = new ModelAndView("error");
+        view.addObject("message", e.getMessage());
+        LOGGER.warn("Build new error page with message: " + e.getMessage());
+        return view;
     }
 }

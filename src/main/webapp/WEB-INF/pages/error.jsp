@@ -11,7 +11,14 @@
     <div class="content">
         <%@include file="navbar.jsp" %>
         <div class="container">
-            <h2 class="display-4 text-center mt-5 mb-4">Oops! Something went wrong...</h2>
+            <c:choose>
+                <c:when test="${message != null}">
+                    <h2 class="display-4 text-center mt-5 mb-4">${message}</h2>
+                </c:when>
+                <c:otherwise>
+                    <h2 class="display-4 text-center mt-5 mb-4">Oops! Something went wrong...</h2>
+                </c:otherwise>
+            </c:choose>
             <hr class="w-50">
             <div class="text-center">
                 <%@include file="buttons/back_button.jsp" %>

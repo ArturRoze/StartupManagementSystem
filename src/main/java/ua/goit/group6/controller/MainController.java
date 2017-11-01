@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.NestedServletException;
 import ua.goit.group6.model.*;
 import ua.goit.group6.service.*;
 
@@ -79,7 +80,7 @@ public class MainController {
         try {
             main.addObject("startups", startupService.getLastN(6));
         } catch (Exception e) {
-            return new ModelAndView("error");
+            throw new RuntimeException("Database malfunction. Please reload page.");
         }
         LOGGER.info("Building index page");
         return main;
@@ -100,8 +101,8 @@ public class MainController {
         user.setPassword(passwordEncoder.encode(password));
         try {
             userService.save(user);
-        } catch (Exception e){
-            return "redirect:/error";
+        } catch (Exception e) {
+            throw new RuntimeException("Fail to register user.");
         }
         LOGGER.info("Redirecting to index page after registration");
         return "redirect:/login";
@@ -125,11 +126,7 @@ public class MainController {
 
             if (page != null) {
 
-                try {
-                    currentPage = Integer.parseInt(page);
-                } catch (NumberFormatException e) {
-                    return new ModelAndView("error");
-                }
+                currentPage = Integer.parseInt(page);
 
                 if (currentPage < 1) {
                     currentPage = 1;
@@ -142,8 +139,10 @@ public class MainController {
             news.addObject("pages_count", pagesCount);
             news.addObject("news_list", newsService.getNPageWithMNews(currentPage, 6));
 
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Not correct attribute 'page'");
         } catch (Exception e) {
-            return new ModelAndView("error");
+            throw new RuntimeException("Database malfunction. Please reload page.");
         }
 
         LOGGER.info("Building news page");
@@ -158,7 +157,7 @@ public class MainController {
     @PostConstruct
     public void initDefaultDatabase() {
 
-        try{
+        try {
             if (countryService.getAll().isEmpty()) {
                 Country country = new Country();
                 country.setName("Ukraine");
@@ -193,8 +192,17 @@ public class MainController {
                 user.setPassword(passwordEncoder.encode("user"));
                 userService.save(user);
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             LOGGER.warn("Fail. It can't even initialize database");
+            throw new RuntimeException("Exception while initializing default database");
         }
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ModelAndView handleException(Exception e) {
+        ModelAndView view = new ModelAndView("error");
+        view.addObject("message", e.getMessage());
+        LOGGER.warn("Build new error page with message: " + e.getMessage());
+        return view;
     }
 }
